@@ -334,8 +334,8 @@ This is the 'classic' books.json example:
 }
 ```
 
-| Path Expression                                               | Description                                                | Returns                                                                                                                    |
-|:--------------------------------------------------------------|:-----------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------|
-| <pre lang="javascript">$['store']['book'][*]['author'] </pre> | Return all book authors                                    | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
-| <pre lang="javascript">$.store.book.*.author </pre>           | Return all book authors (same as above, just dot notation) | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
-| <pre lang="javascript">$..author</pre>                        | Return all book authors (recursive descent)                | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
+| Path Expression                                               | Description                                                | Returns                                                                                                                     |
+|:--------------------------------------------------------------|:-----------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------|
+| <pre lang="javascript">$['store']['book'][*]['author'] </pre> | Return all book authors                                    | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
+| <pre lang="javascript">$.store.book.*.author </pre>           | Return all book authors (same as above, just dot notation) | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
+| <pre lang="javascript">$..author</pre>                        | Return all book authors (recursive descent)                | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
