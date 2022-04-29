@@ -1,1 +1,7 @@
-
+/jsonpath/target/
+/mapper/target/
+/model/target/
+/merger/target/
+/jsonfactory/target/
+/elementfactory/target/
+/parser/target/
