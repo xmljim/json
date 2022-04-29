@@ -25,4 +25,8 @@ abstract class AbstractExpression implements PredicateExpression {
         return global;
     }
 
+    public String toString() {
+        return expression;
+    }
+
 }

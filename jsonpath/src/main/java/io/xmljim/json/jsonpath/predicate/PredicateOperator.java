@@ -27,4 +27,8 @@ public enum PredicateOperator {
     public static PredicateOperator find(String value) {
         return Arrays.stream(values()).filter(p -> p.operator.equals(value)).findFirst().orElse(null);
     }
+
+    public String getOperator() {
+        return operator;
+    }
 }

@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
-public class LessThanPredicate extends AbstractPredicate {
+class LessThanPredicate extends FilterPredicate {
     public LessThanPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
         super(leftSide, rightSide, PredicateOperator.LESS_THAN);
     }

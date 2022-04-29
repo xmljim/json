@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
-class GreaterThanOrEqualPredicate extends AbstractPredicate {
+class GreaterThanOrEqualPredicate extends FilterPredicate {
     public GreaterThanOrEqualPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
         super(leftSide, rightSide, PredicateOperator.GREATER_OR_EQUAL_THAN);
     }

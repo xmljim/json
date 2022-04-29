@@ -3,12 +3,12 @@ package io.xmljim.json.jsonpath.filter;
 import io.xmljim.json.jsonpath.Global;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
-import io.xmljim.json.jsonpath.predicate.FilterPredicate;
 
+import java.util.function.Predicate;
 import java.util.stream.Stream;
 
 class PredicateFilter extends AbstractFilter {
-    private final FilterPredicate predicate;
+    private final Predicate<Context> predicate;
 
     public PredicateFilter(String expression, Global global) {
         super(expression, FilterType.PREDICATE, global);

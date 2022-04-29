@@ -3,10 +3,9 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
-class ContainsPredicate extends StringFilterPredicate {
-
-    public ContainsPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
-        super(leftSide, rightSide, PredicateOperator.CONTAINS);
+class EndsWithPredicate extends StringFilterPredicate {
+    public EndsWithPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
+        super(leftSide, rightSide, PredicateOperator.ENDS_WITH);
     }
 
     @Override

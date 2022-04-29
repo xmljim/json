@@ -1,9 +1,17 @@
 package io.xmljim.json.elementfactory;
 
 import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.model.*;
+import io.xmljim.json.model.JsonArray;
+import io.xmljim.json.model.JsonElement;
+import io.xmljim.json.model.JsonNode;
+import io.xmljim.json.model.JsonValue;
+import io.xmljim.json.model.NodeType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -83,6 +91,11 @@ class JsonArrayImpl extends AbstractJsonNode implements JsonArray {
     @Override
     public <V> boolean contains(V value) {
         return values().anyMatch(item -> item.equals(value));
+    }
+
+    @Override
+    public boolean containsValue(JsonValue<?> value) {
+        return valueList.contains(value);
     }
 
     @Override

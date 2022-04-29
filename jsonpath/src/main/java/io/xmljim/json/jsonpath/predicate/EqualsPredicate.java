@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
-class EqualsPredicate extends AbstractPredicate {
+class EqualsPredicate extends FilterPredicate {
     public EqualsPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
         super(leftSide, rightSide, PredicateOperator.EQUALS);
     }

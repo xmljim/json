@@ -43,6 +43,8 @@ public non-sealed interface JsonArray extends JsonNode {
 
     <V> boolean contains(V value);
 
+    boolean containsValue(JsonValue<?> value);
+
     <V> JsonValue<V> remove(int index);
 
     Stream<JsonValue<?>> splice(int start);

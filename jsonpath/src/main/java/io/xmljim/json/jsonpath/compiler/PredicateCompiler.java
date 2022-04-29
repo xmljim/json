@@ -1,14 +1,16 @@
 package io.xmljim.json.jsonpath.compiler;
 
 import io.xmljim.json.jsonpath.Global;
-import io.xmljim.json.jsonpath.predicate.FilterPredicate;
+import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.PredicateFactory;
 import io.xmljim.json.jsonpath.predicate.PredicateOperator;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
-class PredicateCompiler extends Compiler<FilterPredicate> {
-    private FilterPredicate predicate;
+import java.util.function.Predicate;
+
+class PredicateCompiler extends Compiler<Predicate<Context>> {
+    private Predicate<Context> predicate;
 
     private PredicateToken predicateToken = PredicateToken.START;
     private PredicateExpression left;
@@ -23,7 +25,7 @@ class PredicateCompiler extends Compiler<FilterPredicate> {
     }
 
     @Override
-    public FilterPredicate compile() {
+    public Predicate<Context> compile() {
         processExpression();
         return predicate;
     }
@@ -263,11 +265,11 @@ class PredicateCompiler extends Compiler<FilterPredicate> {
     private void appendJoin() {
         if (predicate != null) {
             PredicateCompiler compiler = new PredicateCompiler(new PathExpression(getTokenString()), getGlobal());
-            FilterPredicate joinedPredicate = compiler.compile();
+            Predicate<Context> joinedPredicate = compiler.compile();
             if (this.predicateJoin == PredicateJoin.AND) {
-                predicate = (FilterPredicate) predicate.and(joinedPredicate);
+                predicate = predicate.and(joinedPredicate);
             } else {
-                predicate = (FilterPredicate) predicate.or(joinedPredicate);
+                predicate = predicate.or(joinedPredicate);
             }
             clearToken();
         } else {

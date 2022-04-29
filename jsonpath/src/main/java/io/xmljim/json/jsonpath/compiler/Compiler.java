@@ -1,11 +1,12 @@
 package io.xmljim.json.jsonpath.compiler;
 
 import io.xmljim.json.jsonpath.Global;
+import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
-import io.xmljim.json.jsonpath.predicate.FilterPredicate;
 
 import java.util.ArrayDeque;
 import java.util.Deque;
+import java.util.function.Predicate;
 
 /**
  * Base class for JsonPath expression compilation
@@ -54,7 +55,7 @@ public abstract class Compiler<T> {
         return new PathCompiler(new PathExpression(expression), isPredicatePath, global);
     }
 
-    public static Compiler<FilterPredicate> newPredicateCompiler(String expression, Global global) {
+    public static Compiler<Predicate<Context>> newPredicateCompiler(String expression, Global global) {
         return new PredicateCompiler(new PathExpression(expression), global);
     }
 
