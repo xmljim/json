@@ -148,31 +148,50 @@ expression criteria. When `false` the item is removed from the selection tree. P
 _Context_ and _Test_ expressions can be either a static value - either a JSON primitive (string, number, boolean, null),
 or a _JsonNode_ (a JsonObject or JsonArray), a _path_ expression, or a _variable_.
 
+#### Expression Types
+
+Different predicate expressions expect different value types. Typically these will be provided through either a path
+expression, a literal, or a [variable](#variables). The table below describes the supported expression types
+
+| Type     | Description                                                                                                                                                           | Example                                              |
+|:---------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------|
+| String   | A literal string value. Must be contained in single quotes                                                                                                            | <pre lang="javascript">'foo'</pre>                   |
+| Number   | A literal number value. Can be of any type (int, long, double). <br/> depending on the predicate, will evaluate as double                                             | <pre lang="javascript">100.01</pre>                  |
+| Boolean  | A boolean value `true` or `false`                                                                                                                                     | <pre lang="javascript">true</pre>                    |
+| Null     | A null value `null`                                                                                                                                                   | <pre lang="javascript">null</pre>                    |
+| RegExp   | A Regular Expression. The expression must be contained in `/` followed by any support options (see [Notes](#notes))                                                   | <pre lang="javascript">/cat.*/im</pre>               |
+| Path     | A Path Expression. Returns a value (or set of values) to be evaluated. <br/>Type is dynamic and predicate will only return `true` if the expected types are evaluated | <pre lang="javascript">@['item'] == 10               |
+| List     | A list of literal values (String, Number, Boolean, Null)                                                                                                              | <pre lang="javascript">['a', 24, false, null] </pre> |
+| Variable | A variable. Variable values resolved at compile time and return one of the above expression types <br/>(see [Variables](#variables) for more information)             | <pre language="javascript">{var#$.name}</pre>        |
+
 #### Predicate Operators
 
 The following _operators_ are supported (see [Notes](#notes) section for additional information):
 
-| Operator      | Description                                                                                                     | Example                     |
-|:--------------|:----------------------------------------------------------------------------------------------------------------|:----------------------------|
-| `==`          | Equals operator. Value types must be equivalent, i.e., `'1'` is not equal to `1`                                | `@.item == 'foo'`           |
-| `!=`          | Not equals operator.                                                                                            | `@.item != 'foo'`           |
-| `<`           | Less than operator. Context and Test expressions must both be numeric, otherwise `false`                        | `@[1] < $.price`            |
-| `<=`          | Less than or equal operator. Expressions must both be numeric                                                   | `{var} <= 10`               |
-| `>`           | Greater than operator. Expressions must both be numeric                                                         | `@.item > {var#$.item}`     | 
-| `>=`          | Greater than or equal operator. Expressions must both be numeric                                                | `@.item.length() >= 0`      |
-| `=~`          | Regular expression. Returns `true` for a match. The Test expression must be a regex pattern, e.g., `/cat.*/i`   | `@.item =~ /cat.*/i`        |
-| `contains`    | String contains. Context and Test expressions must be Strings                                                   | `@.item contains 'foo'`     |
-| `starts-with` | String starts with value. Context and Test expressions must be strings                                          | `@.name starts-with 'Jim'`  |
-| `ends-with`   | String ends with value. Context and Test expressions must be strings                                            | `@.name ends-with 'Earley'` |
-| `in`          | Context expression value is contained in the Test expression                                                    | `@.item in ['a', 'b', 'c]`  |
-| `nin`         | Context expression value is not contained in the Test expression                                                | `@.item nin ['a', 'b']`     |
-| `empty`       | Context expression (array or string) is (or is not) empty. Test expression must be a boolean [`true`, `false`]  | `@.item empty true`         |
+| Operator      | Description                                                                                                     | Example                                                |
+|:--------------|:----------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------|
+| `==`          | Equals operator. Value types must be equivalent, i.e., `'1'` is not equal to `1`                                | <pre lang="javascript">@.item == 'foo'</pre>           |
+| `!=`          | Not equals operator.                                                                                            | <pre lang="javascript">@.item != 'foo'</pre>           |
+| `<`           | Less than operator. Context and Test expressions must both be numeric, otherwise `false`                        | <pre lang="javascript">@[1] < $.price</pre>            |
+| `<=`          | Less than or equal operator. Expressions must both be numeric                                                   | <pre lang="javascript">{var} <= 10</pre>               |
+| `>`           | Greater than operator. Expressions must both be numeric                                                         | <pre lang="javascript">@.item > {var#$.item}</pre>     | 
+| `>=`          | Greater than or equal operator. Expressions must both be numeric                                                | <pre lang="javascript">@.item.length() >= 0</pre>      |
+| `=~`          | Regular expression. Returns `true` for a match. The Test expression must be a regex pattern, e.g., `/cat.*/i`   | <pre lang="javascript">@.item =~ /cat.*/i</pre>        |
+| `contains`    | String contains. Context and Test expressions must be Strings                                                   | <pre lang="javascript">@.item contains 'foo'</pre>     |
+| `starts-with` | String starts with value. Context and Test expressions must be strings                                          | <pre lang="javascript">@.name starts-with 'Jim'</pre>  |
+| `ends-with`   | String ends with value. Context and Test expressions must be strings                                            | <pre lang="javascript">@.name ends-with 'Earley'</pre> |
+| `in`          | Context expression value is contained in the Test expression                                                    | <pre lang="javascript">@.item in ['a', 'b', 'c]</pre>  |
+| `nin`         | Context expression value is not contained in the Test expression                                                | <pre lang="javascript">@.item nin ['a', 'b']</pre>     |
+| `empty`       | Context expression (array or string) is (or is not) empty. Test expression must be a boolean [`true`, `false`]  | <pre lang="javascript">@.item empty true</pre>         |
 
 #### Notes
 
 1. **Negation**: Predicate expressions can be _negated_ by applying the not (`!`) operator to either the Context or Test
    expression:
-   `[?(!@.foo contains 'bar')]` or `[?(@.foo contains !'bar')]`
+
+    ```javascript
+    [?(!@.foo contains 'bar')] or [?(@.foo contains !'bar')]
+    ```
 2. **Regular Expression Flags**: The following flags can be applied to regular expressions. A regular expression can
    have zero or more flags:
 
@@ -279,14 +298,14 @@ Assuming that variables are set:
 }
 ```
 
-| Variable Expression | Example                             | Description                                                                                   |
-|:--------------------|:------------------------------------|:----------------------------------------------------------------------------------------------|
-| `{a}`               | `[?(@.item == {a})]`                | Predicate that evaluates the `item` value from the current context and must equal 'string'    |
-| `{b}`               | `[?(@.item > {b})]`                 | Predicate that evaluates the `item` value from the current context and must be greater than 1 |
-| `{c}`               | `[?(@.item empty {c})]`             | Predicate that evaluates the `item` value is empty (c = `true`)                               |
-| `{d}`               | `[?(@.item in {d})]`                | Predicate that evaluates if the `item` value is contained within the set `[1,2,3,4]`          | 
-| `{d#$.last()}`      | `[?(@.item == {d#$.last()})]`       | Predicate that evaluates if the `item` value is equal to 4 (the last value in 'd')            | 
-| `{e#$.foo}`         | `[?(@.item starts-with {e#$.foo})]` | Predicate that evaluates if the `item` value starts with `'bar'`                              |
+| Variable Expression | Example                                                        | Description                                                                                   |
+|:--------------------|:---------------------------------------------------------------|:----------------------------------------------------------------------------------------------|
+| `{a}`               | <pre lang="javascript">[?(@.item == {a})]</pre>                | Predicate that evaluates the `item` value from the current context and must equal 'string'    |
+| `{b}`               | <pre lang="javascript">[?(@.item > {b})]</pre>                 | Predicate that evaluates the `item` value from the current context and must be greater than 1 |
+| `{c}`               | <pre lang="javascript">[?(@.item empty {c})]</pre>             | Predicate that evaluates the `item` value is empty (c = `true`)                               |
+| `{d}`               | <pre lang="javascript">[?(@.item in {d})]</pre>                | Predicate that evaluates if the `item` value is contained within the set `[1,2,3,4]`          | 
+| `{d#$.last()}`      | <pre lang="javascript">[?(@.item == {d#$.last()})]</pre>       | Predicate that evaluates if the `item` value is equal to 4 (the last value in 'd')            | 
+| `{e#$.foo}`         | <pre lang="javascript">[?(@.item starts-with {e#$.foo})]</pre> | Predicate that evaluates if the `item` value starts with `'bar'`                              |
 
 ## JsonPath Examples
 
@@ -334,8 +353,8 @@ This is the 'classic' books.json example:
 }
 ```
 
-| Path Expression                                               | Description                                                | Returns                                                                                                                     |
-|:--------------------------------------------------------------|:-----------------------------------------------------------|:----------------------------------------------------------------------------------------------------------------------------|
-| <pre lang="javascript">$['store']['book'][*]['author'] </pre> | Return all book authors                                    | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
-| <pre lang="javascript">$.store.book.*.author </pre>           | Return all book authors (same as above, just dot notation) | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
-| <pre lang="javascript">$..author</pre>                        | Return all book authors (recursive descent)                | <pre lang="json">[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre> |
+| Path Expression                                               | Description                                                | Returns                                                                                                          |
+|:--------------------------------------------------------------|:-----------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------|
+| <pre lang="javascript">$['store']['book'][*]['author'] </pre> | Return all book authors                                    | <pre>[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre>  |
+| <pre lang="javascript">$.store.book.*.author </pre>           | Return all book authors (same as above, just dot notation) | <pre>[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre>  |
+| <pre lang="javascript">$..author</pre>                        | Return all book authors (recursive descent)                | <pre>[<br/>  "Nigel Rees",<br/>  "Evelyn Waugh",<br/>  "Herman Melville",<br/>  "J. R. R. Tolkien"<br/>] </pre>  |

@@ -4,7 +4,7 @@ import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 import io.xmljim.json.model.NodeType;
 
-public class InPredicate extends FilterPredicate {
+class InPredicate extends FilterPredicate {
     public InPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
         super(leftSide, rightSide, PredicateOperator.IN);
     }

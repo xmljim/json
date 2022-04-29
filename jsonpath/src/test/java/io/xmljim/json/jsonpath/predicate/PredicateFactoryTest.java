@@ -13,6 +13,7 @@ import static io.xmljim.json.jsonpath.predicate.PredicateOperator.ENDS_WITH;
 import static io.xmljim.json.jsonpath.predicate.PredicateOperator.EQUALS;
 import static io.xmljim.json.jsonpath.predicate.PredicateOperator.GREATER_OR_EQUAL_THAN;
 import static io.xmljim.json.jsonpath.predicate.PredicateOperator.GREATER_THAN;
+import static io.xmljim.json.jsonpath.predicate.PredicateOperator.IN;
 import static io.xmljim.json.jsonpath.predicate.PredicateOperator.NOT_EQUALS;
 import static io.xmljim.json.jsonpath.predicate.PredicateOperator.REGEX_MATCH;
 import static io.xmljim.json.jsonpath.predicate.PredicateOperator.STARTS_WITH;
@@ -241,6 +242,18 @@ class PredicateFactoryTest {
         Predicate<Context> predicate = PredicateFactory.create(left, right, REGEX_MATCH);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
+    }
+
+    @Test
+    void testInPredicateTrue() {
+        String leftString = "a";
+        String rightString = "['a', 'b', 'd']";
+
+        PredicateExpression left = createExpression("'" + leftString + "'");
+        PredicateExpression right = createExpression(rightString);
+        Predicate<Context> predicate = PredicateFactory.create(left, right, IN);
+        assertNotNull(predicate);
+        assertTrue(predicate.test(Context.defaultContext()));
     }
 
     private PredicateExpression createExpression(String expression) {
