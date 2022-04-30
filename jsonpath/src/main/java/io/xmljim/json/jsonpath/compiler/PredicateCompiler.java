@@ -69,6 +69,10 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
             promoteToken();
             clearToken();
         }
+
+        if (!hasNext() && predicateToken == PredicateToken.OPERATOR) {
+            predicate = PredicateFactory.create(left, right, PredicateOperator.IS_NOT_NULL, negate);
+        }
     }
 
     private void promoteToken() {

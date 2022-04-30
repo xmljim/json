@@ -1,6 +1,8 @@
 package io.xmljim.json.jsonpath.predicate;
 
+import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
 import java.util.function.Predicate;
@@ -29,7 +31,8 @@ public class PredicateFactory {
             case NOT_IN -> new InPredicate(left, right).negate();
             case REGEX_MATCH -> new RegExpPredicate(left, right);
             case STARTS_WITH -> new StartsWithPredicate(left, right);
-            default -> null;
+            case IS_NOT_NULL -> new IsNotNullPredicate(left, right);
+            default -> checkForIsNotNullPredicate(left);
         };
 
         if (negate) {
@@ -37,5 +40,13 @@ public class PredicateFactory {
         }
 
         return predicate;
+    }
+
+    private static Predicate<Context> checkForIsNotNullPredicate(PredicateExpression left) {
+        if (left.type() == ExpressionType.CONTEXT) {
+            return new IsNotNullPredicate(left, null);
+        } else {
+            throw new JsonPathExpressionException(left.getExpression(), 0, "Unknown Predicate Type");
+        }
     }
 }

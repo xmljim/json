@@ -18,6 +18,7 @@ abstract class AbstractExpression implements PredicateExpression {
         this.global = global;
     }
 
+    @Override
     public String getExpression() {
         return expression;
     }

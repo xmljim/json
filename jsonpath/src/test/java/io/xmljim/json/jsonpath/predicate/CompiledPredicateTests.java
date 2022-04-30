@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.function.Predicate;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -73,6 +74,14 @@ public class CompiledPredicateTests {
         Predicate<Context> predicate = compile(expression, variables);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
+    }
+
+    @Test
+    public void isNotNullPredicate() {
+        String expression = "@.foo.bar";
+        Predicate<Context> predicate = compile(expression);
+        assertNotNull(predicate);
+        assertEquals(PredicateOperator.IS_NOT_NULL, ((FilterPredicate) predicate).operator());
     }
 
     private Predicate<Context> compile(String expression) {

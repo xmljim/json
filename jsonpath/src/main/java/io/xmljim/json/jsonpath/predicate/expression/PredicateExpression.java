@@ -47,4 +47,6 @@ public interface PredicateExpression {
      * @return the expression type
      */
     ExpressionType type();
+
+    String getExpression();
 }

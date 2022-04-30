@@ -16,7 +16,8 @@ public enum PredicateOperator {
     ENDS_WITH("endswith"),
     CONTAINS("contains"),
     SIZE("size"),
-    EMPTY("empty");
+    EMPTY("empty"),
+    IS_NOT_NULL("isnotnull");
 
     private final String operator;
 
@@ -25,7 +26,7 @@ public enum PredicateOperator {
     }
 
     public static PredicateOperator find(String value) {
-        return Arrays.stream(values()).filter(p -> p.operator.equals(value)).findFirst().orElse(null);
+        return Arrays.stream(values()).filter(p -> p.operator.equalsIgnoreCase(value)).findFirst().orElse(null);
     }
 
     public String getOperator() {
