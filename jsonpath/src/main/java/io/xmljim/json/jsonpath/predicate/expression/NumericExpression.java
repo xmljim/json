@@ -1,14 +1,13 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
 import io.xmljim.json.jsonpath.Global;
-import io.xmljim.json.jsonpath.context.Context;
 
 class NumericExpression extends SimpleExpression<Number> {
     private ExpressionType type;
 
     public NumericExpression(String expression, Global global) {
         super(expression, global);
-        setValue(Context.createSimpleContext(parseNumber(expression)));
+        setValue(parseNumber(expression));
     }
 
     private Number parseNumber(String expression) {

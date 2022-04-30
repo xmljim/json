@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
-class LessThanPredicate extends FilterPredicate {
+class LessThanPredicate extends AbstractFilterPredicate {
     public LessThanPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
         super(leftSide, rightSide, PredicateOperator.LESS_THAN);
     }
@@ -11,17 +11,19 @@ class LessThanPredicate extends FilterPredicate {
     @Override
     public boolean test(Context context) {
         if (leftSide().type().isNumeric() && rightSide().type().isNumeric()) {
-            Number left = leftSide().getValue(context);
-            Number right = rightSide().getValue(context);
+            Number left = (Number) leftSide().getValue(context).orElse(0);
+            Number right = (Number) rightSide().getValue(context).orElse(-1);
 
             return left.doubleValue() < right.doubleValue();
         } else {
-            Context leftContext = leftSide().get(context);
-            Context rightContext = rightSide().get(context);
 
-            if (leftContext.type().isNumeric() && rightContext.type().isNumeric()) {
-                Number left = leftSide().getValue(context);
-                Number right = rightSide().getValue(context);
+
+            if ((leftSide().getContextType(context).isNumeric())
+                && (rightSide().getContextType(context).isNumeric())) {
+
+                Number left = (Number) leftSide().getValue(context).orElse(0);
+                Number right = (Number) rightSide().getValue(context).orElse(-1);
+
                 return left.doubleValue() < right.doubleValue();
             }
         }

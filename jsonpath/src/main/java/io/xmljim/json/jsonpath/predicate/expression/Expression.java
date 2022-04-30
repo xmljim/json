@@ -11,7 +11,6 @@ public abstract class Expression {
     public static final String BOOLEAN_PATTERN = "true|false";
     public static final String NUMBER_PATTERN = "[-+]?[0-9]*\\.?[0-9]*";
     public static final String LIST_PATTERN = "\\[.*(,\\s?.*)+]";
-
     public static final String VARIABLE_PATTERN = "\\{(?<key>[A-Za-z][A-Za-z0-9-]*)(?<path>#.*)?}";
 
     public static PredicateExpression create(String expression, Global global) {

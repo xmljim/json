@@ -7,9 +7,9 @@ import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.service.ServiceManager;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 class ListExpression extends AbstractExpression {
-    private final JsonArray value;
 
     public ListExpression(String expression, Global global) {
         super(expression, global);
@@ -30,17 +30,19 @@ class ListExpression extends AbstractExpression {
             }
         });
 
-        this.value = jsonArray;
+        set(Context.create(jsonArray));
     }
 
     @Override
-    public JsonArray getValue(Context inputContext) {
-        return value;
+    public Optional<Context> getContextAt(Context inputContext, int index) {
+        return Optional.of(values().get(index));
     }
 
     @Override
-    public Context get(Context inputContext) {
-        return Context.createSimpleContext(value);
+    @SuppressWarnings("unchecked")
+    public <T> Optional<T> getValue(Context inputContext) {
+        Optional<Context> context = getContext(inputContext);
+        return context.flatMap(value -> (Optional<T>) Optional.of(value.get()));
     }
 
     @Override

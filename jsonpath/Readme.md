@@ -16,6 +16,7 @@
         - [Predicate Filter](#the-predicate-filter-)
         - [Function Filter](#function-filter)
     - [Predicates](#predicates)
+        - [Expression Types](#expression-types)
         - [Predicate Operators](#predicate-operators)
         - [Notes](#notes)
     - [Functions](#functions)
@@ -168,21 +169,21 @@ expression, a literal, or a [variable](#variables). The table below describes th
 
 The following _operators_ are supported (see [Notes](#notes) section for additional information):
 
-| Operator      | Description                                                                                                     | Example                                                |
-|:--------------|:----------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------|
-| `==`          | Equals operator. Value types must be equivalent, i.e., `'1'` is not equal to `1`                                | <pre lang="javascript">@.item == 'foo'</pre>           |
-| `!=`          | Not equals operator.                                                                                            | <pre lang="javascript">@.item != 'foo'</pre>           |
-| `<`           | Less than operator. Context and Test expressions must both be numeric, otherwise `false`                        | <pre lang="javascript">@[1] < $.price</pre>            |
-| `<=`          | Less than or equal operator. Expressions must both be numeric                                                   | <pre lang="javascript">{var} <= 10</pre>               |
-| `>`           | Greater than operator. Expressions must both be numeric                                                         | <pre lang="javascript">@.item > {var#$.item}</pre>     | 
-| `>=`          | Greater than or equal operator. Expressions must both be numeric                                                | <pre lang="javascript">@.item.length() >= 0</pre>      |
-| `=~`          | Regular expression. Returns `true` for a match. The Test expression must be a regex pattern, e.g., `/cat.*/i`   | <pre lang="javascript">@.item =~ /cat.*/i</pre>        |
-| `contains`    | String contains. Context and Test expressions must be Strings                                                   | <pre lang="javascript">@.item contains 'foo'</pre>     |
-| `starts-with` | String starts with value. Context and Test expressions must be strings                                          | <pre lang="javascript">@.name starts-with 'Jim'</pre>  |
-| `ends-with`   | String ends with value. Context and Test expressions must be strings                                            | <pre lang="javascript">@.name ends-with 'Earley'</pre> |
-| `in`          | Context expression value is contained in the Test expression                                                    | <pre lang="javascript">@.item in ['a', 'b', 'c]</pre>  |
-| `nin`         | Context expression value is not contained in the Test expression                                                | <pre lang="javascript">@.item nin ['a', 'b']</pre>     |
-| `empty`       | Context expression (array or string) is (or is not) empty. Test expression must be a boolean [`true`, `false`]  | <pre lang="javascript">@.item empty true</pre>         |
+| Operator     | Description                                                                                                     | Example                                                |
+|:-------------|:----------------------------------------------------------------------------------------------------------------|:-------------------------------------------------------|
+| `==`         | Equals operator. Value types must be equivalent, i.e., `'1'` is not equal to `1`                                | <pre lang="javascript">@.item == 'foo'</pre>           |
+| `!=`         | Not equals operator.                                                                                            | <pre lang="javascript">@.item != 'foo'</pre>           |
+| `<`          | Less than operator. Context and Test expressions must both be numeric, otherwise `false`                        | <pre lang="javascript">@[1] < $.price</pre>            |
+| `<=`         | Less than or equal operator. Expressions must both be numeric                                                   | <pre lang="javascript">{var} <= 10</pre>               |
+| `>`          | Greater than operator. Expressions must both be numeric                                                         | <pre lang="javascript">@.item > {var#$.item}</pre>     | 
+| `>=`         | Greater than or equal operator. Expressions must both be numeric                                                | <pre lang="javascript">@.item.length() >= 0</pre>      |
+| `=~`         | Regular expression. Returns `true` for a match. The Test expression must be a regex pattern, e.g., `/cat.*/i`   | <pre lang="javascript">@.item =~ /cat.*/i</pre>        |
+| `contains`   | String contains. Context and Test expressions must be Strings                                                   | <pre lang="javascript">@.item contains 'foo'</pre>     |
+| `startswith` | String starts with value. Context and Test expressions must be strings                                          | <pre lang="javascript">@.name starts-with 'Jim'</pre>  |
+| `endswith`   | String ends with value. Context and Test expressions must be strings                                            | <pre lang="javascript">@.name ends-with 'Earley'</pre> |
+| `in`         | Context expression value is contained in the Test expression                                                    | <pre lang="javascript">@.item in ['a', 'b', 'c]</pre>  |
+| `nin`        | Context expression value is not contained in the Test expression                                                | <pre lang="javascript">@.item nin ['a', 'b']</pre>     |
+| `empty`      | Context expression (array or string) is (or is not) empty. Test expression must be a boolean [`true`, `false`]  | <pre lang="javascript">@.item empty true</pre>         |
 
 #### Notes
 
@@ -190,7 +191,7 @@ The following _operators_ are supported (see [Notes](#notes) section for additio
    expression:
 
     ```javascript
-    [?(!@.foo contains 'bar')] or [?(@.foo contains !'bar')]
+    [?(!@.foo contains 'bar')] || [?(@.foo contains !'bar')]
     ```
 2. **Regular Expression Flags**: The following flags can be applied to regular expressions. A regular expression can
    have zero or more flags:
@@ -201,6 +202,16 @@ The following _operators_ are supported (see [Notes](#notes) section for additio
     - `s`: Dot All. Matches newline characters as well. Maps to Java `Pattern.DOTALL`
     - `u`: Unicode. Maps to Java `Pattern.UNICODE_CASE`
     - `d`: Unix Lines. Maps to Java `Pattern.UNIX_LINES`
+
+3. **Logical Operators**: The logical operators `&&` and `||` are supported to logically join predicates together.
+   Parentheses `()` to logically group predicates together for evaluation. For example:
+
+    - `$.count == 10 && @.price < 4.95`: Returns `true` if the `count` value equals `10` _and_ the current `price` is
+      less than `4.95`
+    - `$.count == 10 || @.price < 4.95`: Returns `true` if the `count` value equals `10` _or_ the current `price` is
+      less than `4.95`
+    - `$.manufacturer == 'Acme Corp.' && ($.count == 10 && @.price < 4.95)`: Returns `true` if the `manufacturer` is
+      `'Acme Corp.'` _and both_ the `count` value equals `10` _and_ the current `price` is less than `4.95`
 
 ### Functions
 

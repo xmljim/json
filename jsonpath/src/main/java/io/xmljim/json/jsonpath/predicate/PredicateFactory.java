@@ -5,6 +5,9 @@ import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
 import java.util.function.Predicate;
 
+/**
+ * Factory class with static methods to create different predicate types based on the {@link PredicateOperator}
+ */
 public class PredicateFactory {
 
     public static Predicate<Context> create(PredicateExpression left, PredicateExpression right, PredicateOperator operator) {
@@ -14,6 +17,7 @@ public class PredicateFactory {
     public static Predicate<Context> create(PredicateExpression left, PredicateExpression right, PredicateOperator operator, boolean negate) {
         Predicate<Context> predicate = switch (operator) {
             case CONTAINS -> new ContainsPredicate(left, right);
+            case EMPTY -> new EmptyPredicate(left, right);
             case ENDS_WITH -> new EndsWithPredicate(left, right);
             case EQUALS -> new EqualsPredicate(left, right);
             case GREATER_OR_EQUAL_THAN -> new GreaterThanOrEqualPredicate(left, right);

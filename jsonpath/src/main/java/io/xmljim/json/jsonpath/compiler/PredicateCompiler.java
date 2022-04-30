@@ -50,18 +50,25 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
             case OR -> handleOr();
             case LEFT_PAREN -> handleLeftParen();
             case RIGHT_PAREN -> handleRightParen();
+            case LEFT_BRACE -> handleLeftBrace();
+            case RIGHT_BRACE -> handleRightBrace();
             default -> handleContent();
         }
     }
 
     @Override
     public void applyToken() {
-        switch (predicateToken) {
-            case LEFT, RIGHT -> createExpression();
-            case OPERATOR -> setOperator();
+
+        if (predicateJoin != PredicateJoin.NONE) {
+            appendJoin();
+        } else {
+            switch (predicateToken) {
+                case LEFT, RIGHT -> createExpression();
+                case OPERATOR -> setOperator();
+            }
+            promoteToken();
+            clearToken();
         }
-        promoteToken();
-        clearToken();
     }
 
     private void promoteToken() {
@@ -80,10 +87,12 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     private void handleSpace() {
         if (isEncased()) {
             appendCurrentToToken();
+        } else if (predicateJoin != PredicateJoin.NONE) {
+            appendCurrentToToken();
         } else if (predicateToken == PredicateToken.LEFT) {
             applyToken();
             //no need to append, just transition to next token (operator)
-        } else if (predicateToken == PredicateToken.OPERATOR) {
+        } else if (predicateToken == PredicateToken.OPERATOR && tokenHasContent()) {
             applyToken();
         }
 
@@ -92,6 +101,8 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
 
     private void handleNot() {
         if (isEncased()) {
+            appendCurrentToToken();
+        } else if (predicateJoin != PredicateJoin.NONE) {
             appendCurrentToToken();
         } else if (predicateToken != PredicateToken.OPERATOR && isStartOfExpression()) {
             negate = true;
@@ -103,6 +114,8 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
 
     private void handleEquals() {
         if (isEncased()) {
+            appendCurrentToToken();
+        } else if (predicateJoin != PredicateJoin.NONE) {
             appendCurrentToToken();
         } else if (predicateToken == PredicateToken.LEFT && tokenHasContent()) {
             applyToken();
@@ -151,15 +164,18 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     }
 
     private void handleQuote() {
-        if (isQuoted()) {
+        if (predicateJoin != PredicateJoin.NONE) {
+            appendCurrentToToken();
+        } else if (isQuoted()) {
             popEnclosure();
             appendCurrentToToken();
+
         } else if (isRegex()) {
             appendCurrentToToken();
         } else if (isFilter()) {
             pushEnclosure();
             appendCurrentToToken();
-        } else if (lastCharacter() == ESCAPE) {
+        } else if (isLastCharacter(ESCAPE)) {
             appendCurrentToToken();
         } else if (predicateToken != PredicateToken.OPERATOR && isTokenEmpty()) {
             pushEnclosure();
@@ -205,41 +221,105 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     }
 
     private void handleLeftBrace() {
-        if (isEncased()) {
+        if (predicateJoin != PredicateJoin.NONE) {
             appendCurrentToToken();
+        } else if (isQuotedOrRegex()) {
+            appendCurrentToToken();
+        } else if ((lastEnclosure() != null && lastEnclosure() == LEFT_PAREN)
+            && (predicateToken == PredicateToken.LEFT || predicateToken == PredicateToken.RIGHT)) {
+            pushEnclosure();
+            appendCurrentToToken();
+        } else if (predicateJoin == PredicateJoin.NONE && isTokenEmpty()) {
+            pushEnclosure();
+            appendCurrentToToken();
+
         } else {
-            if (predicateJoin == PredicateJoin.NONE && isTokenEmpty()) {
-                pushEnclosure();
-                appendCurrentToToken();
-            }
+            //invalid token?
+            throw new JsonPathExpressionException(expression(), "invalid left brace");
         }
     }
 
     private void handleRightBrace() {
-
+        if (predicateJoin != PredicateJoin.NONE) {
+            appendCurrentToToken();
+        } else if (isQuotedOrRegex()) {
+            appendCurrentToToken();
+        } else if (isLastEnclosure(LEFT_BRACE)) {
+            popEnclosure();
+            appendCurrentToToken();
+            applyToken();
+        } else {
+            //invalid token
+            throw new JsonPathExpressionException(expression(), "Invalid right brace");
+        }
     }
 
     private void handleAnd() {
-        if (isEncased()) {
+        if (isQuotedOrRegex()) {
             appendCurrentToToken();
         } else {
-            predicateJoin = PredicateJoin.AND;
+            if (predicateJoin == PredicateJoin.NONE) {
+                if (predicateToken == PredicateToken.END && (!isLastCharacter(AND)) && (isNextCharacter(AND))) {
+                    predicateJoin = PredicateJoin.AND;
+                    predicateToken = PredicateToken.START;
+                } else if (predicateJoin == PredicateJoin.AND && !isNextCharacter(AND)) {
+                    //nothing to do
+                } else {
+                    //invalid
+                    throw new JsonPathExpressionException(expression(), "Invalid logical operator (|)");
+                }
+            } else { //already in a join
+                if (tokenHasContent() && isEnclosuresEmpty()) {
+                    appendJoin();
+                    predicateJoin = PredicateJoin.AND;
+                    predicateToken = PredicateToken.START;
+                } else if (isLastEnclosure(LEFT_PAREN)) {
+                    appendCurrentToToken();
+                }
+            }
+
+
         }
     }
 
     private void handleOr() {
-        if (isEncased()) {
+        if (isQuotedOrRegex()) {
             appendCurrentToToken();
         } else {
-            predicateJoin = PredicateJoin.OR;
+            if (predicateJoin == PredicateJoin.NONE) {
+                if (predicateToken == PredicateToken.END && (!isLastCharacter(OR)) && (isNextCharacter(OR))) {
+                    predicateJoin = PredicateJoin.OR;
+                    predicateToken = PredicateToken.START;
+                } else if (predicateJoin == PredicateJoin.OR && !isNextCharacter(OR)) {
+                    //nothing to do
+                } else {
+                    //invalid
+                    throw new JsonPathExpressionException(expression(), "Invalid logical operator (|)");
+                }
+            } else { //already in a join
+                if (tokenHasContent() && isEnclosuresEmpty()) {
+                    appendJoin();
+                    predicateJoin = PredicateJoin.OR;
+                    predicateToken = PredicateToken.START;
+                } else if (isLastEnclosure(LEFT_PAREN)) {
+                    appendCurrentToToken();
+                }
+            }
+
+
         }
     }
+
 
     private void handleExpressionOperator() {
         if (isEncased()) {
             appendCurrentToToken();
+        } else if (predicateJoin != PredicateJoin.NONE) {
+            appendCurrentToToken();
         } else if (predicateToken == PredicateToken.LEFT && tokenHasContent()) {
             applyToken();
+            appendCurrentToToken();
+        } else if (predicateToken == PredicateToken.OPERATOR && isTokenEmpty()) {
             appendCurrentToToken();
         } else {
             throw new JsonPathExpressionException(expression(), "Unexpected operator: " + current());
@@ -264,7 +344,7 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
 
     private void appendJoin() {
         if (predicate != null) {
-            PredicateCompiler compiler = new PredicateCompiler(new PathExpression(getTokenString()), getGlobal());
+            PredicateCompiler compiler = new PredicateCompiler(new PathExpression(unwrapToken()), getGlobal());
             Predicate<Context> joinedPredicate = compiler.compile();
             if (this.predicateJoin == PredicateJoin.AND) {
                 predicate = predicate.and(joinedPredicate);
@@ -272,9 +352,18 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
                 predicate = predicate.or(joinedPredicate);
             }
             clearToken();
+            predicateJoin = PredicateJoin.NONE;
         } else {
             throw new JsonPathExpressionException(expression(), "Appending join: unexpected join. Primary predicate not created");
         }
+    }
+
+    private String unwrapToken() {
+        String stripped = getTokenString().strip().strip();
+        if (getTokenString().strip().startsWith("(")) {
+            return stripped.substring(1, stripped.length() - 1);
+        }
+        return stripped;
     }
 
     private enum PredicateToken {

@@ -95,8 +95,16 @@ public abstract class Compiler<T> {
         return expression.peek();
     }
 
+    public boolean isNextCharacter(Character c) {
+        return (peek() != null && peek() == c);
+    }
+
     public Character lastCharacter() {
         return expression.last();
+    }
+
+    public boolean isLastCharacter(Character c) {
+        return (lastCharacter() != null && lastCharacter() == c);
     }
 
     public Character lastNonWhitespaceCharacter() {
@@ -175,6 +183,10 @@ public abstract class Compiler<T> {
         return enclosures.peek();
     }
 
+    public boolean isLastEnclosure(Character c) {
+        return lastEnclosure() != null && lastEnclosure() == c;
+    }
+
     public void popEnclosure() {
         enclosures.pop();
     }
@@ -186,4 +198,8 @@ public abstract class Compiler<T> {
     public abstract void handleCharacter(Character character);
 
     public abstract void applyToken();
+
+    public String toString() {
+        return expression().toString();
+    }
 }

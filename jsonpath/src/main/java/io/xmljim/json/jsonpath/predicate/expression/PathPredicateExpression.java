@@ -5,10 +5,12 @@ import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 
+import java.util.Optional;
 import java.util.stream.Stream;
 
 class PathPredicateExpression extends AbstractExpression {
     private final FilterStream sequence;
+    private boolean executed = false;
 
     public PathPredicateExpression(String expression, Global global) {
         super(expression, global);
@@ -16,14 +18,26 @@ class PathPredicateExpression extends AbstractExpression {
     }
 
     @Override
-    public Context get(Context inputContext) {
-        return sequence.filter(Stream.of(inputContext)).findFirst().orElse(Context.createSimpleContext(null));
+    public Optional<Context> getContextAt(Context inputContext, int index) {
+        if (!executed) { //only run once
+            set(sequence.filter(Stream.of(inputContext)).toList());
+            executed = true;
+        }
+
+        return index < size(inputContext) ? Optional.of(values().get(index)) : Optional.empty();
+    }
+
+    private void applyContext(Context inputContext) {
+        if (!executed) { //only run once
+            set(sequence.filter(Stream.of(inputContext)).toList());
+            executed = true;
+        }
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getValue(Context inputContext) {
-        return (T) get(inputContext).get().asJsonValue().get();
+    public int size(Context inputContext) {
+        applyContext(inputContext);
+        return values().size();
     }
 
     @Override

@@ -10,7 +10,8 @@ public enum NodeType {
     LONG(true, true),
     NUMBER(true, true),
     NULL(false, true),
-    STRING(false, true);
+    STRING(false, true),
+    UNDEFINED(false, false);
 
     private final boolean numeric;
     private final boolean primitive;
@@ -34,5 +35,9 @@ public enum NodeType {
 
     public boolean isObject() {
         return this.name().equals(OBJECT.name());
+    }
+
+    public boolean isUndefined() {
+        return this.name().equals(UNDEFINED.name());
     }
 }

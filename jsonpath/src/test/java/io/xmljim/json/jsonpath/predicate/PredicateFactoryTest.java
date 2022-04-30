@@ -1,9 +1,13 @@
 package io.xmljim.json.jsonpath.predicate;
 
+import io.xmljim.json.factory.model.ElementFactory;
 import io.xmljim.json.jsonpath.Variables;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
 import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
+import io.xmljim.json.model.JsonArray;
+import io.xmljim.json.model.JsonObject;
+import io.xmljim.json.service.ServiceManager;
 import org.junit.jupiter.api.Test;
 
 import java.util.function.Predicate;
@@ -198,6 +202,7 @@ class PredicateFactoryTest {
         assertFalse(predicate.test(Context.defaultContext()));
     }
 
+    @Test
     void testStartsWithTrue() {
         String leftString = "Jim Earley";
         String rightString = "Jim";
@@ -209,6 +214,7 @@ class PredicateFactoryTest {
         assertTrue(predicate.test(Context.defaultContext()));
     }
 
+    @Test
     void testStartsWithFalse() {
         String leftString = "Jim Earley";
         String rightString = "Other";
@@ -256,9 +262,34 @@ class PredicateFactoryTest {
         assertTrue(predicate.test(Context.defaultContext()));
     }
 
+    @Test
+    void testInPredicateFalse() {
+        String leftString = "c";
+        String rightString = "['a', 'b', 'd']";
+
+        PredicateExpression left = createExpression("'" + leftString + "'");
+        PredicateExpression right = createExpression(rightString);
+        Predicate<Context> predicate = PredicateFactory.create(left, right, IN);
+        assertNotNull(predicate);
+        assertFalse(predicate.test(Context.defaultContext()));
+    }
+
+    void testEmptyTrue() {
+
+    }
+
     private PredicateExpression createExpression(String expression) {
         return Expression.create(expression, new Variables());
     }
 
+    private JsonObject createJsonObject() {
+        ElementFactory factory = ServiceManager.getProvider(ElementFactory.class);
+        return factory.newObject();
+    }
+
+    private JsonArray createJsonArray() {
+        ElementFactory factory = ServiceManager.getProvider(ElementFactory.class);
+        return factory.newArray();
+    }
 
 }

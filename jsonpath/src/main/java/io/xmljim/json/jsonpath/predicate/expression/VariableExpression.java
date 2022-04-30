@@ -6,6 +6,7 @@ import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 
+import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
@@ -33,21 +34,25 @@ public class VariableExpression extends AbstractExpression {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public <T> T getValue(Context inputContext) {
-        //TODO: this could be a big problem. Reevaluate
-        return (T) get(inputContext).get().asJsonValue().get();
+    public Optional<Context> getContext(Context inputContext) {
+        return getContextAt(inputContext, 0);
     }
 
     @Override
-    public Context get(Context inputContext) {
+    public Optional<Context> getContextAt(Context inputContext, int index) {
         PredicateExpression predicateExpression = getGlobal().getVariable(key);
         if (variableExpression.type() == ExpressionType.NODE && filterStream != null) {
-            Stream<Context> resultStream = filterStream.filter(Stream.of(variableExpression.get(Context.defaultContext())));
-            return resultStream.findFirst().orElse(Context.defaultContext());
+            Context nodeContext = variableExpression.getContext(Context.defaultContext()).orElse(null);
+            if (nodeContext != null) {
+                set(filterStream.filter(Stream.of(nodeContext)));
+            } else {
+                return Optional.empty();
+            }
         } else {
-            return variableExpression.get(Context.defaultContext());
+            return variableExpression.getContextAt(Context.defaultContext(), index);
         }
+
+        return index < values().size() ? Optional.of(values().get(index)) : Optional.empty();
     }
 
     @Override

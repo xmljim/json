@@ -3,10 +3,15 @@ package io.xmljim.json.jsonpath.predicate.expression;
 import io.xmljim.json.jsonpath.Global;
 import io.xmljim.json.jsonpath.context.Context;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Stream;
+
 abstract class AbstractExpression implements PredicateExpression {
     private final String expression;
     private Context value;
     private final Global global;
+    private List<Context> values = new ArrayList<>();
 
     public AbstractExpression(String expression, Global global) {
         this.expression = expression;
@@ -17,12 +22,29 @@ abstract class AbstractExpression implements PredicateExpression {
         return expression;
     }
 
-    private void set(Context value) {
-        this.value = value;
+    public void set(Context value) {
+        this.values.add(value);
+    }
+
+    public void set(List<Context> values) {
+        this.values = values;
+    }
+
+    public void set(Stream<Context> valueStream) {
+        set(valueStream.toList());
     }
 
     public Global getGlobal() {
         return global;
+    }
+
+    @Override
+    public int size(Context inputContext) {
+        return values.size();
+    }
+
+    public List<Context> values() {
+        return values;
     }
 
     public String toString() {
