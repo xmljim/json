@@ -37,8 +37,10 @@ public sealed interface JsonElement permits JsonNode, JsonValue {
     default JsonObject asJsonObject() {
         if (this instanceof JsonValue<?> arrayValue) {
             return (JsonObject) arrayValue.get();
+        } else if (this instanceof JsonObject jsonObject) {
+            return jsonObject;
         }
-        return (JsonObject) this;
+        return null;
     }
 
 

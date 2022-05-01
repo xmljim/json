@@ -25,7 +25,7 @@ class RegExpPredicate extends StringFilterPredicate {
             if (flagExpression != null && !"".equals(flagExpression)) {
                 flagExpression.chars().forEach(c -> {
                     switch (c) {
-                        case 'i' -> flags.updateAndGet(v -> v | Pattern.CANON_EQ);
+                        case 'i' -> flags.updateAndGet(v -> v | Pattern.CASE_INSENSITIVE);
                         case 'x' -> flags.updateAndGet(v -> v | Pattern.COMMENTS);
                         case 'm' -> flags.updateAndGet(v -> v | Pattern.MULTILINE);
                         case 'u' -> flags.updateAndGet(v -> v | Pattern.UNICODE_CASE);

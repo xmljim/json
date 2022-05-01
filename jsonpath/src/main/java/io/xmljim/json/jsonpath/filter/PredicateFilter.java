@@ -17,11 +17,19 @@ class PredicateFilter extends AbstractFilter {
 
     @Override
     public Stream<Context> apply(Stream<Context> inputs) {
-        return inputs.filter(predicate);
+        return inputs.flatMap(this::apply);
     }
 
     @Override
     public Stream<Context> apply(Context input) {
-        return null;
+        if (input.type().isArray()) {
+            return input.stream().filter(predicate);
+        } else if (input.type().isObject()) {
+            return predicate.test(input) ? Stream.of(input) : Stream.empty();
+        }
+
+        return Stream.empty();
+
+
     }
 }

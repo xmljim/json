@@ -5,6 +5,7 @@ import io.xmljim.json.jsonpath.context.Context;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 abstract class AbstractExpression implements PredicateExpression {
@@ -25,6 +26,10 @@ abstract class AbstractExpression implements PredicateExpression {
 
     public void set(Context value) {
         this.values.add(value);
+    }
+
+    public void set(Optional<Context> value) {
+        value.ifPresent(this::set);
     }
 
     public void set(List<Context> values) {

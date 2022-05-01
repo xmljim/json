@@ -28,6 +28,11 @@ public class VariableExpression extends AbstractExpression {
             if (path != null) {
                 this.filterStream = Compiler.newPathCompiler(path, global).compile();
             }
+
+            if (variableExpression.type().isPrimitive()) {
+                set(variableExpression.getContext(Context.defaultContext()));
+            }
+
         } else {
             throw new JsonPathExpressionException(expression, 0, "Invalid Variable Expression");
         }
@@ -37,6 +42,7 @@ public class VariableExpression extends AbstractExpression {
     public Optional<Context> getContext(Context inputContext) {
         return getContextAt(inputContext, 0);
     }
+
 
     @Override
     public Optional<Context> getContextAt(Context inputContext, int index) {

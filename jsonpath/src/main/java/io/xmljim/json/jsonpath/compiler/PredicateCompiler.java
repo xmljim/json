@@ -109,7 +109,7 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
         } else if (predicateJoin != PredicateJoin.NONE) {
             appendCurrentToToken();
         } else if (predicateToken != PredicateToken.OPERATOR && isStartOfExpression()) {
-            negate = true;
+            negate = !negate;
         } else if (predicateToken == PredicateToken.LEFT && tokenHasContent()) {
             applyToken(); //build the expression, which also clears the token buffer
             appendCurrentToToken(); //append to the token buffer
@@ -124,7 +124,7 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
         } else if (predicateToken == PredicateToken.LEFT && tokenHasContent()) {
             applyToken();
             appendCurrentToToken();
-        } else if (predicateToken == PredicateToken.OPERATOR && lastCharacter() == EQ) {
+        } else if (predicateToken == PredicateToken.OPERATOR && (isLastCharacter(EQ) || isLastCharacter(LT) || isLastCharacter(GT))) {
             appendCurrentToToken();
             applyToken();
         } else if (predicateToken == PredicateToken.OPERATOR && isTokenEmpty()) {
@@ -154,10 +154,10 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     }
 
     private void handleRegexContainer() {
-        if (lastNonWhitespaceCharacter() == REGEX_OP && predicateToken == PredicateToken.RIGHT && isStartOfExpression()) {
+        if (lastNonWhitespaceCharacter() == REGEX_OP && predicateToken == PredicateToken.RIGHT && isTokenEmpty()) {
             pushEnclosure();
             appendCurrentToToken();
-        } else if (lastEnclosure() == REGEX_CONTAINER) {
+        } else if (isLastEnclosure(REGEX_CONTAINER)) {
             popEnclosure();
             appendCurrentToToken();
         } else if (isQuoted()) {
@@ -183,6 +183,12 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
             appendCurrentToToken();
         } else if (predicateToken != PredicateToken.OPERATOR && isTokenEmpty()) {
             pushEnclosure();
+            appendCurrentToToken();
+        } else if (isLastCharacter(FILTER_START)) {
+            pushEnclosure();
+            appendCurrentToToken();
+        } else if (isLastCharacter(FILTER_END)) {
+            popEnclosure();
             appendCurrentToToken();
         }
     }

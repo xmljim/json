@@ -3,7 +3,6 @@ package io.xmljim.json.jsonpath.predicate.expression;
 import io.xmljim.json.jsonpath.Global;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
-import io.xmljim.json.jsonpath.filter.Accessor;
 import io.xmljim.json.jsonpath.filter.Filter;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 import io.xmljim.json.jsonpath.filter.FilterType;
@@ -22,19 +21,14 @@ class PathPredicateExpression extends AbstractExpression implements PathExpressi
 
     @Override
     public Optional<Context> getContextAt(Context inputContext, int index) {
-        if (!executed) { //only run once
-            set(sequence.filter(Stream.of(inputContext)).toList());
-            executed = true;
-        }
+        applyContext(inputContext);
 
         return index < size(inputContext) ? Optional.of(values().get(index)) : Optional.empty();
     }
 
     private void applyContext(Context inputContext) {
-        if (!executed) { //only run once
-            set(sequence.filter(Stream.of(inputContext)).toList());
-            executed = true;
-        }
+        set(sequence.filter(Stream.of(inputContext)).toList());
+        executed = true;
     }
 
     @Override
@@ -51,14 +45,18 @@ class PathPredicateExpression extends AbstractExpression implements PathExpressi
 
     @Override
     public Stream<Context> subfilter(Context inputContext) {
-        assert sequence.peekLast() != null;
-        if (sequence.size() > 1 && sequence.peekLast().getOperatorType() == FilterType.CHILD) {
-            assert sequence.peekLast() != null;
-            Accessor accessor = Accessor.parse(sequence.peekLast().getExpression());
-            sequence.removeLast();
+        //Since predicates are typically run over multiple items
+        //we need to clone the stream before removing the child
+        //filter. In that way we're not permanently removing the filter
+        FilterStream clonedSequence = (FilterStream) sequence.clone();
+
+        assert clonedSequence.peekLast() != null;
+        if (clonedSequence.size() > 1 && clonedSequence.peekLast().getOperatorType() == FilterType.CHILD) {
+            assert clonedSequence.peekLast() != null;
+            clonedSequence.removeLast();
         }
 
-        return sequence.filter(Stream.of(inputContext));
+        return clonedSequence.filter(Stream.of(inputContext));
     }
 
     public Filter getLastFilter() {

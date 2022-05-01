@@ -102,6 +102,10 @@ class PathCompiler extends Compiler<FilterStream> {
             } else if (tokenHasContent()) {
                 //has token data for the previous filter
                 applyToken();
+                if (isNextCharacter(DOT)) {
+                    appendCurrentToToken();
+                }
+
             }
 
             //default behavior is just to ignore and move on

@@ -22,6 +22,10 @@ class ChildFilter extends AbstractFilter {
     public Stream<Context> apply(Context input) {
         if (input.canTraverse()) {
             if (input.get().type().isArray()) {
+                if (accessor.isString()) {
+                    return Stream.empty();
+                }
+
                 int access = accessor.get();
                 if (access < 0) {
                     access = access + input.get().asJsonArray().size();
