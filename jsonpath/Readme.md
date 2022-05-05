@@ -27,6 +27,7 @@
         - [Examples](#examples)
 - [JsonPath Examples](#jsonpath-examples)
     - [Books Example](#books-example)
+- [JsonPath API](#jsonpath-api)
 
 ## Overview
 
@@ -385,3 +386,17 @@ This is the 'classic' books.json example:
 | <pre lang="javascript">$..book[?(@.price <= $['expensive'])]</pre> | Get all books that are less than 'expensive' (10)           | <pre>[<br/>  {<br/>    "category":"reference",<br/>    "title":"Sayings of the Century",<br/>    "price":8.95,<br/>    "author":"Nigel Rees"<br/>  },<br/>  {<br/>    "price":8.99,<br/>    "title":"Moby Dick",<br/>    "category":"fiction",<br/>    "author":"Herman Melville",<br/>    "isbn":"0-553-21311-3"<br/>  }<br/>]</pre>                                     |
 | <pre lang="javascript">$..book[?(@.price <= {expensive})]</pre>    | Get all books that are not expensive (global variable = 10) | <pre>[<br/>  {<br/>    "category":"reference",<br/>    "title":"Sayings of the Century",<br/>    "price":8.95,<br/>    "author":"Nigel Rees"<br/>  },<br/>  {<br/>    "price":8.99,<br/>    "title":"Moby Dick",<br/>    "category":"fiction",<br/>    "author":"Herman Melville",<br/>    "isbn":"0-553-21311-3"<br/>  }<br/>]</pre>                                     |
 | <pre lang="javascript">$..book[?(@.author =~ /.*REES/i)]</pre>     | Get all books by author, using regular expression           | <pre>[<br/>  {<br/>    "category":"reference",<br/>    "title":"Sayings of the Century",<br/>    "price":8.95,<br/>    "author":"Nigel Rees"<br/>  }<br/>]</pre>                                                                                                                                                                                                          |
+
+## JsonPath API
+
+To access the `JsonPath` interface, use the `ServiceManager` to create an instance of the `JsonPathFactory` interface.
+With the `JsonPathFactory`, you can create a `JsonPath` instance with default configuration:
+
+```java
+JsonPathFactory factory=ServiceManager.getProvider(JsonPathFactory.class);
+    JsonPath jsonPath=factory.newJsonPath();
+    JsonArray results=jsonPath.select(...);
+```
+
+
+

@@ -1,6 +1,6 @@
 package io.xmljim.json.jsonpath.filter;
 
-import io.xmljim.json.jsonpath.Variables;
+import io.xmljim.json.jsonpath.variables.Variables;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -80,7 +80,7 @@ class OperatorFactoryTest {
         Filter filter = createDefaultFilter("[1:-1]");
         assertNotNull(filter);
         assertEquals(FilterType.SLICE, filter.getOperatorType());
-        
+
     }
 
     private Filter createDefaultFilter(String expression) {

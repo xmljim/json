@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.Global;
-import io.xmljim.json.jsonpath.Variables;
+import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.NodeType;
@@ -18,7 +18,7 @@ class ExpressionTest {
     void testStringExpression() {
         String val = "Testing";
         String expr = "'" + val + "'";
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.STRING, expression.type());
 
@@ -28,7 +28,7 @@ class ExpressionTest {
     @Test
     void testBooleanExpression() {
         String expr = "true";
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.BOOLEAN, expression.type());
         assertEquals(Boolean.parseBoolean(expr), expression.getValue(Context.defaultContext()).orElseThrow());
@@ -45,7 +45,7 @@ class ExpressionTest {
     void testIntegerExpression() throws Exception {
         int val = 1234;
         String expr = String.valueOf(val);
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.INTEGER, expression.type());
         assertTrue(expression.type().isPrimitive());
@@ -57,7 +57,7 @@ class ExpressionTest {
     void testLongExpression() throws Exception {
         long val = Long.MAX_VALUE;
         String expr = String.valueOf(val);
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.LONG, expression.type());
         assertTrue(expression.type().isPrimitive());
@@ -69,7 +69,7 @@ class ExpressionTest {
     void testDoubleExpression() throws Exception {
         double val = 3.1415927;
         String expr = String.valueOf(val);
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.DOUBLE, expression.type());
         assertTrue(expression.type().isPrimitive());
@@ -80,7 +80,7 @@ class ExpressionTest {
     @Test
     void testNullExpression() {
         String expr = "null";
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.NULL, expression.type());
         assertTrue(expression.getValue(Context.defaultContext()).isEmpty());
@@ -89,7 +89,7 @@ class ExpressionTest {
     @Test
     void testRegexExpression() {
         String expr = "/[$|@]((\\.)?(\\[?.*?]?))*/i";
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.REGEX, expression.type());
     }
@@ -97,7 +97,7 @@ class ExpressionTest {
     @Test
     void testListExpression() throws Exception {
         String expr = "[1,'2',true]";
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.LIST, expression.type());
         assertEquals(NodeType.ARRAY, expression.getContextType(Context.defaultContext()));
@@ -111,7 +111,7 @@ class ExpressionTest {
     @Test
     void testPathPredicateExpression() {
         String expr = "@.foo[1]..*[?($.v == 'foo')]";
-        PredicateExpression expression = createDefaultExpression(expr);
+        Expression expression = createDefaultExpression(expr);
         assertNotNull(expression);
         assertEquals(ExpressionType.CONTEXT, expression.type());
     }
@@ -124,7 +124,7 @@ class ExpressionTest {
         variables.setVariable("bool", true);
 
         String expr = "{C}";
-        PredicateExpression expression = createExpressionWithVariables(expr, variables);
+        Expression expression = createExpressionWithVariables(expr, variables);
         assertNotNull(expression);
         assertEquals(ExpressionType.VARIABLE, expression.type());
         assertEquals(100, expression.getValue(Context.defaultContext()).orElseThrow());
@@ -143,11 +143,11 @@ class ExpressionTest {
 
     }
 
-    private PredicateExpression createDefaultExpression(String expression) {
-        return Expression.create(expression, new Variables());
+    private Expression createDefaultExpression(String expression) {
+        return ExpressionFactory.create(expression, new Variables());
     }
 
-    private PredicateExpression createExpressionWithVariables(String expression, Global global) {
-        return Expression.create(expression, global);
+    private Expression createExpressionWithVariables(String expression, Global global) {
+        return ExpressionFactory.create(expression, global);
     }
 }

@@ -1,10 +1,10 @@
 package io.xmljim.json.jsonpath.predicate;
 
 import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.jsonpath.Variables;
+import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionFactory;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
-import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.JsonObject;
 import io.xmljim.json.service.ServiceManager;
@@ -29,8 +29,8 @@ class PredicateFactoryTest {
 
     @Test
     void testEqualsPredicateNumeric() {
-        PredicateExpression left = createExpression("5");
-        PredicateExpression right = createExpression("5");
+        Expression left = createExpression("5");
+        Expression right = createExpression("5");
         Predicate<Context> predicate = PredicateFactory.create(left, right, EQUALS);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -38,8 +38,8 @@ class PredicateFactoryTest {
 
     @Test
     void testEqualsPredicateString() {
-        PredicateExpression left = createExpression("'foo'");
-        PredicateExpression right = createExpression("'foo'");
+        Expression left = createExpression("'foo'");
+        Expression right = createExpression("'foo'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, EQUALS);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -47,8 +47,8 @@ class PredicateFactoryTest {
 
     @Test
     void testNotEqualsPredicateNumeric() {
-        PredicateExpression left = createExpression("5");
-        PredicateExpression right = createExpression("6");
+        Expression left = createExpression("5");
+        Expression right = createExpression("6");
         Predicate<Context> predicate = PredicateFactory.create(left, right, NOT_EQUALS);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -56,8 +56,8 @@ class PredicateFactoryTest {
 
     @Test
     void testNotEqualsPredicateString() {
-        PredicateExpression left = createExpression("'foo'");
-        PredicateExpression right = createExpression("'bar'");
+        Expression left = createExpression("'foo'");
+        Expression right = createExpression("'bar'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, NOT_EQUALS);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -65,8 +65,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanTrue() {
-        PredicateExpression left = createExpression("6");
-        PredicateExpression right = createExpression("5");
+        Expression left = createExpression("6");
+        Expression right = createExpression("5");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_THAN);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -74,8 +74,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanFalse() {
-        PredicateExpression left = createExpression("5");
-        PredicateExpression right = createExpression("6");
+        Expression left = createExpression("5");
+        Expression right = createExpression("6");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_THAN);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -83,8 +83,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanFalseWhenEqual() {
-        PredicateExpression left = createExpression("5");
-        PredicateExpression right = createExpression("5");
+        Expression left = createExpression("5");
+        Expression right = createExpression("5");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_THAN);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -92,8 +92,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanFalseWhenValuesDifferentTypes() {
-        PredicateExpression left = createExpression("5");
-        PredicateExpression right = createExpression("'5'");
+        Expression left = createExpression("5");
+        Expression right = createExpression("'5'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_THAN);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -101,8 +101,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanOrEqualTrue() {
-        PredicateExpression left = createExpression("6");
-        PredicateExpression right = createExpression("5");
+        Expression left = createExpression("6");
+        Expression right = createExpression("5");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_OR_EQUAL_THAN);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -110,8 +110,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanOrEqualTrueWhenEqual() {
-        PredicateExpression left = createExpression("6");
-        PredicateExpression right = createExpression("6");
+        Expression left = createExpression("6");
+        Expression right = createExpression("6");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_OR_EQUAL_THAN);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -119,8 +119,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanOrEqualFalse() {
-        PredicateExpression left = createExpression("6");
-        PredicateExpression right = createExpression("7");
+        Expression left = createExpression("6");
+        Expression right = createExpression("7");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_OR_EQUAL_THAN);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -128,8 +128,8 @@ class PredicateFactoryTest {
 
     @Test
     void testGreaterThanOrEqualFalseWhenDifferentTypes() {
-        PredicateExpression left = createExpression("6");
-        PredicateExpression right = createExpression("'6'");
+        Expression left = createExpression("6");
+        Expression right = createExpression("'6'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, GREATER_OR_EQUAL_THAN);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -140,8 +140,8 @@ class PredicateFactoryTest {
         String leftString = "The Hobbit: An Unexpected Journey";
         String rightString = "Hobbit";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression("'" + rightString + "'");
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression("'" + rightString + "'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, CONTAINS);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -152,8 +152,8 @@ class PredicateFactoryTest {
         String leftString = "The Hobbit: An Unexpected Journey";
         String rightString = "Bilbo";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression("'" + rightString + "'");
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression("'" + rightString + "'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, CONTAINS);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -165,11 +165,11 @@ class PredicateFactoryTest {
         String rightString = "Bilbo";
         String leftString2 = "There And Back Again, by Bilbo Baggins";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression("'" + rightString + "'");
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression("'" + rightString + "'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, CONTAINS);
 
-        PredicateExpression left2 = createExpression("'" + leftString2 + "'");
+        Expression left2 = createExpression("'" + leftString2 + "'");
         Predicate<Context> orPredicate = PredicateFactory.create(left2, right, CONTAINS);
 
         predicate = predicate.or(orPredicate);
@@ -183,8 +183,8 @@ class PredicateFactoryTest {
         String leftString = "Jim Earley";
         String rightString = "ley";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression("'" + rightString + "'");
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression("'" + rightString + "'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, ENDS_WITH);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -195,8 +195,8 @@ class PredicateFactoryTest {
         String leftString = "Jim Earley";
         String rightString = "ly";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression("'" + rightString + "'");
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression("'" + rightString + "'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, ENDS_WITH);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -207,8 +207,8 @@ class PredicateFactoryTest {
         String leftString = "Jim Earley";
         String rightString = "Jim";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression("'" + rightString + "'");
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression("'" + rightString + "'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, STARTS_WITH);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -219,8 +219,8 @@ class PredicateFactoryTest {
         String leftString = "Jim Earley";
         String rightString = "Other";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression("'" + rightString + "'");
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression("'" + rightString + "'");
         Predicate<Context> predicate = PredicateFactory.create(left, right, STARTS_WITH);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -231,8 +231,8 @@ class PredicateFactoryTest {
         String leftString = "xml.jim@gmail.com";
         String rightString = "/^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$/i";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression(rightString);
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression(rightString);
         Predicate<Context> predicate = PredicateFactory.create(left, right, REGEX_MATCH);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -243,8 +243,8 @@ class PredicateFactoryTest {
         String leftString = "http://mit.edu";
         String rightString = "/^(?=.{1,64}@)[A-Za-z0-9_-]+(\\.[A-Za-z0-9_-]+)*@[^-][A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$/i";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression(rightString);
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression(rightString);
         Predicate<Context> predicate = PredicateFactory.create(left, right, REGEX_MATCH);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -255,8 +255,8 @@ class PredicateFactoryTest {
         String leftString = "a";
         String rightString = "['a', 'b', 'd']";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression(rightString);
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression(rightString);
         Predicate<Context> predicate = PredicateFactory.create(left, right, IN);
         assertNotNull(predicate);
         assertTrue(predicate.test(Context.defaultContext()));
@@ -267,8 +267,8 @@ class PredicateFactoryTest {
         String leftString = "c";
         String rightString = "['a', 'b', 'd']";
 
-        PredicateExpression left = createExpression("'" + leftString + "'");
-        PredicateExpression right = createExpression(rightString);
+        Expression left = createExpression("'" + leftString + "'");
+        Expression right = createExpression(rightString);
         Predicate<Context> predicate = PredicateFactory.create(left, right, IN);
         assertNotNull(predicate);
         assertFalse(predicate.test(Context.defaultContext()));
@@ -278,8 +278,8 @@ class PredicateFactoryTest {
 
     }
 
-    private PredicateExpression createExpression(String expression) {
-        return Expression.create(expression, new Variables());
+    private Expression createExpression(String expression) {
+        return ExpressionFactory.create(expression, new Variables());
     }
 
     private JsonObject createJsonObject() {

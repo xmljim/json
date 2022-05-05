@@ -1,25 +1,25 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.Global;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
+import io.xmljim.json.jsonpath.variables.Global;
 
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Stream;
 
-public class VariableExpression extends AbstractExpression {
+class VariableExpression extends AbstractExpression {
     private final String key;
     private final String path;
-    private final PredicateExpression variableExpression;
+    private final Expression variableExpression;
     private FilterStream filterStream;
 
     public VariableExpression(String expression, Global global) {
         super(expression, global);
-        Pattern pattern = Pattern.compile(Expression.VARIABLE_PATTERN);
+        Pattern pattern = Pattern.compile(ExpressionFactory.VARIABLE_PATTERN);
         Matcher matcher = pattern.matcher(expression);
         if (matcher.matches()) {
             this.key = matcher.group("key");
@@ -46,7 +46,7 @@ public class VariableExpression extends AbstractExpression {
 
     @Override
     public Optional<Context> getContextAt(Context inputContext, int index) {
-        PredicateExpression predicateExpression = getGlobal().getVariable(key);
+        Expression predicateExpression = getGlobal().getVariable(key);
         if (variableExpression.type() == ExpressionType.NODE && filterStream != null) {
             Context nodeContext = variableExpression.getContext(Context.defaultContext()).orElse(null);
             if (nodeContext != null) {

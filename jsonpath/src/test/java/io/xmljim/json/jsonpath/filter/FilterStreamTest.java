@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.filter;
 
 import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.jsonpath.Variables;
+import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.model.JsonArray;

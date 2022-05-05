@@ -2,8 +2,10 @@ package io.xmljim.json.jsonpath.context;
 
 import io.xmljim.json.factory.model.ElementFactory;
 import io.xmljim.json.jsonpath.filter.Accessor;
+import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.JsonElement;
 import io.xmljim.json.model.JsonNode;
+import io.xmljim.json.model.JsonObject;
 import io.xmljim.json.model.NodeType;
 import io.xmljim.json.service.ServiceManager;
 
@@ -52,6 +54,11 @@ public abstract class Context {
         }
     }
 
+    public static Context createBad(JsonElement element, Context parentContext, Accessor accessor) {
+        ElementFactory elementFactory = ServiceManager.getProvider(ElementFactory.class);
+        return new ValueContext(elementFactory.newValue(element), parentContext, accessor);
+    }
+
     public static Context create(JsonElement element, Context parentContext, Accessor accessor) {
         return switch (element.type()) {
             case ARRAY -> new ArrayContext(element.asJsonArray(), parentContext, accessor);
@@ -70,6 +77,18 @@ public abstract class Context {
 
     public JsonElement get() {
         return current;
+    }
+
+    public <T> T value() {
+        return get().asJsonValue().value();
+    }
+
+    public JsonArray array() {
+        return get().asJsonArray();
+    }
+
+    public JsonObject object() {
+        return get().asJsonObject();
     }
 
     public Context root() {

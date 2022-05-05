@@ -1,10 +1,10 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.Global;
+import io.xmljim.json.jsonpath.variables.Global;
 
 import java.util.regex.Pattern;
 
-public class RegexExpression extends SimpleExpression<String> {
+class RegexExpression extends SimpleExpression<String> {
     private Pattern pattern;
 
     public RegexExpression(String expression, Global global) {

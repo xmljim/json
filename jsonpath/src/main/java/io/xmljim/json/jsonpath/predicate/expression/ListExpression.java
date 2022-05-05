@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
 import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.jsonpath.Global;
+import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.service.ServiceManager;
@@ -19,13 +19,13 @@ class ListExpression extends AbstractExpression {
 
         String[] token = expression.substring(1, expression.length() - 1).split(",");
         Arrays.stream(token).forEach(item -> {
-            if (item.strip().matches(Expression.STRING_PATTERN)) {
+            if (item.strip().matches(ExpressionFactory.STRING_PATTERN)) {
                 jsonArray.add(item.strip().substring(1, item.strip().length() - 1));
-            } else if (item.strip().matches(Expression.NUMBER_PATTERN)) {
+            } else if (item.strip().matches(ExpressionFactory.NUMBER_PATTERN)) {
                 jsonArray.add(parseNumber(item.strip()));
-            } else if (item.strip().matches(Expression.BOOLEAN_PATTERN)) {
+            } else if (item.strip().matches(ExpressionFactory.BOOLEAN_PATTERN)) {
                 jsonArray.add(Boolean.parseBoolean(item.strip()));
-            } else if (item.strip().matches(Expression.NULL_PATTERN)) {
+            } else if (item.strip().matches(ExpressionFactory.NULL_PATTERN)) {
                 jsonArray.add(null);
             }
         });

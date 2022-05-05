@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
-import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
+import io.xmljim.json.jsonpath.predicate.expression.Expression;
 
 import java.util.function.Predicate;
 
@@ -12,11 +12,11 @@ import java.util.function.Predicate;
  */
 public class PredicateFactory {
 
-    public static Predicate<Context> create(PredicateExpression left, PredicateExpression right, PredicateOperator operator) {
+    public static Predicate<Context> create(Expression left, Expression right, PredicateOperator operator) {
         return create(left, right, operator, false);
     }
 
-    public static Predicate<Context> create(PredicateExpression left, PredicateExpression right, PredicateOperator operator, boolean negate) {
+    public static Predicate<Context> create(Expression left, Expression right, PredicateOperator operator, boolean negate) {
         Predicate<Context> predicate = switch (operator) {
             case CONTAINS -> new ContainsPredicate(left, right);
             case EMPTY -> new EmptyPredicate(left, right);
@@ -42,7 +42,7 @@ public class PredicateFactory {
         return predicate;
     }
 
-    private static Predicate<Context> checkForIsNotNullPredicate(PredicateExpression left) {
+    private static Predicate<Context> checkForIsNotNullPredicate(Expression left) {
         if (left.type() == ExpressionType.CONTEXT) {
             return new IsNotNullPredicate(left, null);
         } else {

@@ -4,13 +4,13 @@ import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.Accessor;
 import io.xmljim.json.jsonpath.filter.Filter;
 import io.xmljim.json.jsonpath.filter.FilterType;
+import io.xmljim.json.jsonpath.predicate.expression.Expression;
 import io.xmljim.json.jsonpath.predicate.expression.PathExpression;
-import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
 import java.util.List;
 
 public class IsNotNullPredicate extends AbstractFilterPredicate {
-    public IsNotNullPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
+    public IsNotNullPredicate(Expression leftSide, Expression rightSide) {
         super(leftSide, rightSide, PredicateOperator.IS_NOT_NULL);
     }
 
@@ -26,9 +26,9 @@ public class IsNotNullPredicate extends AbstractFilterPredicate {
                     return false;
                 } else if (resultList.size() == 1) {//this is what we want, one result
                     return switch (resultList.get(0).type()) {
-                        case ARRAY -> resultList.get(0).get().asJsonArray().getOptional(accessor.get()).orElse(null) != null;
-                        case OBJECT -> resultList.get(0).get().asJsonObject().getOptional(accessor.get()).orElse(null) != null;
-                        default -> resultList.get(0).get().asJsonValue().get() != null;
+                        case ARRAY -> resultList.get(0).array().getOptional(accessor.get()).orElse(null) != null;
+                        case OBJECT -> resultList.get(0).object().getOptional(accessor.get()).orElse(null) != null;
+                        default -> resultList.get(0).value() != null;
                     };
                 } else {
                     return false;

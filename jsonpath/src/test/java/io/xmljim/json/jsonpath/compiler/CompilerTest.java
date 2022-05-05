@@ -1,6 +1,6 @@
 package io.xmljim.json.jsonpath.compiler;
 
-import io.xmljim.json.jsonpath.Variables;
+import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 import io.xmljim.json.jsonpath.filter.FilterType;
 import org.junit.jupiter.api.DisplayName;

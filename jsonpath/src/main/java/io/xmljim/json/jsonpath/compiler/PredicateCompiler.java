@@ -1,11 +1,11 @@
 package io.xmljim.json.jsonpath.compiler;
 
-import io.xmljim.json.jsonpath.Global;
+import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.PredicateFactory;
 import io.xmljim.json.jsonpath.predicate.PredicateOperator;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionFactory;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
-import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
 import java.util.function.Predicate;
 
@@ -13,8 +13,8 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     private Predicate<Context> predicate;
 
     private PredicateToken predicateToken = PredicateToken.START;
-    private PredicateExpression left;
-    private PredicateExpression right;
+    private Expression left;
+    private Expression right;
     private PredicateOperator operator;
     private boolean negate;
     private boolean nestedPredicate;  //TODO: handle "nested" predicate for left/right expressions
@@ -337,7 +337,7 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     }
 
     private void createExpression() {
-        PredicateExpression expression = Expression.create(getTokenString(), getGlobal());
+        Expression expression = ExpressionFactory.create(getTokenString(), getGlobal());
 
         if (predicateToken == PredicateToken.LEFT) {
             left = expression;

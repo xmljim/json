@@ -1,10 +1,10 @@
 package io.xmljim.json.jsonpath.predicate;
 
 import io.xmljim.json.jsonpath.context.Context;
-import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
+import io.xmljim.json.jsonpath.predicate.expression.Expression;
 
 class LessThanPredicate extends AbstractFilterPredicate {
-    public LessThanPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
+    public LessThanPredicate(Expression leftSide, Expression rightSide) {
         super(leftSide, rightSide, PredicateOperator.LESS_THAN);
     }
 

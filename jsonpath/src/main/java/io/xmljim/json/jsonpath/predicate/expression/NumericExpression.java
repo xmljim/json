@@ -1,6 +1,6 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.Global;
+import io.xmljim.json.jsonpath.variables.Global;
 
 class NumericExpression extends SimpleExpression<Number> {
     private ExpressionType type;

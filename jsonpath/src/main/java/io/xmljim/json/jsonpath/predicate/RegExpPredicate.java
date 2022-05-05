@@ -2,8 +2,8 @@ package io.xmljim.json.jsonpath.predicate;
 
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionFactory;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
-import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
 
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
@@ -12,10 +12,10 @@ import java.util.regex.Pattern;
 class RegExpPredicate extends StringFilterPredicate {
     private final Pattern pattern;
 
-    public RegExpPredicate(PredicateExpression leftSide, PredicateExpression rightSide) {
+    public RegExpPredicate(Expression leftSide, Expression rightSide) {
         super(leftSide, rightSide, PredicateOperator.REGEX_MATCH);
 
-        Pattern pattern = Pattern.compile(Expression.REGEX_PATTERN);
+        Pattern pattern = Pattern.compile(ExpressionFactory.REGEX_PATTERN);
         Matcher matcher = pattern.matcher(getValue(rightSide, Context.defaultContext()));
         if (matcher.matches()) { //need to fire this method to invoke the match and retrieve the groups
             String regexExpression = matcher.group("pattern");

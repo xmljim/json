@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.predicate;
 
-import io.xmljim.json.jsonpath.Global;
-import io.xmljim.json.jsonpath.Variables;
+import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
 import org.junit.jupiter.api.Test;

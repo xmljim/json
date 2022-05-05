@@ -12,7 +12,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
-public record InputData(InputStream inputStream) {
+public record InputData(InputStream inputStream) implements AutoCloseable {
 
 //    public InputStream getInputStream() {
 //        return inputStream;
@@ -59,5 +59,10 @@ public record InputData(InputStream inputStream) {
 
     public static InputData of(final InputStream inputStream) {
         return new InputData(inputStream);
+    }
+
+    @Override
+    public void close() throws Exception {
+        inputStream.close();
     }
 }

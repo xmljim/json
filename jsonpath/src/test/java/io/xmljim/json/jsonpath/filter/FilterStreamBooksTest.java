@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.filter;
 import io.xmljim.json.factory.parser.InputData;
 import io.xmljim.json.factory.parser.Parser;
 import io.xmljim.json.factory.parser.ParserFactory;
-import io.xmljim.json.jsonpath.Variables;
+import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.model.JsonObject;

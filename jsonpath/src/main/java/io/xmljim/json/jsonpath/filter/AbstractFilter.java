@@ -1,6 +1,6 @@
 package io.xmljim.json.jsonpath.filter;
 
-import io.xmljim.json.jsonpath.Global;
+import io.xmljim.json.jsonpath.variables.Global;
 
 abstract class AbstractFilter implements Filter {
 

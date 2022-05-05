@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.filter;
 
-import io.xmljim.json.jsonpath.Global;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Global;
 
 import java.util.stream.Stream;
 
@@ -31,7 +31,7 @@ class ChildFilter extends AbstractFilter {
                     access = access + input.get().asJsonArray().size();
                 }
 
-                if ((access > 0) && (input.get().asJsonArray().size() >= access + 1)) {
+                if ((access >= 0) && (input.get().asJsonArray().size() >= access + 1)) {
                     return Stream.of(Context.create(input.get().asJsonArray().getValue(access), input, accessor));
                 } else {
                     return Stream.empty(); //invalid index

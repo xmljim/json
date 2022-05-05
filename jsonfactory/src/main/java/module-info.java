@@ -10,6 +10,7 @@ module io.xmljim.jsonfactory {
     exports io.xmljim.json.factory.merge.strategy;
     exports io.xmljim.json.service;
     exports io.xmljim.json.service.exception;
+    exports io.xmljim.json.factory.jsonpath;
 
 
 }

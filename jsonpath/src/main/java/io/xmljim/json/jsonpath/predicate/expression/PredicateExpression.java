@@ -1,52 +1,88 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
+import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
-import io.xmljim.json.model.NodeType;
+import io.xmljim.json.jsonpath.filter.Filter;
+import io.xmljim.json.jsonpath.filter.FilterStream;
+import io.xmljim.json.jsonpath.filter.FilterType;
+import io.xmljim.json.jsonpath.variables.Global;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Stream;
 
-/**
- * An expression value in a predicate
- */
-public interface PredicateExpression {
-    int size(Context inputContext);
+class PredicateExpression extends AbstractExpression implements PathExpression {
+    private final FilterStream sequence;
+    private boolean executed = false;
+    private final ConcurrentHashMap<String, List<Context>> concurrentHashMap = new ConcurrentHashMap<>();
 
-    default boolean isEmpty(Context inputContext) {
-        return size(inputContext) == 0;
+    public PredicateExpression(String expression, Global global) {
+        super(expression, global);
+        sequence = Compiler.newPathCompiler(expression, true, global).compile();
     }
 
-    @SuppressWarnings("unchecked")
-    default <T> Optional<T> getValue(Context inputContext) {
-        Optional<Context> context = getContext(inputContext);
-        return context.flatMap(value -> (Optional<T>) Optional.ofNullable(value.get().asJsonValue().get()));
+    @Override
+    public Optional<Context> getContextAt(Context inputContext, int index) {
+        applyContext(inputContext);
+        return index < size(inputContext) ? Optional.of(values(inputContext).get(index)) : Optional.empty();
     }
 
-    @SuppressWarnings("unchecked")
-    default <T> Optional<T> getValueAt(Context inputContext, int index) {
-        Optional<Context> context = getContextAt(inputContext, index);
-        return context.flatMap(value -> (Optional<T>) Optional.of(value));
+    private void applyContext(Context inputContext) {
+        if (!isCached(inputContext)) {
+            cache(inputContext, sequence.filter(Stream.of(inputContext)).toList());
+            executed = true;
+        }
     }
 
-    default Optional<Context> getContext(Context inputContext) {
-        return isEmpty(inputContext) ? Optional.empty() : getContextAt(inputContext, 0);
+    private void cache(Context inputContext, List<Context> values) {
+        String key = getExpression() + "_" + inputContext.toString();
+        concurrentHashMap.putIfAbsent(key, values);
+        System.out.println("Cached [" + key + "]: " + values);
     }
 
-    Optional<Context> getContextAt(Context inputContext, int index);
-
-    default NodeType getContextType(Context inputContext) {
-        return getContextTypeAt(inputContext, 0);
+    private boolean isCached(Context inputContext) {
+        String key = getExpression() + "_" + inputContext.toString();
+        return concurrentHashMap.containsKey(key);
     }
 
-    default NodeType getContextTypeAt(Context inputContext, int index) {
-        return getContextAt(inputContext, index).map(Context::type).orElse(NodeType.UNDEFINED);
+    public List<Context> values(Context inputContext) {
+        String key = getExpression() + "_" + inputContext.toString();
+        //System.out.println("Get Cache [" + key + "]");
+        return concurrentHashMap.getOrDefault(key, Collections.emptyList());
     }
 
-    /**
-     * The expression type
-     *
-     * @return the expression type
-     */
-    ExpressionType type();
+    @Override
+    public int size(Context inputContext) {
+        //System.out.println("size [" + getExpression() + "]: " + inputContext);
+        applyContext(inputContext);
+        return values(inputContext).size();
+    }
 
-    String getExpression();
+    @Override
+    public ExpressionType type() {
+        return ExpressionType.CONTEXT;
+    }
+
+
+    @Override
+    public Stream<Context> subfilter(Context inputContext) {
+        //Since predicates are typically run over multiple items
+        //we need to clone the stream before removing the child
+        //filter. In that way we're not permanently removing the filter
+        FilterStream clonedSequence = (FilterStream) sequence.clone();
+
+        assert clonedSequence.peekLast() != null;
+        if (clonedSequence.size() > 1 && clonedSequence.peekLast().getOperatorType() == FilterType.CHILD) {
+            assert clonedSequence.peekLast() != null;
+            clonedSequence.removeLast();
+        }
+
+        return clonedSequence.filter(Stream.of(inputContext));
+    }
+
+    public Filter getLastFilter() {
+        return sequence.peekLast();
+    }
 }

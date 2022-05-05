@@ -1,18 +1,19 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.Global;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Global;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Stream;
 
-abstract class AbstractExpression implements PredicateExpression {
+abstract class AbstractExpression implements Expression {
     private final String expression;
     private Context value;
     private final Global global;
     private List<Context> values = new ArrayList<>();
+
 
     public AbstractExpression(String expression, Global global) {
         this.expression = expression;

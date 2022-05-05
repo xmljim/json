@@ -1,12 +1,12 @@
 package io.xmljim.json.jsonpath.predicate;
 
-import io.xmljim.json.jsonpath.predicate.expression.PredicateExpression;
+import io.xmljim.json.jsonpath.predicate.expression.Expression;
 
 public interface FilterPredicate {
 
-    PredicateExpression leftSide();
+    Expression leftSide();
 
-    PredicateExpression rightSide();
+    Expression rightSide();
 
     PredicateOperator operator();
 }

@@ -1,6 +1,6 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.Global;
+import io.xmljim.json.jsonpath.variables.Global;
 
 class StringExpression extends SimpleExpression<String> {
     public StringExpression(String expression, Global global) {
