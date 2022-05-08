@@ -3,6 +3,7 @@ package io.xmljim.json.jsonpath.predicate.expression;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.model.NodeType;
 
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -19,6 +20,8 @@ public interface Expression {
         Optional<Context> context = getContext(inputContext);
         return context.flatMap(value -> Optional.ofNullable(value.value()));
     }
+
+    List<Context> values(Context inputContext);
 
 
     default <T> Optional<T> getValueAt(Context inputContext, int index) {

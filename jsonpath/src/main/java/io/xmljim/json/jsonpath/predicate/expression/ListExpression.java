@@ -1,12 +1,13 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
 import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.service.ServiceManager;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 class ListExpression extends AbstractExpression {
@@ -68,5 +69,10 @@ class ListExpression extends AbstractExpression {
         }
 
         return value;
+    }
+
+    @Override
+    public List<Context> values(Context inputContext) {
+        return null;
     }
 }

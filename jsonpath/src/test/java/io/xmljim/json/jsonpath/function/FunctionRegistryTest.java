@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.function;
 
-import io.xmljim.json.jsonpath.function.math.AvgFunction;
-import io.xmljim.json.jsonpath.function.math.SumFunction;
+import io.xmljim.json.jsonpath.function.aggregate.AvgFunction;
+import io.xmljim.json.jsonpath.function.aggregate.SumFunction;
 import io.xmljim.json.jsonpath.function.node.IsNumericFunction;
 import io.xmljim.json.jsonpath.function.node.IsPrimitiveFunction;
 import io.xmljim.json.jsonpath.function.node.NodeTypeFunction;

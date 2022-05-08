@@ -3,6 +3,8 @@ package io.xmljim.json.elementfactory;
 import io.xmljim.json.model.JsonElement;
 import io.xmljim.json.model.NodeType;
 
+import java.util.Objects;
+
 class NumberValue extends AbstractJsonValue<Number> {
 
     public NumberValue(JsonElement parent, Number value) {
@@ -55,5 +57,16 @@ class NumberValue extends AbstractJsonValue<Number> {
     @Override
     public String toString() {
         return toJsonString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof NumberValue that)) {
+            return false;
+        }
+        return Objects.equals(get().doubleValue(), that.get().doubleValue());
     }
 }

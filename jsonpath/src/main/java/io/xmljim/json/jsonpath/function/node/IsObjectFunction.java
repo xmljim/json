@@ -8,14 +8,14 @@ import io.xmljim.json.jsonpath.variables.BuiltIns;
 import java.util.Collections;
 import java.util.stream.Stream;
 
-@FunctionDefinition(builtIn = BuiltIns.IS_NUMERIC)
-public class IsNumericFunction extends AbstractJsonPathFunction {
-    public IsNumericFunction() {
-        super(BuiltIns.IS_NUMERIC.functionName(), Collections.emptyList());
+@FunctionDefinition(builtIn = BuiltIns.IS_OBJECT)
+public class IsObjectFunction extends AbstractJsonPathFunction {
+    public IsObjectFunction() {
+        super(BuiltIns.IS_OBJECT.functionName(), Collections.emptyList());
     }
 
     @Override
     public Stream<Context> apply(Stream<Context> contextStream) {
-        return contextStream.map(context -> Context.createSimpleContext(context.type().isNumeric()));
+        return contextStream.map(context -> Context.createSimpleContext(context.type().isObject()));
     }
 }

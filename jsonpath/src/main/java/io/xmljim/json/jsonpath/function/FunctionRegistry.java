@@ -5,6 +5,7 @@ import io.xmljim.json.jsonpath.function.info.FunctionDefinition;
 import io.xmljim.json.jsonpath.function.info.FunctionInfo;
 import io.xmljim.json.model.JsonObject;
 
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,7 +22,7 @@ public class FunctionRegistry {
 
     public void registerFunction(Class<? extends JsonPathFunction> functionClass) {
         FunctionInfo functionInfo = getFunctionInfo(functionClass)
-            .orElseThrow(() -> new JsonPathException("Cannot register function. No function information supplied"));
+                                        .orElseThrow(() -> new JsonPathException("Cannot register function. No function information supplied"));
         registerFunction(functionInfo);
     }
 
@@ -38,7 +39,6 @@ public class FunctionRegistry {
     }
 
     public Optional<FunctionInfo> getFunctionInfo(Class<? extends JsonPathFunction> function) {
-
 
         if (function.isAnnotationPresent(FunctionDefinition.class)) {
             FunctionDefinition functionDefinition = function.getAnnotation(FunctionDefinition.class);
@@ -58,12 +58,14 @@ public class FunctionRegistry {
         int max = getRegisteredFunctions().stream().mapToInt(fi -> fi.toString().length()).max().orElse(0);
         int padding = max + 4;
 
-        getRegisteredFunctions().forEach(fi -> {
-            String signature = fi.toString();
-            int length = signature.length();
-            int paddingSize = padding - length;
-            builder.append(signature).append(pad(paddingSize)).append(fi.description()).append(System.lineSeparator());
-        });
+        getRegisteredFunctions()
+            .stream().sorted(Comparator.comparing(FunctionInfo::toString))
+            .forEach(fi -> {
+                String signature = fi.toString();
+                int length = signature.length();
+                int paddingSize = padding - length;
+                builder.append(signature).append(pad(paddingSize)).append(fi.description()).append(System.lineSeparator());
+            });
 
         return builder.toString();
     }

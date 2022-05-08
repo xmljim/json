@@ -1,8 +1,8 @@
 package io.xmljim.json.jsonpath.filter;
 
-import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Global;
 
 import java.util.function.Predicate;
 import java.util.stream.Stream;
@@ -29,7 +29,5 @@ class PredicateFilter extends AbstractFilter {
         }
 
         return Stream.empty();
-
-
     }
 }

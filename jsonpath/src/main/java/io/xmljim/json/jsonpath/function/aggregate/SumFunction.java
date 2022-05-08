@@ -1,16 +1,17 @@
-package io.xmljim.json.jsonpath.function.math;
+package io.xmljim.json.jsonpath.function.aggregate;
 
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.function.AbstractJsonPathFunction;
 import io.xmljim.json.jsonpath.function.info.FunctionDefinition;
+import io.xmljim.json.jsonpath.variables.BuiltIns;
 
 import java.util.Collections;
 import java.util.stream.Stream;
 
-@FunctionDefinition(name = "average", description = "returns the average of all numeric values in context")
-public class AvgFunction extends AbstractJsonPathFunction {
-    public AvgFunction() {
-        super("average", Collections.emptyList());
+@FunctionDefinition(builtIn = BuiltIns.SUM)
+public class SumFunction extends AbstractJsonPathFunction {
+    public SumFunction() {
+        super(BuiltIns.SUM.functionName(), Collections.emptyList());
     }
 
     @Override
@@ -18,7 +19,7 @@ public class AvgFunction extends AbstractJsonPathFunction {
         double value = contextStream.filter(context -> context.type().isNumeric())
             .mapToDouble(Context::value)
             .summaryStatistics()
-            .getAverage();
+            .getSum();
 
         return Stream.of(Context.createSimpleContext(value));
     }

@@ -29,26 +29,29 @@ class PredicateExpression extends AbstractExpression implements PathExpression {
         return index < size(inputContext) ? Optional.of(values(inputContext).get(index)) : Optional.empty();
     }
 
-    private void applyContext(Context inputContext) {
+    void applyContext(Context inputContext) {
         if (!isCached(inputContext)) {
             cache(inputContext, sequence.filter(Stream.of(inputContext)).toList());
             executed = true;
         }
     }
 
-    private void cache(Context inputContext, List<Context> values) {
+    void cache(Context inputContext, List<Context> values) {
         String key = getExpression() + "_" + inputContext.toString();
         concurrentHashMap.putIfAbsent(key, values);
-        System.out.println("Cached [" + key + "]: " + values);
+        //System.out.println("Cached [" + key + "]: " + values);
     }
 
-    private boolean isCached(Context inputContext) {
+    boolean isCached(Context inputContext) {
         String key = getExpression() + "_" + inputContext.toString();
         return concurrentHashMap.containsKey(key);
     }
 
     public List<Context> values(Context inputContext) {
         String key = getExpression() + "_" + inputContext.toString();
+        if (!concurrentHashMap.containsKey(key)) {
+            applyContext(inputContext);
+        }
         //System.out.println("Get Cache [" + key + "]");
         return concurrentHashMap.getOrDefault(key, Collections.emptyList());
     }

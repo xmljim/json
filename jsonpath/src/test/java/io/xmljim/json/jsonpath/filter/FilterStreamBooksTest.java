@@ -3,9 +3,11 @@ package io.xmljim.json.jsonpath.filter;
 import io.xmljim.json.factory.parser.InputData;
 import io.xmljim.json.factory.parser.Parser;
 import io.xmljim.json.factory.parser.ParserFactory;
-import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Variables;
+import io.xmljim.json.model.JsonArray;
+import io.xmljim.json.model.JsonElement;
 import io.xmljim.json.model.JsonObject;
 import io.xmljim.json.service.ServiceManager;
 import org.junit.jupiter.api.DisplayName;
@@ -220,6 +222,35 @@ public class FilterStreamBooksTest {
         assertEquals(2, results.size());
         assertEquals("Sayings of the Century", results.get(0).get().asJsonObject().get("title"));
         assertEquals("Moby Dick", results.get(1).get().asJsonObject().get("title"));
+    }
+
+    @Test
+    @DisplayName("Get authors data type: $..book.*.author.type()")
+    void testGetAuthorsDataType() throws IOException {
+        JsonObject object = loadBooks();
+        String expr = "$..book.*.author.type()";
+        FilterStream filterStream = Compiler.newPathCompiler(expr, new Variables()).compile();
+        List<Context> results = filterStream.filter(object).toList();
+        System.out.println(results);
+        assertEquals(4, results.size());
+        results.stream().forEach(context -> {
+            assertEquals("string", context.value());
+        });
+    }
+
+    @Test
+    @DisplayName("Get the sum of all book prices: $..book.*.price.sum()")
+    void testGetSumOfAllBookPrices() throws IOException {
+        JsonObject object = loadBooks();
+        JsonObject store = object.get("store");
+        JsonArray book = store.get("book");
+        double testValue = book.jsonValues().map(JsonElement::asJsonObject).mapToDouble(bk -> bk.get("price")).sum();
+
+        String expr = "$..book.*.price.sum()";
+        FilterStream filterStream = Compiler.newPathCompiler(expr, new Variables()).compile();
+        List<Context> results = filterStream.filter(object).toList();
+        assertEquals(testValue, results.get(0).value());
+        System.out.println(results);
     }
 
     @Test

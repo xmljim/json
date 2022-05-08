@@ -1,0 +1,74 @@
+[
+    {
+        "id": 1,
+        "school_cd": 18713,
+        "assignments": [
+            {
+                "doc_id": 1,
+                "doc_type_id": 11,
+                "doc_status": "ASSIGNED"
+            },
+            {
+                "doc_id": 2,
+                "doc_type_id": 11,
+                "doc_status": "PROCESSED"
+            },
+            {
+                "doc_id": 3,
+                "doc_type_id": 19,
+                "doc_status": "PROCESSED"
+            },
+            {
+                "doc_id": 4,
+                "doc_type_id": 19,
+                "doc_status": "ASSIGNED"
+            },
+            {
+                "doc_id": 5,
+                "doc_type_id": 19,
+                "doc_status": "ASSIGNED"
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "school_cd": 18713,
+        "assignments": [
+            {
+                "doc_id": 12,
+                "doc_type_id": 11,
+                "doc_status": "ASSIGNED"
+            },
+            {
+                "doc_id": 22,
+                "doc_type_id": 11,
+                "doc_status": "PROCESSED"
+            },
+            {
+                "doc_id": 32,
+                "doc_type_id": 19,
+                "doc_status": "PROCESSED"
+            },
+            {
+                "doc_id": 42,
+                "doc_type_id": 19,
+                "doc_status": "ASSIGNED"
+            },
+            {
+                "doc_id": 52,
+                "doc_type_id": 19,
+                "doc_status": "PROCESSED"
+            },
+            {
+                "doc_id": 62,
+                "doc_type_id": 19,
+                "doc_status": "ASSIGNED"
+            },
+            {
+                "doc_id": 72,
+                "doc_type_id": 19,
+                "doc_status": "PROCESSED"
+            }
+        ]
+    }
+]

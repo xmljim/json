@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 public class FunctionFactory {
 
     private static final String FUNCTION_PATTERN = "(?<function>[a-z0-9\\-]+)\\((?<args>.*)\\)";
-    private static final String ARGS_PATTERN = "([@$.a-zA-Z0-9_\\-'{}#]+(\\[\\d+[\\s?:,\\d+]*])?(\\(.*\\))?)*";
+    private static final String ARGS_PATTERN = "(([@$.a-zA-Z\\d_\\-'{}*#]+(\\[[,:a-z\\d'-]+])*)(\\s[!<>=a-z]+\\s\\2?)?(\\s?[&|]{2}\\s?)?)+";//"(([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?(\\s?[&|]+\\s?)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,\\]]+)?)(,\\s?((([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?(\\s?[&|]+\\s?)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?)))*";
 
     public static JsonPathFunction createFunction(String expression, Global global) {
         Pattern functionPattern = Pattern.compile(FUNCTION_PATTERN);
@@ -54,7 +54,9 @@ public class FunctionFactory {
 
         while (matcher.find()) {
             if (matcher.group() != null && !"".equals(matcher.group())) {
-                argExpressions.add(matcher.group().strip());
+                argExpressions.add(matcher.group().strip().endsWith(",") ?
+                    matcher.group().strip().substring(0, matcher.group().strip().length() - 1) :
+                    matcher.group().strip());
             }
         }
         if (functionInfo.arguments().length != 0) {
@@ -104,7 +106,8 @@ public class FunctionFactory {
                 Constructor<JsonPathFunction> constructor = (Constructor<JsonPathFunction>) functionClass.getConstructor(List.class);
                 return constructor.newInstance(args);
             }
-        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+        } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                 IllegalAccessException e) {
             e.printStackTrace();
         }
 

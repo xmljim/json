@@ -193,7 +193,7 @@ The following _operators_ are supported (see [Notes](#notes) section for additio
 1. **Negation**: Predicate expressions can be _negated_ by applying the not (`!`) operator to either the Context or Test
    expression:
 
-    ```javascript
+    ```
     [?(!@.foo contains 'bar')] || [?(@.foo contains !'bar')]
     ```
 2. **Regular Expression Flags**: The following flags can be applied to regular expressions. A regular expression can
@@ -297,18 +297,18 @@ Assuming that variables are set:
 
 ```json5
 {
-    "a": "string",
-    "b": 1,
-    "c": true,
-    "d": [
-        1,
-        2,
-        3,
-        4
-    ],
-    "e": {
-        "foo": "bar"
-    }
+  "a": "string",
+  "b": 1,
+  "c": true,
+  "d": [
+    1,
+    2,
+    3,
+    4
+  ],
+  "e": {
+    "foo": "bar"
+  }
 }
 ```
 
@@ -329,41 +329,41 @@ This is the 'classic' books.json example:
 
 ```json
 {
-    "store": {
-        "book": [
-            {
-                "category": "reference",
-                "author": "Nigel Rees",
-                "title": "Sayings of the Century",
-                "price": 8.95
-            },
-            {
-                "category": "fiction",
-                "author": "Evelyn Waugh",
-                "title": "Sword of Honour",
-                "price": 12.99
-            },
-            {
-                "category": "fiction",
-                "author": "Herman Melville",
-                "title": "Moby Dick",
-                "isbn": "0-553-21311-3",
-                "price": 8.99
-            },
-            {
-                "category": "fiction",
-                "author": "J. R. R. Tolkien",
-                "title": "The Lord of the Rings",
-                "isbn": "0-395-19395-8",
-                "price": 22.99
-            }
-        ],
-        "bicycle": {
-            "color": "red",
-            "price": 19.95
-        }
-    },
-    "expensive": 10
+  "store": {
+    "book": [
+      {
+        "category": "reference",
+        "author": "Nigel Rees",
+        "title": "Sayings of the Century",
+        "price": 8.95
+      },
+      {
+        "category": "fiction",
+        "author": "Evelyn Waugh",
+        "title": "Sword of Honour",
+        "price": 12.99
+      },
+      {
+        "category": "fiction",
+        "author": "Herman Melville",
+        "title": "Moby Dick",
+        "isbn": "0-553-21311-3",
+        "price": 8.99
+      },
+      {
+        "category": "fiction",
+        "author": "J. R. R. Tolkien",
+        "title": "The Lord of the Rings",
+        "isbn": "0-395-19395-8",
+        "price": 22.99
+      }
+    ],
+    "bicycle": {
+      "color": "red",
+      "price": 19.95
+    }
+  },
+  "expensive": 10
 }
 ```
 
@@ -392,11 +392,11 @@ This is the 'classic' books.json example:
 To access the `JsonPath` interface, use the `ServiceManager` to create an instance of the `JsonPathFactory` interface.
 With the `JsonPathFactory`, you can create a `JsonPath` instance with default configuration:
 
-```java
+<pre lang="java">
 JsonPathFactory factory=ServiceManager.getProvider(JsonPathFactory.class);
-    JsonPath jsonPath=factory.newJsonPath();
-    JsonArray results=jsonPath.select(...);
-```
+JsonPath jsonPath = factory.newJsonPath();
+JsonArray results = jsonPath.select(...);
+</pre>
 
 
 

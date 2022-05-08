@@ -13,6 +13,8 @@ public abstract class ExpressionFactory {
     public static final String LIST_PATTERN = "\\[.*(,\\s?.*)+]";
     public static final String VARIABLE_PATTERN = "\\{(?<key>[A-Za-z][A-Za-z0-9-]*)(?<path>#.*)?}";
 
+    public static final String FUNCTION_PATTERN = "(?<function>[a-z0-9\\-]+)\\((?<args>.*)\\)";
+
     public static Expression create(String expression, Global global) {
         if (expression.matches(PATH_PATTERN)) {
             return new PredicateExpression(expression, global);
@@ -44,6 +46,10 @@ public abstract class ExpressionFactory {
 
         if (expression.matches(VARIABLE_PATTERN)) {
             return new VariableExpression(expression, global);
+        }
+
+        if (expression.matches(FUNCTION_PATTERN)) {
+            return new FunctionExpression(expression, global);
         }
 
 

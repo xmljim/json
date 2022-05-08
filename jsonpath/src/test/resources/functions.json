@@ -1,0 +1,14 @@
+{
+    "functions": [
+        {
+            "name": "average-if",
+            "args": [
+                {
+                    "name": "test",
+                    "scope": "required",
+                    "type": "predicate"
+                }
+            ]
+        }
+    ]
+}

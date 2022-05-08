@@ -2,8 +2,8 @@ package io.xmljim.json.jsonpath.predicate;
 
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
-import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
 
 import java.util.function.Predicate;
 
@@ -27,7 +27,7 @@ public class PredicateFactory {
             case IN -> new InPredicate(left, right);
             case LESS_OR_EQUAL_THAN -> new LessThanOrEqualPredicate(left, right);
             case LESS_THAN -> new LessThanPredicate(left, right);
-            case NOT_EQUALS -> new NotEqualsPredicate(left, right);
+            case NOT_EQUALS -> new EqualsPredicate(left, right).negate();
             case NOT_IN -> new InPredicate(left, right).negate();
             case REGEX_MATCH -> new RegExpPredicate(left, right);
             case STARTS_WITH -> new StartsWithPredicate(left, right);

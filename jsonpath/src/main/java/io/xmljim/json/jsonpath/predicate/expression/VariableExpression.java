@@ -6,6 +6,7 @@ import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 import io.xmljim.json.jsonpath.variables.Global;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -36,6 +37,11 @@ class VariableExpression extends AbstractExpression {
         } else {
             throw new JsonPathExpressionException(expression, 0, "Invalid Variable Expression");
         }
+    }
+
+    @Override
+    public List<Context> values(Context inputContext) {
+        return null;
     }
 
     @Override

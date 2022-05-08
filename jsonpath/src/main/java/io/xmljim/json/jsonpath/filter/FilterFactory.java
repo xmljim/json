@@ -1,5 +1,6 @@
 package io.xmljim.json.jsonpath.filter;
 
+import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.variables.Global;
 
 public abstract class FilterFactory {
@@ -52,7 +53,7 @@ public abstract class FilterFactory {
             return new FunctionFilter(expression, global);
         }
 
-        return new NoOpOperator(expression);
+        throw new JsonPathExpressionException(expression, 0, "No filter found for expression: " + expression);
     }
 
 

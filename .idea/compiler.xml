@@ -6,7 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="json-model" />
         <module name="parser" />
+        <module name="json-parser" />
+        <module name="json-merger" />
+        <module name="json-mapper" />
         <module name="jsonpath" />
         <module name="model" />
         <module name="jsonfactory" />

@@ -5,4 +5,5 @@ import io.xmljim.json.jsonpath.context.Context;
 import java.util.function.Predicate;
 
 public interface PredicateArgument extends Argument<Predicate<Context>, Boolean> {
+
 }

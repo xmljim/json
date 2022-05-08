@@ -3,6 +3,8 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
 
+import java.util.List;
+
 class LessThanOrEqualPredicate extends AbstractFilterPredicate {
     public LessThanOrEqualPredicate(Expression leftSide, Expression rightSide) {
         super(leftSide, rightSide, PredicateOperator.LESS_OR_EQUAL_THAN);
@@ -16,6 +18,8 @@ class LessThanOrEqualPredicate extends AbstractFilterPredicate {
 
             return left.doubleValue() <= right.doubleValue();
         } else {
+            int size = leftSide().size(context);
+            List<Context> vals = leftSide().values(context);
             if ((leftSide().size(context) == 1 && leftSide().getContextType(context).isNumeric())
                 && (rightSide().size(context) == 1 && rightSide().getContextType(context).isNumeric())) {
 

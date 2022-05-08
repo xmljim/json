@@ -1,9 +1,10 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.model.JsonNode;
 
+import java.util.List;
 import java.util.Optional;
 
 class JsonNodeExpression extends AbstractExpression {
@@ -29,5 +30,10 @@ class JsonNodeExpression extends AbstractExpression {
     @Override
     public ExpressionType type() {
         return ExpressionType.NODE;
+    }
+
+    @Override
+    public List<Context> values(Context inputContext) {
+        return null;
     }
 }

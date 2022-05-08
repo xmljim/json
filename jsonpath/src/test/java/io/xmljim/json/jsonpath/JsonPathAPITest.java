@@ -69,10 +69,34 @@ class JsonPathAPITest {
         System.out.println(array.prettyPrint());
     }
 
+    @Test
+    void testCompoundPredicate() throws Exception {
+        JsonPathFactory factory = ServiceManager.getProvider(JsonPathFactory.class);
+        JsonPath jsonPath = factory.newJsonPath();
+        JsonNode context = loadData("/compound-test.json");
+        long start = System.nanoTime();
+        JsonArray array = jsonPath.select(context, "$.assignments.*[?(@.doc_type_id == 19 && @.doc_status != 'ASSIGNED')].count()");
+        long end = System.nanoTime();
+        System.out.println(array.prettyPrint());
+        System.out.println(String.format("%.3f", ((double) (end - start) / 1_000_000_000)));
+    }
+
+    @Test
+    void testCompoundPredicate2() throws Exception {
+        JsonPathFactory factory = ServiceManager.getProvider(JsonPathFactory.class);
+        JsonPath jsonPath = factory.newJsonPath();
+        JsonNode context = loadData("/crazy-doc.json");
+        long start = System.nanoTime();
+        JsonArray array = jsonPath.select(context, "$.PROGRAM_ASSIGNMENT_DATA.*[?(@.PA_DOC_ID == 19 && @.PA_STATUS == 'PROCESSED')].count()");
+        long end = System.nanoTime();
+        System.out.println(array.prettyPrint());
+        System.out.println(String.format("%.3f", ((double) (end - start) / 1_000_000_000)));
+    }
+
     private JsonNode loadData(String classResource) throws Exception {
         try (InputData data = InputData.of(getClass().getResourceAsStream(classResource))) {
             ParserFactory parserFactory = ServiceManager.getProvider(ParserFactory.class);
-            Parser parser = parserFactory.newParser();
+            Parser parser = parserFactory.newParserBuilder().setUseStrict(false).build();
             return parser.parse(data);
         }
     }

@@ -31,4 +31,8 @@ public interface JsonPathFunction extends Function<Stream<Context>, Stream<Conte
 
         return Optional.empty();
     }
+
+    default boolean hasArgument(String name) {
+        return arguments().stream().anyMatch(argument -> argument.name().equals(name));
+    }
 }

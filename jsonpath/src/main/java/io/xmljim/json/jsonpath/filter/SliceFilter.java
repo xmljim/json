@@ -1,8 +1,8 @@
 package io.xmljim.json.jsonpath.filter;
 
-import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.JsonObject;
 
@@ -12,7 +12,7 @@ import java.util.regex.Pattern;
 import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
-public class SliceFilter extends AbstractFilter {
+class SliceFilter extends AbstractFilter {
     private final int start;
     private final int end;
 

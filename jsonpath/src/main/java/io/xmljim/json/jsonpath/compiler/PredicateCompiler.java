@@ -1,11 +1,11 @@
 package io.xmljim.json.jsonpath.compiler;
 
-import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.PredicateFactory;
 import io.xmljim.json.jsonpath.predicate.PredicateOperator;
-import io.xmljim.json.jsonpath.predicate.expression.ExpressionFactory;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionFactory;
+import io.xmljim.json.jsonpath.variables.Global;
 
 import java.util.function.Predicate;
 
@@ -113,6 +113,8 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
         } else if (predicateToken == PredicateToken.LEFT && tokenHasContent()) {
             applyToken(); //build the expression, which also clears the token buffer
             appendCurrentToToken(); //append to the token buffer
+        } else if (predicateToken == PredicateToken.OPERATOR && isTokenEmpty()) {
+            appendCurrentToToken();
         }
     }
 
@@ -124,7 +126,8 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
         } else if (predicateToken == PredicateToken.LEFT && tokenHasContent()) {
             applyToken();
             appendCurrentToToken();
-        } else if (predicateToken == PredicateToken.OPERATOR && (isLastCharacter(EQ) || isLastCharacter(LT) || isLastCharacter(GT))) {
+        } else if (predicateToken == PredicateToken.OPERATOR
+            && (isLastCharacter(EQ) || isLastCharacter(LT) || isLastCharacter(GT) || isLastCharacter(NOT))) {
             appendCurrentToToken();
             applyToken();
         } else if (predicateToken == PredicateToken.OPERATOR && isTokenEmpty()) {
@@ -173,7 +176,8 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
         } else if (isQuoted()) {
             popEnclosure();
             appendCurrentToToken();
-
+        } else if (isFunctionCandidate()) {
+            appendCurrentToToken();
         } else if (isRegex()) {
             appendCurrentToToken();
         } else if (isFilter()) {
@@ -269,14 +273,25 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
             appendCurrentToToken();
         } else {
             if (predicateJoin == PredicateJoin.NONE) {
-                if (predicateToken == PredicateToken.END && (!isLastCharacter(AND)) && (isNextCharacter(AND))) {
-                    predicateJoin = PredicateJoin.AND;
-                    predicateToken = PredicateToken.START;
+                if ((!isLastCharacter(AND)) && (isNextCharacter(AND))) {
+                    if (predicateToken == PredicateToken.RIGHT && tokenHasContent() && !isFunctionCandidate()) {
+                        applyToken();
+                        predicateJoin = PredicateJoin.AND;
+                        predicateToken = PredicateToken.START;
+                    } else if (isFunctionCandidate()) {
+                        //we're in a predicate function
+                        appendCurrentToToken();
+                    } else {
+                        predicateJoin = PredicateJoin.AND;
+                        predicateToken = PredicateToken.START;
+                    }
+                } else if (isFunctionCandidate()) {
+                    appendCurrentToToken();
                 } else if (predicateJoin == PredicateJoin.AND && !isNextCharacter(AND)) {
                     //nothing to do
                 } else {
                     //invalid
-                    throw new JsonPathExpressionException(expression(), "Invalid logical operator (|)");
+                    throw new JsonPathExpressionException(expression(), "Invalid logical operator (&)");
                 }
             } else { //already in a join
                 if (tokenHasContent() && isEnclosuresEmpty()) {

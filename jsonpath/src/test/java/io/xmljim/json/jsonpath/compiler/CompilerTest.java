@@ -1,8 +1,9 @@
 package io.xmljim.json.jsonpath.compiler;
 
-import io.xmljim.json.jsonpath.variables.Variables;
+import io.xmljim.json.jsonpath.filter.Filter;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 import io.xmljim.json.jsonpath.filter.FilterType;
+import io.xmljim.json.jsonpath.variables.Variables;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -115,6 +116,29 @@ class CompilerTest {
         assertEquals(2, stream.size());
         assertEquals(FilterType.ROOT, stream.pop().getOperatorType());
         assertEquals(FilterType.SLICE, stream.pop().getOperatorType());
+    }
+
+    @Test
+    void testFunctionFilter() {
+        String expression = "$.type()";
+        FilterStream stream = compileExpression(expression);
+        assertNotNull(stream);
+        assertEquals(2, stream.size());
+        assertEquals(FilterType.ROOT, stream.pop().getOperatorType());
+        assertEquals(FilterType.FUNCTION, stream.pop().getOperatorType());
+    }
+
+    @Test
+    void testWithPredicateFunction() {
+        String expression = "$.*[?(count-if(@.assignments*, @.doc_id == 19 && @.doc_status == 'PROCESSED') >= 2)]";
+        FilterStream stream = compileExpression(expression);
+        assertEquals(3, stream.size());
+        assertEquals(FilterType.ROOT, stream.pop().getOperatorType());
+        assertEquals(FilterType.WILDCARD, stream.pop().getOperatorType());
+        Filter lastFilter = stream.pop();
+        assertEquals(FilterType.PREDICATE, lastFilter.getOperatorType());
+
+        assertNotNull(stream);
     }
 
     private FilterStream compileExpression(String expression) {
