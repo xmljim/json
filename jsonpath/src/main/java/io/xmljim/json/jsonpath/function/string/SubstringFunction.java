@@ -15,10 +15,10 @@ import java.util.stream.Stream;
 
 @FunctionDefinition(builtIn = BuiltIns.SUBSTRING,
     args = {
-        @ArgumentDefinition(name = "start", scope = ArgumentScope.REQUIRED, type = ExpressionArgument.class,
+        @ArgumentDefinition(name = "start", scope = ArgumentScope.REQUIRED, argType = ExpressionArgument.class,
             description = "The start position of the string"
         ),
-        @ArgumentDefinition(name = "end", scope = ArgumentScope.OPTIONAL, type = ExpressionArgument.class,
+        @ArgumentDefinition(name = "end", scope = ArgumentScope.OPTIONAL, argType = ExpressionArgument.class,
             description = "The end index position of the string"
         )
     }
@@ -32,22 +32,22 @@ public class SubstringFunction extends AbstractJsonPathFunction {
     public Stream<Context> apply(Stream<Context> contextStream) {
 
         return contextStream
-                   .filter(context -> context.type() == NodeType.STRING)
-                   .map(context -> {
-                       String currentValue = context.value();
+            .filter(context -> context.type() == NodeType.STRING)
+            .map(context -> {
+                String currentValue = context.value();
 
-                       //ExpressionArgument arg = (ExpressionArgument) getArgument("start").orElseThrow();
-                       int start = getArgumentValue("start", context);
+                //ExpressionArgument arg = (ExpressionArgument) getArgument("start").orElseThrow();
+                Number start = getArgumentValue("start", context);
 
-                       if (hasArgument("end")) {
-                           //ExpressionArgument endArg = (ExpressionArgument) getArgument("end").get();
-                           int end = getArgumentValue("end", context);
-                           currentValue = currentValue.substring(start, end);
-                       } else {
-                           currentValue = currentValue.substring(start);
-                       }
+                if (hasArgument("end")) {
+                    //ExpressionArgument endArg = (ExpressionArgument) getArgument("end").get();
+                    Number end = getArgumentValue("end", context);
+                    currentValue = currentValue.substring(start.intValue(), end.intValue());
+                } else {
+                    currentValue = currentValue.substring(start.intValue());
+                }
 
-                       return Context.createSimpleContext(currentValue);
-                   });
+                return Context.createSimpleContext(currentValue);
+            });
     }
 }

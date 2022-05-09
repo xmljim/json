@@ -14,7 +14,7 @@ import java.util.stream.Stream;
 @FunctionDefinition(builtIn = BuiltIns.DISTINCT_VALUES)
 public class DistinctValuesFunction extends AbstractJsonPathFunction {
     public DistinctValuesFunction() {
-        super(BuiltIns.DISTINCT_VALUES.functionName(), Collections.emptyList());
+        super(BuiltIns.DISTINCT_VALUES, Collections.emptyList());
     }
 
     @Override

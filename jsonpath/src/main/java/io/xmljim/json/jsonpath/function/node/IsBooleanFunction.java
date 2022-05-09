@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 @FunctionDefinition(builtIn = BuiltIns.IS_BOOLEAN)
 public class IsBooleanFunction extends AbstractJsonPathFunction {
     public IsBooleanFunction() {
-        super(BuiltIns.IS_BOOLEAN.functionName(), Collections.emptyList());
+        super(BuiltIns.IS_BOOLEAN, Collections.emptyList());
     }
 
     @Override

@@ -1,5 +1,6 @@
 package io.xmljim.json.jsonpath.function.info;
 
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
 import io.xmljim.json.jsonpath.variables.BuiltIns;
 
 import java.lang.annotation.ElementType;
@@ -21,4 +22,6 @@ public @interface FunctionDefinition {
     BuiltIns builtIn() default BuiltIns.UNDEFINED;
 
     ArgumentDefinition[] args() default {};
+
+    ExpressionType returnType() default ExpressionType.ANY;
 }

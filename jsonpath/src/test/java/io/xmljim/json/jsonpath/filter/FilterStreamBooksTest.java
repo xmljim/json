@@ -191,10 +191,10 @@ public class FilterStreamBooksTest extends JsonPathTestBase {
     }
 
     @Test
-    @DisplayName("Get authors data type: $..book.*.author.type()")
+    @DisplayName("Get authors data argType: $..book.*.author.argType()")
     void testGetAuthorsDataType() throws Exception {
 
-        String expr = "$..book.*.author.type()";
+        String expr = "$..book.*.author.argType()";
         List<Context> results = getResults(expr);
         System.out.println(results);
         assertEquals(4, results.size());

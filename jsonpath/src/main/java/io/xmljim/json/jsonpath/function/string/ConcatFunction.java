@@ -7,13 +7,15 @@ import io.xmljim.json.jsonpath.function.ExpressionArgument;
 import io.xmljim.json.jsonpath.function.info.ArgumentDefinition;
 import io.xmljim.json.jsonpath.function.info.ArgumentScope;
 import io.xmljim.json.jsonpath.function.info.FunctionDefinition;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
 import io.xmljim.json.jsonpath.variables.BuiltIns;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 @FunctionDefinition(builtIn = BuiltIns.CONCAT,
-    args = {@ArgumentDefinition(name = "expr", scope = ArgumentScope.VARARGS, type = ExpressionArgument.class, description = "The expression value")}
+    args = {@ArgumentDefinition(name = "expr", scope = ArgumentScope.VARARGS, argType = ExpressionArgument.class,
+        description = "The expression value", valueType = ExpressionType.STRING)}
 )
 public class ConcatFunction extends AbstractJsonPathFunction {
     public ConcatFunction(List<Argument<?, ?>> arguments) {

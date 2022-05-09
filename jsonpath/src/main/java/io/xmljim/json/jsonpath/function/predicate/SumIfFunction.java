@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.stream.Stream;
 
 @FunctionDefinition(builtIn = BuiltIns.SUM_IF, args = {
-    @ArgumentDefinition(name = "list", scope = ArgumentScope.REQUIRED, type = ExpressionArgument.class, description = "The list of values to evaluate"),
-    @ArgumentDefinition(name = "test", scope = ArgumentScope.REQUIRED, type = PredicateArgument.class, description = "The test predicate"),
-    @ArgumentDefinition(name = "valueExpr", scope = ArgumentScope.REQUIRED, type = ExpressionArgument.class, description = "The expression containing the value to sum"),
+    @ArgumentDefinition(name = "list", scope = ArgumentScope.REQUIRED, argType = ExpressionArgument.class, description = "The list of values to evaluate"),
+    @ArgumentDefinition(name = "test", scope = ArgumentScope.REQUIRED, argType = PredicateArgument.class, description = "The test predicate"),
+    @ArgumentDefinition(name = "valueExpr", scope = ArgumentScope.REQUIRED, argType = ExpressionArgument.class, description = "The expression containing the value to sum"),
 })
 public class SumIfFunction extends AbstractPredicateFunction {
     public SumIfFunction(List<Argument<?, ?>> arguments) {

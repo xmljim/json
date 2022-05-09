@@ -44,9 +44,9 @@ public interface Expression {
     }
 
     /**
-     * The expression type
+     * The expression argType
      *
-     * @return the expression type
+     * @return the expression argType
      */
     ExpressionType type();
 

@@ -1,6 +1,7 @@
 package io.xmljim.json.jsonpath.function.info;
 
 import io.xmljim.json.jsonpath.function.Argument;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -12,7 +13,9 @@ public @interface ArgumentDefinition {
 
     ArgumentScope scope();
 
-    Class<? extends Argument<?, ?>> type();
+    Class<? extends Argument<?, ?>> argType();
+
+    ExpressionType valueType() default ExpressionType.ANY;
 
     String description();
 }

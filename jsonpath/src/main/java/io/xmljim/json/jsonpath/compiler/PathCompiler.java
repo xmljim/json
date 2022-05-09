@@ -1,10 +1,10 @@
 package io.xmljim.json.jsonpath.compiler;
 
-import io.xmljim.json.jsonpath.variables.Global;
 import io.xmljim.json.jsonpath.filter.Filter;
 import io.xmljim.json.jsonpath.filter.FilterFactory;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 import io.xmljim.json.jsonpath.filter.FilterType;
+import io.xmljim.json.jsonpath.variables.Global;
 
 class PathCompiler extends Compiler<FilterStream> {
     private final FilterStream sequence = new FilterStream();
@@ -85,7 +85,7 @@ class PathCompiler extends Compiler<FilterStream> {
                 //invalid syntax - ending dot without accessor or filter
                 throw new JsonPathExpressionException(expression(), "Invalid syntax: Orphaned dot separator");
             } else if (isRecursiveCandidate()) {
-                //catch redundant dot if last sequence type is recursive
+                //catch redundant dot if last sequence argType is recursive
                 if (getLastFilterType() == FilterType.RECURSIVE) {
                     throw new JsonPathExpressionException(expression(), "Invalid dot separator. Last sequence is recursive");
                 }

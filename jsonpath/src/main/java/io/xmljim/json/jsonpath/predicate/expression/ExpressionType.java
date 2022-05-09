@@ -12,7 +12,11 @@ public enum ExpressionType {
     FUNCTION,
     LIST,
     NODE,
-    VARIABLE;
+    VARIABLE,
+    /**
+     * Special argType used for function and argument definitions
+     */
+    ANY;
 
     public boolean isPrimitive() {
         return this == STRING || this == INTEGER || this == LONG || this == DOUBLE || this == BOOLEAN;

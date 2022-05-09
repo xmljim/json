@@ -11,7 +11,7 @@ import java.util.function.Predicate;
 /**
  * Base class for JsonPath expression compilation
  *
- * @param <T> The return result type from the compilation
+ * @param <T> The return result argType from the compilation
  */
 public abstract class Compiler<T> {
     protected static final char ROOT = '$';

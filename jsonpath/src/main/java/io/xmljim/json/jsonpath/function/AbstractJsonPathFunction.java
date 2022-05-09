@@ -4,6 +4,7 @@ package io.xmljim.json.jsonpath.function;
 import io.xmljim.json.jsonpath.JsonPathException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
+import io.xmljim.json.jsonpath.variables.BuiltIns;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,10 @@ public abstract class AbstractJsonPathFunction implements JsonPathFunction {
     public AbstractJsonPathFunction(String name, List<Argument<?, ?>> arguments) {
         this.name = name;
         this.args = arguments;
+    }
+
+    public AbstractJsonPathFunction(BuiltIns builtIn, List<Argument<?, ?>> arguments) {
+        this(builtIn.functionName(), arguments);
     }
 
     public String name() {

@@ -60,7 +60,7 @@ public abstract class ExpressionFactory {
      * Creates a predicate expression from a {@link JsonNode}
      *
      * <p>
-     * The typical use for this type of {@link Expression} is
+     * The typical use for this argType of {@link Expression} is
      * for global variable objects expressed as a predicate expression.
      * For example, {@code {document('path/to/document')}}
      * </p>

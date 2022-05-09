@@ -84,7 +84,7 @@ class OperatorFactoryTest {
 
     @Test
     void testFunctionFilter() {
-        Filter filter = createDefaultFilter("type()");
+        Filter filter = createDefaultFilter("argType()");
         assertNotNull(filter);
         assertEquals(FilterType.FUNCTION, filter.getOperatorType());
     }

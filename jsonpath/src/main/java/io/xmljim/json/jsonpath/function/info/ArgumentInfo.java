@@ -7,7 +7,7 @@ import io.xmljim.json.model.JsonObject;
 public record ArgumentInfo(String name, ArgumentScope scope, String description, Class<? extends Argument<?, ?>> type) {
 
     public static ArgumentInfo fromArgumentDefinition(ArgumentDefinition definition) {
-        return new ArgumentInfo(definition.name(), definition.scope(), definition.description(), definition.type());
+        return new ArgumentInfo(definition.name(), definition.scope(), definition.description(), definition.argType());
     }
 
     @SuppressWarnings("unchecked")
@@ -19,7 +19,7 @@ public record ArgumentInfo(String name, ArgumentScope scope, String description,
                 (Class<? extends Argument<?, ?>>) Class.forName(String.valueOf(record.get("typeClass")))
             );
         } catch (ClassNotFoundException e) {
-            throw new JsonPathException("Argument type not found: " + e.getMessage());
+            throw new JsonPathException("Argument argType not found: " + e.getMessage());
         }
 
     }

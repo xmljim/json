@@ -8,14 +8,17 @@ import io.xmljim.json.jsonpath.function.info.ArgumentDefinition;
 import io.xmljim.json.jsonpath.function.info.ArgumentScope;
 import io.xmljim.json.jsonpath.function.info.FunctionDefinition;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
+import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
 import io.xmljim.json.jsonpath.variables.BuiltIns;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 @FunctionDefinition(builtIn = BuiltIns.COUNT_IF, args = {
-    @ArgumentDefinition(name = "list", scope = ArgumentScope.REQUIRED, type = ExpressionArgument.class, description = "The list of values to evaluate"),
-    @ArgumentDefinition(name = "test", scope = ArgumentScope.REQUIRED, type = PredicateArgument.class, description = "The test predicate"),
+    @ArgumentDefinition(name = "list", scope = ArgumentScope.REQUIRED, argType = ExpressionArgument.class, valueType = ExpressionType.LIST,
+        description = "The list of values to evaluate"),
+    @ArgumentDefinition(name = "test", scope = ArgumentScope.REQUIRED, argType = PredicateArgument.class, valueType = ExpressionType.BOOLEAN,
+        description = "The test predicate"),
 })
 public class CountIfFunction extends AbstractPredicateFunction {
     public CountIfFunction(List<Argument<?, ?>> arguments) {

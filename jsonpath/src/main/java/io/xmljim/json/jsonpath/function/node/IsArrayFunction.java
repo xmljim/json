@@ -11,7 +11,7 @@ import java.util.stream.Stream;
 @FunctionDefinition(builtIn = BuiltIns.IS_ARRAY)
 public class IsArrayFunction extends AbstractJsonPathFunction {
     public IsArrayFunction() {
-        super(BuiltIns.IS_ARRAY.functionName(), Collections.emptyList());
+        super(BuiltIns.IS_ARRAY, Collections.emptyList());
     }
 
     @Override

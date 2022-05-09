@@ -13,7 +13,7 @@ class EmptyPredicate extends AbstractFilterPredicate {
     @Override
     public boolean test(Context context) {
         if (rightSide().getContextType(context) != NodeType.BOOLEAN) {
-            throw new JsonPathExpressionException(rightSide().toString(), 0, "Expected a boolean test expression. Value type is" + rightSide().getContextType(context));
+            throw new JsonPathExpressionException(rightSide().toString(), 0, "Expected a boolean test expression. Value argType is" + rightSide().getContextType(context));
         } else {
             boolean rightValue = (boolean) rightSide().getValue(context)
                 .orElseThrow(() -> new JsonPathExpressionException(toString(), 0, "Unexpected Error")); //shouldn't get here

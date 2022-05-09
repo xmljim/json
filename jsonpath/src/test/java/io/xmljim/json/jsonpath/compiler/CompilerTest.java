@@ -120,7 +120,7 @@ class CompilerTest extends JsonPathTestBase {
 
     @Test
     void testFunctionFilter() {
-        String expression = "$.type()";
+        String expression = "$.argType()";
         FilterStream stream = getFilterStream(expression);
         assertNotNull(stream);
         assertEquals(2, stream.size());
