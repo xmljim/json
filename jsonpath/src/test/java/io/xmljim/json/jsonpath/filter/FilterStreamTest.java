@@ -1,9 +1,9 @@
 package io.xmljim.json.jsonpath.filter;
 
 import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.variables.Variables;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.JsonObject;
 import io.xmljim.json.model.NodeType;
@@ -21,7 +21,6 @@ class FilterStreamTest {
     void testSimpleChildKeyWithDot() {
         JsonObject object = createJsonObject();
         object.put("foo", "bar");
-
         String jsonPath = "$.foo";
         FilterStream filterStream = createFilterStream(jsonPath);
 
@@ -35,7 +34,6 @@ class FilterStreamTest {
     void testInvalidChildKeyWithDot() {
         JsonObject object = createJsonObject();
         object.put("foo", "bar");
-
         String jsonPath = "$.boo";
         FilterStream filterStream = createFilterStream(jsonPath);
 

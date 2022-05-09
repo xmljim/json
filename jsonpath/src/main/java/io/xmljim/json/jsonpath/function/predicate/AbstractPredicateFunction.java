@@ -4,12 +4,13 @@ import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.function.AbstractJsonPathFunction;
 import io.xmljim.json.jsonpath.function.Argument;
 import io.xmljim.json.jsonpath.function.PredicateArgument;
+import io.xmljim.json.jsonpath.function.PredicateFunction;
 
 import java.util.List;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
-abstract class AbstractPredicateFunction extends AbstractJsonPathFunction {
+abstract class AbstractPredicateFunction extends AbstractJsonPathFunction implements PredicateFunction {
     public AbstractPredicateFunction(String name, List<Argument<?, ?>> arguments) {
         super(name, arguments);
     }

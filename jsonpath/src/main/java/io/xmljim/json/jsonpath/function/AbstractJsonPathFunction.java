@@ -3,8 +3,10 @@ package io.xmljim.json.jsonpath.function;
 
 import io.xmljim.json.jsonpath.JsonPathException;
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.predicate.expression.Expression;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public abstract class AbstractJsonPathFunction implements JsonPathFunction {
@@ -30,7 +32,6 @@ public abstract class AbstractJsonPathFunction implements JsonPathFunction {
         Argument<?, ?> arg = (Argument<?, ?>) getArgument(name, index)
             .orElseThrow(() -> new JsonPathException("No argument found with name: " + name));
         return getArgumentValue(arg, context);
-
     }
 
     @SuppressWarnings("unchecked")
@@ -40,6 +41,26 @@ public abstract class AbstractJsonPathFunction implements JsonPathFunction {
         } else {
             return (T) ((PredicateArgument) arg).apply(context);
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public <T> Optional<T> getArgElement(String name, int index) {
+        Optional<Argument<?, ?>> arg = getArgument(name, index);
+        return arg.flatMap(argument -> (Optional<T>) Optional.of(argument.element()));
+    }
+
+    public <T> Optional<T> getArgElement(String name) {
+        return getArgElement(name, 0);
+    }
+
+    public Expression getExpression(String name, int index) {
+        return (Expression) getArgElement(name, index)
+            .orElseThrow(() -> new JsonPathException("No argument found for '" + name + "' at index " + index));
+
+    }
+
+    public Expression getExpression(String name) {
+        return getExpression(name, 0);
     }
 
     public <T> T getArgumentValue(String name, Context context) {

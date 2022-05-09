@@ -80,7 +80,13 @@ class OperatorFactoryTest {
         Filter filter = createDefaultFilter("[1:-1]");
         assertNotNull(filter);
         assertEquals(FilterType.SLICE, filter.getOperatorType());
+    }
 
+    @Test
+    void testFunctionFilter() {
+        Filter filter = createDefaultFilter("type()");
+        assertNotNull(filter);
+        assertEquals(FilterType.FUNCTION, filter.getOperatorType());
     }
 
     private Filter createDefaultFilter(String expression) {

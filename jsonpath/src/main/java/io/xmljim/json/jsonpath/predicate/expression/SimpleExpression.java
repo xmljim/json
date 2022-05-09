@@ -12,7 +12,6 @@ abstract class SimpleExpression<T> extends AbstractExpression {
 
     public SimpleExpression(String expression, Global global) {
         super(expression, global);
-
     }
 
     public void setValue(T value) {

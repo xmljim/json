@@ -12,7 +12,6 @@ class RegexExpression extends SimpleExpression<String> {
         setValue(expression);
     }
 
-
     @Override
     public ExpressionType type() {
         return ExpressionType.REGEX;

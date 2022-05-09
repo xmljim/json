@@ -17,6 +17,7 @@ import io.xmljim.json.jsonpath.function.node.LengthFunction;
 import io.xmljim.json.jsonpath.function.node.NodeTypeFunction;
 import io.xmljim.json.jsonpath.function.node.ValuesFunction;
 import io.xmljim.json.jsonpath.function.predicate.CountIfFunction;
+import io.xmljim.json.jsonpath.function.predicate.SumIfFunction;
 import io.xmljim.json.jsonpath.function.string.ConcatFunction;
 import io.xmljim.json.jsonpath.function.string.SubstringFunction;
 import io.xmljim.json.jsonpath.function.string.UpperCaseFunction;
@@ -62,6 +63,8 @@ public enum BuiltIns {
         "string", ConcatFunction.class),
     COUNT_IF("count-if", "returns a count of values based on a predicate", "predicate",
         "aggregate", CountIfFunction.class),
+    SUM_IF("sum-if", "returns a sum of values based on a predicate",
+        "predicate", "aggregate", SumIfFunction.class),
     UNDEFINED("UNDEFINED", "", "", "", null),
     ;
     private final String functionName;

@@ -13,13 +13,14 @@ import io.xmljim.json.jsonpath.variables.BuiltIns;
 import java.util.List;
 import java.util.stream.Stream;
 
-@FunctionDefinition(builtIn = BuiltIns.COUNT_IF, args = {
+@FunctionDefinition(builtIn = BuiltIns.SUM_IF, args = {
     @ArgumentDefinition(name = "list", scope = ArgumentScope.REQUIRED, type = ExpressionArgument.class, description = "The list of values to evaluate"),
     @ArgumentDefinition(name = "test", scope = ArgumentScope.REQUIRED, type = PredicateArgument.class, description = "The test predicate"),
+    @ArgumentDefinition(name = "valueExpr", scope = ArgumentScope.REQUIRED, type = ExpressionArgument.class, description = "The expression containing the value to sum"),
 })
-public class CountIfFunction extends AbstractPredicateFunction {
-    public CountIfFunction(List<Argument<?, ?>> arguments) {
-        super(BuiltIns.COUNT_IF.functionName(), arguments);
+public class SumIfFunction extends AbstractPredicateFunction {
+    public SumIfFunction(List<Argument<?, ?>> arguments) {
+        super(BuiltIns.SUM_IF.functionName(), arguments);
     }
 
     @Override
@@ -27,6 +28,13 @@ public class CountIfFunction extends AbstractPredicateFunction {
         Expression expression = getExpression("list");
         Stream<Context> nestedContextStream = contextStream.flatMap(context -> expression.values(context).stream());
         Stream<Context> filteredStream = nestedContextStream.filter(getPredicate("test"));
-        return Stream.of(Context.createSimpleContext(filteredStream.count()));
+
+        double result = filteredStream.flatMap(context -> getExpression("valueExpr").values(context).stream())
+            .filter(context -> context.type().isNumeric())
+            .mapToDouble(Context::value)
+            .summaryStatistics()
+            .getSum();
+
+        return Stream.of(Context.createSimpleContext(result));
     }
 }
