@@ -1,6 +1,6 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 import io.xmljim.json.model.JsonNode;
 
 public abstract class ExpressionFactory {
@@ -17,7 +17,7 @@ public abstract class ExpressionFactory {
 
     public static Expression create(String expression, Global global) {
         if (expression.matches(PATH_PATTERN)) {
-            return new PredicateExpression(expression, global);
+            return new PathExpression(expression, global);
         }
 
         if (expression.matches(REGEX_PATTERN)) {

@@ -8,6 +8,10 @@ Returns the average of all numeric values in context
 average()
 ```
 
+## Input Type
+
+[`NUMBER`] Will only evaluate numeric contexts. All other types will be ignored.
+
 ## Arguments
 
 None

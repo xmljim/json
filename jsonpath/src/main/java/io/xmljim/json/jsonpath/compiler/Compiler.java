@@ -2,7 +2,7 @@ package io.xmljim.json.jsonpath.compiler;
 
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.ArrayDeque;
 import java.util.Deque;

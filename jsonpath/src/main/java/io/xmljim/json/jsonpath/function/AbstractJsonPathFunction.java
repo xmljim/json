@@ -4,7 +4,8 @@ package io.xmljim.json.jsonpath.function;
 import io.xmljim.json.jsonpath.JsonPathException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
-import io.xmljim.json.jsonpath.variables.BuiltIns;
+import io.xmljim.json.jsonpath.util.BuiltIns;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.List;
 import java.util.Optional;
@@ -14,14 +15,17 @@ public abstract class AbstractJsonPathFunction implements JsonPathFunction {
     private final String name;
     private final List<Argument<?, ?>> args;
 
+    private final Global global;
 
-    public AbstractJsonPathFunction(String name, List<Argument<?, ?>> arguments) {
+
+    public AbstractJsonPathFunction(String name, List<Argument<?, ?>> arguments, Global global) {
         this.name = name;
         this.args = arguments;
+        this.global = global;
     }
 
-    public AbstractJsonPathFunction(BuiltIns builtIn, List<Argument<?, ?>> arguments) {
-        this(builtIn.functionName(), arguments);
+    public AbstractJsonPathFunction(BuiltIns builtIn, List<Argument<?, ?>> arguments, Global global) {
+        this(builtIn.functionName(), arguments, global);
     }
 
     public String name() {
@@ -33,9 +37,14 @@ public abstract class AbstractJsonPathFunction implements JsonPathFunction {
         return args;
     }
 
+    @Override
+    public Global getGlobal() {
+        return global;
+    }
+
     public <T> T getArgumentValue(String name, Context context, int index) {
         Argument<?, ?> arg = (Argument<?, ?>) getArgument(name, index)
-            .orElseThrow(() -> new JsonPathException("No argument found with name: " + name));
+                .orElseThrow(() -> new JsonPathException("No argument found with name: " + name));
         return getArgumentValue(arg, context);
     }
 
@@ -60,7 +69,7 @@ public abstract class AbstractJsonPathFunction implements JsonPathFunction {
 
     public Expression getExpression(String name, int index) {
         return (Expression) getArgElement(name, index)
-            .orElseThrow(() -> new JsonPathException("No argument found for '" + name + "' at index " + index));
+                .orElseThrow(() -> new JsonPathException("No argument found for '" + name + "' at index " + index));
 
     }
 
@@ -74,6 +83,6 @@ public abstract class AbstractJsonPathFunction implements JsonPathFunction {
 
     public <T> Stream<T> getArgumentValueStream(String name, Context context) {
         return arguments().stream().filter(argument -> argument.name().equals(name))
-            .map(argument -> getArgumentValue(argument, context));
+                .map(argument -> getArgumentValue(argument, context));
     }
 }

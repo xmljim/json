@@ -5,7 +5,7 @@ import io.xmljim.json.jsonpath.predicate.PredicateFactory;
 import io.xmljim.json.jsonpath.predicate.PredicateOperator;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
 import io.xmljim.json.jsonpath.predicate.expression.ExpressionFactory;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.function.Predicate;
 

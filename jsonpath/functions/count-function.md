@@ -8,6 +8,10 @@ Returns a count of all values in context
 count()
 ```
 
+## Input Type
+
+[`NUMBER`] Will only evaluate numeric contexts. All other types will be ignored.
+
 ## Arguments
 
 None

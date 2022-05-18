@@ -7,19 +7,20 @@ import io.xmljim.json.jsonpath.function.ExpressionArgument;
 import io.xmljim.json.jsonpath.function.info.ArgumentDefinition;
 import io.xmljim.json.jsonpath.function.info.ArgumentScope;
 import io.xmljim.json.jsonpath.function.info.FunctionDefinition;
-import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
-import io.xmljim.json.jsonpath.variables.BuiltIns;
+import io.xmljim.json.jsonpath.util.BuiltIns;
+import io.xmljim.json.jsonpath.util.DataType;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 @FunctionDefinition(builtIn = BuiltIns.CONCAT,
-    args = {@ArgumentDefinition(name = "expr", scope = ArgumentScope.VARARGS, argType = ExpressionArgument.class,
-        description = "The expression value", valueType = ExpressionType.STRING)}
+        args = {@ArgumentDefinition(name = "expr", scope = ArgumentScope.VARARGS, argType = ExpressionArgument.class,
+                description = "The expression value", valueType = DataType.STRING)}
 )
 public class ConcatFunction extends AbstractJsonPathFunction {
-    public ConcatFunction(List<Argument<?, ?>> arguments) {
-        super(BuiltIns.CONCAT.functionName(), arguments);
+    public ConcatFunction(List<Argument<?, ?>> arguments, Global global) {
+        super(BuiltIns.CONCAT, arguments, global);
     }
 
     @Override

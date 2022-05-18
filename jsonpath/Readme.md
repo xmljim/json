@@ -23,7 +23,7 @@
         - [Path Functions](#path-functions)
         - [Axis (Navigation) Functions](#axis-navigation-functions)
         - [Document Functions](#document-functions)
-    - [Variables](#variables)
+    - [Variables](#settings)
         - [Examples](#examples)
 - [JsonPath Examples](#jsonpath-examples)
     - [Books Example](#books-example)
@@ -34,7 +34,7 @@
 This JsonPath implementation is heavily inspired by concepts from
 both [Stefan Goessner's](https://goessner.net/articles/JsonPath/)
 original ideas as well as from the [JayWay](https://github.com/json-path/JsonPath) JsonPath Java library. In addition,
-it extends these with functionality familiar to XPath, including some primitive axis navigation, global variables, and
+it extends these with functionality familiar to XPath, including some primitive axis navigation, global settings, and
 some additional functions. The rationale for a separate implementation is to leverage the _opinionated_ model used in
 this library without requiring a separate, third-party library. That said, there's nothing to prevent this Json library
 from integrating the Jayway SPI API as a separate implementation (which is very, very good).
@@ -116,6 +116,8 @@ values `['a', 'b', 'c', 'd', 'e']` and we want the second, fourth and fifth elem
 use `[1, 3, 4]` (element indexes are 0-based). Note that spaces between indexes is optional (but no more than one space)
 , it's allowed to make your expression more readable. A union must include 2 or more indexes.
 
+> **NOTE**: You can also use the same filter for objects to access specific values by key, e.g., `['a', 'b', 'd']`
+
 #### The Slice Filter (`[:]`)
 
 Returns a subset of an array by slicing from a start index (inclusive) to and end index inclusive. The syntax is very
@@ -155,7 +157,7 @@ or a _JsonNode_ (a JsonObject or JsonArray), a _path_ expression, or a _variable
 #### Expression Types
 
 Different predicate expressions expect different value types. Typically these will be provided through either a path
-expression, a literal, or a [variable](#variables). The table below describes the supported expression types
+expression, a literal, or a [variable](#settings). The table below describes the supported expression types
 
 | Type     | Description                                                                                                                                                           | Example                                              |
 |:---------|:----------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-----------------------------------------------------|
@@ -166,7 +168,7 @@ expression, a literal, or a [variable](#variables). The table below describes th
 | RegExp   | A Regular Expression. The expression must be contained in `/` followed by any support options (see [Notes](#notes))                                                   | <pre lang="javascript">/cat.*/im</pre>               |
 | Path     | A Path Expression. Returns a value (or set of values) to be evaluated. <br/>Type is dynamic and predicate will only return `true` if the expected types are evaluated | <pre lang="javascript">@['item'] == 10               |
 | List     | A list of literal values (String, Number, Boolean, Null)                                                                                                              | <pre lang="javascript">['a', 24, false, null] </pre> |
-| Variable | A variable. Variable values resolved at compile time and return one of the above expression types <br/>(see [Variables](#variables) for more information)             | <pre language="javascript">{var#$.name}</pre>        |
+| Variable | A variable. Variable values resolved at compile time and return one of the above expression types <br/>(see [Variables](#settings) for more information)             | <pre language="javascript">{var#$.name}</pre>        |
 
 #### Predicate Operators
 
@@ -224,7 +226,7 @@ The following _operators_ are supported (see [Notes](#notes) section for additio
 
 There are two types of functions: _contextual_ and _non-contextual_. _Contextual_ functions operate by using data from
 the current context stream; _Non-contextual_ functions operate independently from any context and typically require one
-or more arguments. Return values from non-contextual functions have no context to the Json elements being evaluated.
+or more arguments to specify elements that will be used in the function.
 
 #### Path Functions
 
@@ -293,22 +295,22 @@ Where:
 
 #### Examples
 
-Assuming that variables are set:
+Assuming that settings are set:
 
 ```json5
 {
-  "a": "string",
-  "b": 1,
-  "c": true,
-  "d": [
-    1,
-    2,
-    3,
-    4
-  ],
-  "e": {
-    "foo": "bar"
-  }
+    "a": "string",
+    "b": 1,
+    "c": true,
+    "d": [
+        1,
+        2,
+        3,
+        4
+    ],
+    "e": {
+        "foo": "bar"
+    }
 }
 ```
 
@@ -329,41 +331,41 @@ This is the 'classic' books.json example:
 
 ```json
 {
-  "store": {
-    "book": [
-      {
-        "category": "reference",
-        "author": "Nigel Rees",
-        "title": "Sayings of the Century",
-        "price": 8.95
-      },
-      {
-        "category": "fiction",
-        "author": "Evelyn Waugh",
-        "title": "Sword of Honour",
-        "price": 12.99
-      },
-      {
-        "category": "fiction",
-        "author": "Herman Melville",
-        "title": "Moby Dick",
-        "isbn": "0-553-21311-3",
-        "price": 8.99
-      },
-      {
-        "category": "fiction",
-        "author": "J. R. R. Tolkien",
-        "title": "The Lord of the Rings",
-        "isbn": "0-395-19395-8",
-        "price": 22.99
-      }
-    ],
-    "bicycle": {
-      "color": "red",
-      "price": 19.95
-    }
-  },
-  "expensive": 10
+    "store": {
+        "book": [
+            {
+                "category": "reference",
+                "author": "Nigel Rees",
+                "title": "Sayings of the Century",
+                "price": 8.95
+            },
+            {
+                "category": "fiction",
+                "author": "Evelyn Waugh",
+                "title": "Sword of Honour",
+                "price": 12.99
+            },
+            {
+                "category": "fiction",
+                "author": "Herman Melville",
+                "title": "Moby Dick",
+                "isbn": "0-553-21311-3",
+                "price": 8.99
+            },
+            {
+                "category": "fiction",
+                "author": "J. R. R. Tolkien",
+                "title": "The Lord of the Rings",
+                "isbn": "0-395-19395-8",
+                "price": 22.99
+            }
+        ],
+        "bicycle": {
+            "color": "red",
+            "price": 19.95
+        }
+    },
+    "expensive": 10
 }
 ```
 

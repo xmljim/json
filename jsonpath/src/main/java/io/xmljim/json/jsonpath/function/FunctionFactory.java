@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.function;
 import io.xmljim.json.jsonpath.JsonPathException;
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.function.info.FunctionInfo;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -29,16 +29,16 @@ public class FunctionFactory {
             String fxName = matcher.group("function");
 
             FunctionInfo functionInfo = global.getFunctionRegistry()
-                .getFunctionInfo(fxName)
-                .orElseThrow(() -> new JsonPathException("Function not found: " + fxName));
+                    .getFunctionInfo(fxName)
+                    .orElseThrow(() -> new JsonPathException("Function not found: " + fxName));
 
             String argsString = matcher.group("args");
 
             if (argsString != null && !"".equals(argsString)) {
                 List<Argument<?, ?>> args = buildArgs(functionInfo, argsString, global);
-                return newInstance(functionInfo.functionClass(), args);
+                return newInstance(functionInfo.functionClass(), args, global);
             } else {
-                return newInstance(functionInfo.functionClass(), Collections.emptyList());
+                return newInstance(functionInfo.functionClass(), Collections.emptyList(), global);
             }
         } else {
             throw new JsonPathExpressionException(expression, 0, "Undefined function");
@@ -55,8 +55,8 @@ public class FunctionFactory {
         while (matcher.find()) {
             if (matcher.group() != null && !"".equals(matcher.group())) {
                 argExpressions.add(matcher.group().strip().endsWith(",") ?
-                    matcher.group().strip().substring(0, matcher.group().strip().length() - 1) :
-                    matcher.group().strip());
+                        matcher.group().strip().substring(0, matcher.group().strip().length() - 1) :
+                        matcher.group().strip());
             }
         }
         if (functionInfo.arguments().length != 0) {
@@ -97,14 +97,14 @@ public class FunctionFactory {
     }
 
     @SuppressWarnings("unchecked")
-    private static JsonPathFunction newInstance(Class<? extends JsonPathFunction> functionClass, List<Argument<?, ?>> args) {
+    private static JsonPathFunction newInstance(Class<? extends JsonPathFunction> functionClass, List<Argument<?, ?>> args, Global global) {
         try {
             if (args.isEmpty()) {
-                Constructor<JsonPathFunction> constructor = (Constructor<JsonPathFunction>) functionClass.getConstructor();
-                return constructor.newInstance();
+                Constructor<JsonPathFunction> constructor = (Constructor<JsonPathFunction>) functionClass.getConstructor(Global.class);
+                return constructor.newInstance(global);
             } else {
-                Constructor<JsonPathFunction> constructor = (Constructor<JsonPathFunction>) functionClass.getConstructor(List.class);
-                return constructor.newInstance(args);
+                Constructor<JsonPathFunction> constructor = (Constructor<JsonPathFunction>) functionClass.getConstructor(List.class, Global.class);
+                return constructor.newInstance(args, global);
             }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {

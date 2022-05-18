@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.filter;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.function.FunctionFactory;
 import io.xmljim.json.jsonpath.function.JsonPathFunction;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.stream.Stream;
 

@@ -8,6 +8,10 @@ Returns a sum of all numeric context elements
 sum()
 ```
 
+## Input Type
+
+[`NUMBER`] Will only evaluate numeric contexts. All other types will be ignored.
+
 ## Arguments
 
 None

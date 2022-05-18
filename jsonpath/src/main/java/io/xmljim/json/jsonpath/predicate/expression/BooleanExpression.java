@@ -1,6 +1,7 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.DataType;
+import io.xmljim.json.jsonpath.util.Global;
 
 class BooleanExpression extends SimpleExpression<Boolean> {
     public BooleanExpression(String expression, Global global) {
@@ -9,7 +10,7 @@ class BooleanExpression extends SimpleExpression<Boolean> {
     }
 
     @Override
-    public ExpressionType type() {
-        return ExpressionType.BOOLEAN;
+    public DataType type() {
+        return DataType.BOOLEAN;
     }
 }

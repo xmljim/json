@@ -1,5 +1,7 @@
 package io.xmljim.json.model;
 
+import io.xmljim.json.exception.JsonException;
+
 public sealed interface JsonElement permits JsonNode, JsonValue {
 
     NodeType type();
@@ -41,6 +43,30 @@ public sealed interface JsonElement permits JsonNode, JsonValue {
             return jsonObject;
         }
         return null;
+    }
+
+    default String asString() {
+        if (this instanceof JsonValue<?> value && this.type() == NodeType.STRING) {
+            return value.value();
+        } else {
+            throw new JsonException("Invalid Cast: Cannot cast " + this.type() + " to String");
+        }
+    }
+
+    default Number asNumber() {
+        if (this instanceof JsonValue<?> value && this.type().isNumeric()) {
+            return value.value();
+        } else {
+            throw new JsonException("Invalid Cast: Cannot cast " + this.type() + " to String");
+        }
+    }
+
+    default Boolean asBoolean() {
+        if (this instanceof JsonValue<?> value && this.type() == NodeType.BOOLEAN) {
+            return value.value();
+        } else {
+            throw new JsonException("Invalid Cast: Cannot cast " + this.type() + " to String");
+        }
     }
 
 

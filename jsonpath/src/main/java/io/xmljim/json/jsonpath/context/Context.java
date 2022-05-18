@@ -1,16 +1,22 @@
 package io.xmljim.json.jsonpath.context;
 
 import io.xmljim.json.factory.model.ElementFactory;
+import io.xmljim.json.jsonpath.JsonPathException;
 import io.xmljim.json.jsonpath.filter.Accessor;
+import io.xmljim.json.jsonpath.util.DataType;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.JsonElement;
 import io.xmljim.json.model.JsonNode;
 import io.xmljim.json.model.JsonObject;
-import io.xmljim.json.model.NodeType;
 import io.xmljim.json.service.ServiceManager;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.Temporal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 public abstract class Context {
@@ -54,10 +60,6 @@ public abstract class Context {
         }
     }
 
-    public static Context createBad(JsonElement element, Context parentContext, Accessor accessor) {
-        ElementFactory elementFactory = ServiceManager.getProvider(ElementFactory.class);
-        return new ValueContext(elementFactory.newValue(element), parentContext, accessor);
-    }
 
     public static Context create(JsonElement element, Context parentContext, Accessor accessor) {
         return switch (element.type()) {
@@ -65,6 +67,16 @@ public abstract class Context {
             case OBJECT -> new ObjectContext(element.asJsonObject(), parentContext, accessor);
             default -> new ValueContext(element.asJsonValue(), parentContext, accessor);
         };
+    }
+
+    public static <T extends Temporal> Context createTemporalContext(T value) {
+        if (value instanceof LocalDate localDate) {
+            return new DateContext(localDate);
+        } else if (value instanceof LocalDateTime localDateTime) {
+            return new DateTimeContext(localDateTime);
+        } else {
+            throw new JsonPathException("Invalid Temporal Value");
+        }
     }
 
     public static <T> Context createSimpleContext(T value) {
@@ -105,8 +117,8 @@ public abstract class Context {
 
     public abstract int childLength();
 
-    public NodeType type() {
-        return current.type();
+    public DataType type() {
+        return DataType.fromNodeType(current.type());
     }
 
     public void setVariable(String key, Context context) {
@@ -117,8 +129,24 @@ public abstract class Context {
         root.variables.getOrDefault(key, null);
     }
 
-    public boolean equals(Context other) {
-        return get().equals(other.get());
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Context o) {
+//            System.out.printf("equals: %1$d <=> %2$d", get().hashCode(), o.get().hashCode());
+//            System.out.println();
+            return Objects.equals(get(), o.get());
+        } else {
+            return false;
+        }
+    }
+
+    @Override
+    public int hashCode() {
+        return get().hashCode();
+    }
+
+    public Optional<Context> getParent() {
+        return Optional.ofNullable(parent);
     }
 
     public String toString() {

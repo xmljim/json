@@ -1,6 +1,7 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.DataType;
+import io.xmljim.json.jsonpath.util.Global;
 
 class NullExpression extends SimpleExpression<Void> {
     public NullExpression(String expression, Global global) {
@@ -9,7 +10,7 @@ class NullExpression extends SimpleExpression<Void> {
     }
 
     @Override
-    public ExpressionType type() {
-        return ExpressionType.NULL;
+    public DataType type() {
+        return DataType.NULL;
     }
 }

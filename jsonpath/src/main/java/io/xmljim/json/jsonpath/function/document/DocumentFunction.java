@@ -8,6 +8,7 @@ import io.xmljim.json.jsonpath.JsonPathException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.function.AbstractJsonPathFunction;
 import io.xmljim.json.jsonpath.function.Argument;
+import io.xmljim.json.jsonpath.util.Global;
 import io.xmljim.json.model.JsonNode;
 import io.xmljim.json.service.ServiceManager;
 
@@ -16,8 +17,8 @@ import java.util.List;
 import java.util.stream.Stream;
 
 public class DocumentFunction extends AbstractJsonPathFunction {
-    public DocumentFunction(String name, List<Argument<?, ?>> arguments) {
-        super(name, arguments);
+    public DocumentFunction(String name, List<Argument<?, ?>> arguments, Global global) {
+        super(name, arguments, global);
     }
 
     @Override
@@ -25,7 +26,7 @@ public class DocumentFunction extends AbstractJsonPathFunction {
         List<Context> inputContexts = contextStream.toList();
 
         Context contextToUse = inputContexts.isEmpty() ? Context.defaultContext() :
-            inputContexts.get(0);
+                inputContexts.get(0);
 
         String path = getArgumentValue("path", contextToUse);
 

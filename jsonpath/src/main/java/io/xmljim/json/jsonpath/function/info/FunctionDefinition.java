@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.function.info;
 
-import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
-import io.xmljim.json.jsonpath.variables.BuiltIns;
+import io.xmljim.json.jsonpath.util.BuiltIns;
+import io.xmljim.json.jsonpath.util.DataType;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -23,5 +23,5 @@ public @interface FunctionDefinition {
 
     ArgumentDefinition[] args() default {};
 
-    ExpressionType returnType() default ExpressionType.ANY;
+    DataType returnType() default DataType.ANY;
 }

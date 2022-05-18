@@ -16,6 +16,7 @@
         <module name="jsonfactory" />
         <module name="mapper" />
         <module name="elementfactory" />
+        <module name="TestModule" />
         <module name="merger" />
       </profile>
     </annotationProcessing>

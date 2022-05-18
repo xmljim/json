@@ -7,7 +7,7 @@ import java.util.stream.Stream;
 public interface Filter {
     String getExpression();
 
-    FilterType getOperatorType();
+    FilterType getFilterType();
 
     Stream<Context> apply(Stream<Context> inputs);
 

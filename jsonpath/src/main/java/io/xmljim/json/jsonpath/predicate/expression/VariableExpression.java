@@ -4,7 +4,8 @@ import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.DataType;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.List;
 import java.util.Optional;
@@ -53,7 +54,7 @@ class VariableExpression extends AbstractExpression {
     @Override
     public Optional<Context> getContextAt(Context inputContext, int index) {
         Expression predicateExpression = getGlobal().getVariable(key);
-        if (variableExpression.type() == ExpressionType.NODE && filterStream != null) {
+        if (variableExpression.type() == DataType.NODE && filterStream != null) {
             Context nodeContext = variableExpression.getContext(Context.defaultContext()).orElse(null);
             if (nodeContext != null) {
                 set(filterStream.filter(Stream.of(nodeContext)));
@@ -68,7 +69,7 @@ class VariableExpression extends AbstractExpression {
     }
 
     @Override
-    public ExpressionType type() {
-        return ExpressionType.VARIABLE;
+    public DataType type() {
+        return DataType.VARIABLE;
     }
 }

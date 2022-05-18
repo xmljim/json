@@ -1,33 +1,41 @@
 package io.xmljim.json.jsonpath.function.node;
 
-import io.xmljim.json.factory.model.ElementFactory;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.function.AbstractJsonPathFunction;
 import io.xmljim.json.jsonpath.function.info.FunctionDefinition;
-import io.xmljim.json.jsonpath.variables.BuiltIns;
-import io.xmljim.json.model.JsonArray;
-import io.xmljim.json.service.ServiceManager;
+import io.xmljim.json.jsonpath.util.BuiltIns;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 @FunctionDefinition(builtIn = BuiltIns.DISTINCT_VALUES)
 public class DistinctValuesFunction extends AbstractJsonPathFunction {
-    public DistinctValuesFunction() {
-        super(BuiltIns.DISTINCT_VALUES, Collections.emptyList());
+    public DistinctValuesFunction(Global global) {
+        super(BuiltIns.DISTINCT_VALUES, Collections.emptyList(), global);
     }
 
     @Override
     public Stream<Context> apply(Stream<Context> contextStream) {
-        return contextStream.map(context -> {
-            JsonArray array = ServiceManager.getProvider(ElementFactory.class).newArray();
-            switch (context.type()) {
-                case ARRAY -> array.addAll(context.array().jsonValues().distinct());
-                case OBJECT -> array.addAll(context.object().values().distinct());
-                default -> array.add(context.value());
-            }
+        /*
+        JsonArray array = ServiceManager.getProvider(ElementFactory.class).newArray();
 
-            return Context.createSimpleContext(array);
+        contextStream.forEach(context -> {
+
+            switch (context.type()) {
+                case ARRAY -> vals.addAll((Collection<?>) context.array().jsonValues().distinct());
+                case OBJECT -> vals.addAll((Collection<?>) context.object().values().distinct());
+                default -> vals.add(context.value());
+            }
         });
+        */
+
+
+        Set<Context> vals = new HashSet<>();
+        contextStream.forEach(vals::add);
+        return vals.stream();
+
     }
 }

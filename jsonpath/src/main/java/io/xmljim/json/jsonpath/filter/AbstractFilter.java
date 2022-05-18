@@ -1,16 +1,16 @@
 package io.xmljim.json.jsonpath.filter;
 
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 
 abstract class AbstractFilter implements Filter {
 
     private final String expression;
-    private final FilterType operatorType;
+    private final FilterType filterType;
     private final Global global;
 
-    public AbstractFilter(String expression, FilterType operatorType, Global global) {
+    public AbstractFilter(String expression, FilterType filterType, Global global) {
         this.expression = expression;
-        this.operatorType = operatorType;
+        this.filterType = filterType;
         this.global = global;
     }
 
@@ -20,8 +20,8 @@ abstract class AbstractFilter implements Filter {
     }
 
     @Override
-    public FilterType getOperatorType() {
-        return operatorType;
+    public FilterType getFilterType() {
+        return filterType;
     }
 
     public Global getGlobal() {

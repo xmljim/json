@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.filter;
 
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 
 public abstract class FilterFactory {
     private static final String INDEX_FILTER = "\\[-?\\d+]";
@@ -12,11 +12,11 @@ public abstract class FilterFactory {
     private static final String WILDCARD_FILTER = "\\[?\\*]?";
     private static final String RECURSION_FILTER = "\\[?\\.\\.]?";
     private static final String PREDICATE_FILTER = "\\[\\?\\(.*\\)]";
-    private static final String UNION_FILTER = "\\[\\d+[,\\s?\\d+]+]";
-    private static final String SLICE_FILTER = "\\[(?<start>\\-?\\d+)?:(?<end>\\-?\\d+)?]";
-    private static final String FUNCTION_FILTER = "[a-z0-9\\-]+\\([.*]?\\)";
+    private static final String UNION_FILTER = "\\[(\\d+[,\\s?\\d+]+)?('.*'(,\\s?'.*')+)?]";
+    private static final String SLICE_FILTER = "\\[(?<start>-?\\d+)?:(?<end>-?\\d+)?]";
+    private static final String FUNCTION_FILTER = "[a-z\\d\\-]+\\(.*\\)";
 
-    public static Filter newOperator(String expression, Global global) {
+    public static Filter newFilter(String expression, Global global) {
         if (expression.matches(ROOT_FILTER)) {
             return new RootFilter(global);
         }

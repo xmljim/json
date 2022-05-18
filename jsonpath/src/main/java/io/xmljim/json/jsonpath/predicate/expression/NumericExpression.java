@@ -1,9 +1,10 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.DataType;
+import io.xmljim.json.jsonpath.util.Global;
 
 class NumericExpression extends SimpleExpression<Number> {
-    private ExpressionType type;
+    private DataType type;
 
     public NumericExpression(String expression, Global global) {
         super(expression, global);
@@ -20,21 +21,21 @@ class NumericExpression extends SimpleExpression<Number> {
 
             if (longValue < Integer.MAX_VALUE) {
                 value = ((Long) longValue).intValue();
-                type = ExpressionType.INTEGER;
+                type = DataType.INTEGER;
             } else {
                 value = longValue;
-                type = ExpressionType.LONG;
+                type = DataType.LONG;
             }
         } else if (expression.matches(regexDouble)) {
             value = Double.parseDouble(expression);
-            type = ExpressionType.DOUBLE;
+            type = DataType.DOUBLE;
         }
 
         return value;
     }
 
     @Override
-    public ExpressionType type() {
+    public DataType type() {
         return type;
     }
 }

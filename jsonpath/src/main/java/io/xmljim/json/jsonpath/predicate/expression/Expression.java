@@ -1,7 +1,7 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
 import io.xmljim.json.jsonpath.context.Context;
-import io.xmljim.json.model.NodeType;
+import io.xmljim.json.jsonpath.util.DataType;
 
 import java.util.List;
 import java.util.Optional;
@@ -35,12 +35,22 @@ public interface Expression {
 
     Optional<Context> getContextAt(Context inputContext, int index);
 
-    default NodeType getContextType(Context inputContext) {
+    default DataType getContextType(Context inputContext) {
         return getContextTypeAt(inputContext, 0);
     }
 
-    default NodeType getContextTypeAt(Context inputContext, int index) {
-        return getContextAt(inputContext, index).map(Context::type).orElse(NodeType.UNDEFINED);
+    default DataType getContextTypeAt(Context inputContext, int index) {
+        return getContextAt(inputContext, index).map(Context::type).orElse(DataType.UNDEFINED);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <T> T get(Context context) {
+        return (T) getValue(context).orElse(null);
+    }
+
+    @SuppressWarnings("unchecked")
+    default <T> T get(Context context, int index) {
+        return (T) getValueAt(context, index).orElse(null);
     }
 
     /**
@@ -48,7 +58,7 @@ public interface Expression {
      *
      * @return the expression argType
      */
-    ExpressionType type();
+    DataType type();
 
     String getExpression();
 }

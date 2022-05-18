@@ -5,7 +5,7 @@ import io.xmljim.json.jsonpath.filter.Accessor;
 import io.xmljim.json.jsonpath.filter.Filter;
 import io.xmljim.json.jsonpath.filter.FilterType;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
-import io.xmljim.json.jsonpath.predicate.expression.PathExpression;
+import io.xmljim.json.jsonpath.predicate.expression.FilterExpression;
 
 import java.util.List;
 
@@ -16,9 +16,9 @@ public class IsNotNullPredicate extends AbstractFilterPredicate {
 
     @Override
     public boolean test(Context context) {
-        if (leftSide() instanceof PathExpression pathExpression) {
+        if (leftSide() instanceof FilterExpression pathExpression) {
             Filter lastFilter = pathExpression.getLastFilter();
-            if (lastFilter.getOperatorType() == FilterType.CHILD) {
+            if (lastFilter.getFilterType() == FilterType.CHILD) {
                 Accessor accessor = Accessor.parse(lastFilter.getExpression());
                 List<Context> resultList = pathExpression.subfilter(context).toList();
 

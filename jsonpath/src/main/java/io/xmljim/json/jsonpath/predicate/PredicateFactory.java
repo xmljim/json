@@ -3,7 +3,7 @@ package io.xmljim.json.jsonpath.predicate;
 import io.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.predicate.expression.Expression;
-import io.xmljim.json.jsonpath.predicate.expression.ExpressionType;
+import io.xmljim.json.jsonpath.util.DataType;
 
 import java.util.function.Predicate;
 
@@ -43,7 +43,7 @@ public class PredicateFactory {
     }
 
     private static Predicate<Context> checkForIsNotNullPredicate(Expression left) {
-        if (left.type() == ExpressionType.CONTEXT) {
+        if (left.type() == DataType.CONTEXT) {
             return new IsNotNullPredicate(left, null);
         } else {
             throw new JsonPathExpressionException(left.getExpression(), 0, "Unknown Predicate Type");

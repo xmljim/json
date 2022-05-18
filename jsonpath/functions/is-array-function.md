@@ -4,9 +4,13 @@ Evaluates the context element's node type if it is an array type
 
 ## Syntax
 
-```js
-is - array()
 ```
+is-array()
+```
+
+## Input Type
+
+[`ANY`] Evaluates each context node's type value to determine if it's an array
 
 ## Arguments
 

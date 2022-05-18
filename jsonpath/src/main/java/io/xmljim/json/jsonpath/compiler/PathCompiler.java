@@ -4,7 +4,7 @@ import io.xmljim.json.jsonpath.filter.Filter;
 import io.xmljim.json.jsonpath.filter.FilterFactory;
 import io.xmljim.json.jsonpath.filter.FilterStream;
 import io.xmljim.json.jsonpath.filter.FilterType;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 
 class PathCompiler extends Compiler<FilterStream> {
     private final FilterStream sequence = new FilterStream();
@@ -44,7 +44,7 @@ class PathCompiler extends Compiler<FilterStream> {
 
     @Override
     public void applyToken() {
-        sequence.add(FilterFactory.newOperator(getTokenString(), getGlobal()));
+        sequence.add(FilterFactory.newFilter(getTokenString(), getGlobal()));
         clearToken();
     }
 
@@ -217,7 +217,7 @@ class PathCompiler extends Compiler<FilterStream> {
     }
 
     private FilterType getLastFilterType() {
-        return getLastSequence() == null ? FilterType.INVALID : getLastSequence().getOperatorType();
+        return getLastSequence() == null ? FilterType.INVALID : getLastSequence().getFilterType();
     }
 
     private boolean shouldBeSubscripted() {

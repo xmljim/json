@@ -3,7 +3,8 @@ package io.xmljim.json.jsonpath.predicate.expression;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.function.FunctionFactory;
 import io.xmljim.json.jsonpath.function.JsonPathFunction;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.DataType;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,7 +26,7 @@ public class FunctionExpression extends CachedExpression {
     }
 
     @Override
-    public ExpressionType type() {
-        return ExpressionType.FUNCTION;
+    public DataType type() {
+        return DataType.FUNCTION;
     }
 }

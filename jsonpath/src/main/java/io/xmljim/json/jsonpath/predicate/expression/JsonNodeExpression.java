@@ -1,7 +1,8 @@
 package io.xmljim.json.jsonpath.predicate.expression;
 
 import io.xmljim.json.jsonpath.context.Context;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.DataType;
+import io.xmljim.json.jsonpath.util.Global;
 import io.xmljim.json.model.JsonNode;
 
 import java.util.List;
@@ -28,8 +29,8 @@ class JsonNodeExpression extends AbstractExpression {
     }
 
     @Override
-    public ExpressionType type() {
-        return ExpressionType.NODE;
+    public DataType type() {
+        return DataType.NODE;
     }
 
     @Override

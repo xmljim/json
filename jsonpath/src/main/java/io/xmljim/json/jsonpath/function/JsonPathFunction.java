@@ -1,6 +1,7 @@
 package io.xmljim.json.jsonpath.function;
 
 import io.xmljim.json.jsonpath.context.Context;
+import io.xmljim.json.jsonpath.util.Global;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +13,8 @@ public interface JsonPathFunction extends Function<Stream<Context>, Stream<Conte
     List<Argument<?, ?>> arguments();
 
     String name();
+
+    Global getGlobal();
 
     @SuppressWarnings("unchecked")
     default <T, E, R extends Argument<E, R>> Optional<T> getArgument(String argName) {

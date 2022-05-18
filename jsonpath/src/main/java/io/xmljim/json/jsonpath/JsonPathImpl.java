@@ -9,7 +9,7 @@ import io.xmljim.json.factory.parser.ParserFactory;
 import io.xmljim.json.jsonpath.compiler.Compiler;
 import io.xmljim.json.jsonpath.context.Context;
 import io.xmljim.json.jsonpath.filter.FilterStream;
-import io.xmljim.json.jsonpath.variables.Global;
+import io.xmljim.json.jsonpath.util.Global;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.JsonNode;
 import io.xmljim.json.service.ServiceManager;

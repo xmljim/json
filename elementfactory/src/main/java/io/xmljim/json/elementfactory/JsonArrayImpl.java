@@ -131,8 +131,15 @@ class JsonArrayImpl extends AbstractJsonNode implements JsonArray {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof JsonArrayImpl jsonArray)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof JsonArrayImpl jsonArray)) {
+            return false;
+        }
+
+        System.out.printf("equals array: %1$d %2$d", valueList, jsonArray.valueList);
+        System.out.println();
         return Objects.equals(valueList, jsonArray.valueList);
     }
 
@@ -143,11 +150,6 @@ class JsonArrayImpl extends AbstractJsonNode implements JsonArray {
         }
 
         return false;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(valueList, parent());
     }
 
     @Override

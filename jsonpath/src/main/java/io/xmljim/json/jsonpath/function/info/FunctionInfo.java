@@ -2,7 +2,7 @@ package io.xmljim.json.jsonpath.function.info;
 
 import io.xmljim.json.jsonpath.JsonPathException;
 import io.xmljim.json.jsonpath.function.JsonPathFunction;
-import io.xmljim.json.jsonpath.variables.BuiltIns;
+import io.xmljim.json.jsonpath.util.BuiltIns;
 import io.xmljim.json.model.JsonArray;
 import io.xmljim.json.model.JsonElement;
 import io.xmljim.json.model.JsonObject;
