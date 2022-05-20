@@ -16,9 +16,11 @@
         <module name="jsonfactory" />
         <module name="mapper" />
         <module name="elementfactory" />
-        <module name="TestModule" />
         <module name="merger" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="TestModule" target="17" />
+    </bytecodeTargetLevel>
   </component>
 </project>
