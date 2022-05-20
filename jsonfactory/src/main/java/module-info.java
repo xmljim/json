@@ -1,16 +1,14 @@
-module io.xmljim.jsonfactory {
-    requires transitive io.xmljim.jsonmodel;
+module io.github.xmljim.json.factory {
+    requires transitive io.github.xmljim.json.model;
 
-    exports io.xmljim.json.factory.mapper;
-    exports io.xmljim.json.factory.mapper.annotation;
-    exports io.xmljim.json.factory.model;
-    exports io.xmljim.json.factory.parser;
-    exports io.xmljim.json.factory.parser.event;
-    exports io.xmljim.json.factory.merge;
-    exports io.xmljim.json.factory.merge.strategy;
-    exports io.xmljim.json.service;
-    exports io.xmljim.json.service.exception;
-    exports io.xmljim.json.factory.jsonpath;
-
-
+    exports io.github.xmljim.json.factory.mapper;
+    exports io.github.xmljim.json.factory.mapper.annotation;
+    exports io.github.xmljim.json.factory.model;
+    exports io.github.xmljim.json.factory.parser;
+    exports io.github.xmljim.json.factory.parser.event;
+    exports io.github.xmljim.json.factory.merge;
+    exports io.github.xmljim.json.factory.merge.strategy;
+    exports io.github.xmljim.json.service;
+    exports io.github.xmljim.json.service.exception;
+    exports io.github.xmljim.json.factory.jsonpath;
 }

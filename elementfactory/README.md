@@ -1,7 +1,7 @@
 # ElementFactory
 
-This is a default reference implementation of the `io.xmljim.json.factory.model.ElementFactory` service. There is only
-one public class, `io.xmljim.json.elementfactory.ElementFactoryImpl`, which implements the service, and provides methods
+This is a default reference implementation of the `ElementFactory` service. There is only
+one public class, `ElementFactoryImpl`, which implements the service, and provides methods
 and a default implementation of the JSON Model.
 
 This module includes transitive dependencies on `jsonfactory` and `model` modules. As a result, once loaded, you can

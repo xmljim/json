@@ -3,13 +3,13 @@
 The `JsonFactory` module acts as the orchestration layer between various modules by exposing interfaces and services
 that are provided by different modules.
 
-All services typically follow a *Factory* design pattern and all extend the `io.xmljim.json.service.JsonService`. For
+All services typically follow a *Factory* design pattern and all extend the `JsonService`. For
 example, the `ElementFactory` interface extends `JsonService` and provides methods for creating concrete instances of
 the JSON Model.
 
 ## ServiceManager
 
-The `io.xmljim.json.service.ServiceManager` class provides static methods for instantiating *Service Providers*. Service
+The `ServiceManager` class provides static methods for instantiating *Service Providers*. Service
 Providers are implementations for each `JsonService` sub-interface.
 
 The primary methods for creating Service Provider instances are:
@@ -51,8 +51,8 @@ the `ElementFactory`, which is used to instantiate concrete JSON Model classes a
 class might look like:
 
 ```java
-import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.service.JsonServiceProvider;
+import ElementFactory;
+import JsonServiceProvider;
 
 @JsonServiceProvider(service = ElementFactory.class, version = "2.0.1")
 public class MyElementFactory implements ElementFactory {
@@ -69,10 +69,10 @@ and a `version` that indicates the implementation version.
 The last step is to expose the Service Provider in your module's `module-info` file:
 
 ```java
-import io.xmljim.json.factory.model.ElementFactory;
+import ElementFactory;
 
 module myjson.elementfactory {
-    requires transitive io.xmljim.jsonfactory; //note this will also pull in the JSON Model
+    requires transitive io.github.xmljim.json.factory; //note this will also pull in the JSON Model
     //export your package(s)
     exports your.package.name.a;
     exports your.package.name.b;

@@ -1,10 +1,10 @@
 package io.xmljim.json.parsertest;
 
-import io.xmljim.json.factory.parser.InputData;
-import io.xmljim.json.factory.parser.Parser;
-import io.xmljim.json.factory.parser.ParserFactory;
-import io.xmljim.json.model.JsonObject;
-import io.xmljim.json.service.ServiceManager;
+import io.github.xmljim.json.factory.parser.InputData;
+import io.github.xmljim.json.factory.parser.Parser;
+import io.github.xmljim.json.factory.parser.ParserFactory;
+import io.github.xmljim.json.model.JsonObject;
+import io.github.xmljim.json.service.ServiceManager;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;

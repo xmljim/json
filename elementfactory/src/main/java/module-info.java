@@ -1,8 +1,8 @@
-import io.xmljim.json.elementfactory.ElementFactoryImpl;
-import io.xmljim.json.factory.model.ElementFactory;
+import io.github.xmljim.json.elementfactory.ElementFactoryImpl;
+import io.github.xmljim.json.factory.model.ElementFactory;
 
-module io.xmljim.json.elementfactory {
-    requires transitive io.xmljim.jsonfactory;
-    opens io.xmljim.json.elementfactory;
+module io.github.xmljim.json.elementfactory {
+    requires transitive io.github.xmljim.json.factory;
+    opens io.github.xmljim.json.elementfactory;
     provides ElementFactory with ElementFactoryImpl;
 }

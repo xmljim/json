@@ -1,22 +1,22 @@
-module io.xmljim.json.jsonpathtest {
+module io.github.xmljim.json.jsonpath.test {
     //transitive dependencies on implementation modules for testing
-    requires transitive io.xmljim.json.mapper;
-    requires transitive io.xmljim.json.elementfactory;
-    requires transitive io.xmljim.jsonparser;
+    requires transitive io.github.xmljim.json.mapper;
+    requires transitive io.github.xmljim.json.elementfactory;
+    requires transitive io.github.xmljim.json.parser;
     //transitive dependency on "main"
-    requires transitive io.xmljim.json.jsonpath;
+    requires transitive io.github.xmljim.json.jsonpath;
 
     //These dependencies are needed to run tests
     requires org.junit.jupiter.api;
     requires org.junit.jupiter.engine;
 
     //exposes test classes to Jupiter tests
-    opens io.xmljim.json.jsonpathtest;
-    opens io.xmljim.json.jsonpathtest.predicate;
-    opens io.xmljim.json.jsonpathtest.compiler;
-    opens io.xmljim.json.jsonpathtest.function;
-    opens io.xmljim.json.jsonpathtest.function.predicate;
-    opens io.xmljim.json.jsonpathtest.predicate.expression;
-    opens io.xmljim.json.jsonpathtest.function.node;
-    opens io.xmljim.json.jsonpathtest.filter;
+    opens io.github.xmljim.json.jsonpath.test;
+    opens io.github.xmljim.json.jsonpath.test.predicate;
+    opens io.github.xmljim.json.jsonpath.test.compiler;
+    opens io.github.xmljim.json.jsonpath.test.function;
+    opens io.github.xmljim.json.jsonpath.test.function.predicate;
+    opens io.github.xmljim.json.jsonpath.test.predicate.expression;
+    opens io.github.xmljim.json.jsonpath.test.function.node;
+    opens io.github.xmljim.json.jsonpath.test.filter;
 }

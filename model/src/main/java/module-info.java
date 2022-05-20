@@ -1,4 +1,4 @@
-module io.xmljim.jsonmodel {
-    exports io.xmljim.json.model;
-    exports io.xmljim.json.exception;
+module io.github.xmljim.json.model {
+    exports io.github.xmljim.json.model;
+    exports io.github.xmljim.json.exception;
 }

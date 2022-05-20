@@ -1,3 +1,4 @@
 module TestModule {
-    requires transitive io.xmljim.jsonparser;
+    requires transitive io.github.xmljim.json.parser;
+    requires transitive io.github.xmljim.json.jsonpath;
 }

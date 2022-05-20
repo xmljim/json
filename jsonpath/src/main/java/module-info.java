@@ -1,34 +1,36 @@
-import io.xmljim.json.factory.jsonpath.JsonPathFactory;
-import io.xmljim.json.factory.mapper.MapperFactory;
-import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.factory.parser.ParserFactory;
-import io.xmljim.json.jsonpath.JsonPathFactoryImpl;
+import io.github.xmljim.json.factory.jsonpath.JsonPathFactory;
+import io.github.xmljim.json.factory.mapper.MapperFactory;
+import io.github.xmljim.json.factory.model.ElementFactory;
+import io.github.xmljim.json.factory.parser.ParserFactory;
+import io.github.xmljim.json.jsonpath.JsonPathFactoryImpl;
 
-module io.xmljim.json.jsonpath {
+module io.github.xmljim.json.jsonpath {
     //transitive dependencies
-    requires transitive io.xmljim.jsonfactory;
+    requires transitive io.github.xmljim.json.factory;
 
     // limit access to jsonfactory module: Require consumers to go through ServiceManager;
     // can't access public classes directly
     // however - important that packages are available to testing module at compile time.
-    opens io.xmljim.json.jsonpath to io.xmljim.jsonfactory;
-    exports io.xmljim.json.jsonpath to io.xmljim.json.jsonpathtest;
-    opens io.xmljim.json.jsonpath.function to io.xmljim.jsonfactory;
-    exports io.xmljim.json.jsonpath.function to io.xmljim.json.jsonpathtest;
+    opens io.github.xmljim.json.jsonpath to io.github.xmljim.json.factory;
+
+    //export function package globally so that custom functions can be created;
+    exports io.github.xmljim.json.jsonpath.function;
 
     //exports for testing only - not intended for public consumption
-    exports io.xmljim.json.jsonpath.function.predicate to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.function.node to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.function.aggregate to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.function.info to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.function.document to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.function.string to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.util to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.context to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.filter to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.compiler to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.predicate to io.xmljim.json.jsonpathtest;
-    exports io.xmljim.json.jsonpath.predicate.expression to io.xmljim.json.jsonpathtest;
+    exports io.github.xmljim.json.jsonpath to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.function.predicate to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.function.node to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.function.aggregate to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.function.info to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.function.document to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.function.string to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.util to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.context to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.filter to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.compiler to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.predicate to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.predicate.expression to io.github.xmljim.json.jsonpath.test;
+    exports io.github.xmljim.json.jsonpath.function.date to io.github.xmljim.json.jsonpath.test;
 
     //Ensure that we have at least one implementation of these services on the classpath...
     uses ElementFactory;

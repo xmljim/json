@@ -1,11 +1,11 @@
-import io.xmljim.json.factory.mapper.MapperFactory;
-import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.mapper.MapperFactoryImpl;
+import io.github.xmljim.json.factory.mapper.MapperFactory;
+import io.github.xmljim.json.factory.model.ElementFactory;
+import io.github.xmljim.json.mapper.MapperFactoryImpl;
 
-module io.xmljim.json.mapper {
-    requires transitive io.xmljim.jsonfactory;
-    opens io.xmljim.json.mapper;
-    exports io.xmljim.json.mapper to io.xmljim.json.mapper.test;
+module io.github.xmljim.json.mapper {
+    requires transitive io.github.xmljim.json.factory;
+    opens io.github.xmljim.json.mapper;
+    exports io.github.xmljim.json.mapper to io.xmljim.json.mapper.test;
     provides MapperFactory with MapperFactoryImpl;
     uses ElementFactory;
 }

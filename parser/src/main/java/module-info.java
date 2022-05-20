@@ -1,10 +1,10 @@
-import io.xmljim.json.factory.model.ElementFactory;
-import io.xmljim.json.factory.parser.ParserFactory;
-import io.xmljim.json.parser.ParserFactoryImpl;
+import io.github.xmljim.json.factory.model.ElementFactory;
+import io.github.xmljim.json.factory.parser.ParserFactory;
+import io.github.xmljim.json.parser.ParserFactoryImpl;
 
-module io.xmljim.jsonparser {
-    requires transitive io.xmljim.jsonfactory;
-    opens io.xmljim.json.parser;
+module io.github.xmljim.json.parser {
+    requires transitive io.github.xmljim.json.factory;
+    opens io.github.xmljim.json.parser;
     provides ParserFactory with ParserFactoryImpl;
 
     uses ElementFactory;
