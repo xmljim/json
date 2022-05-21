@@ -1,18 +1,13 @@
 package io.github.xmljim.json.jsonpath.function;
 
-import io.github.xmljim.json.jsonpath.function.info.FunctionInfo;
 import io.github.xmljim.json.jsonpath.JsonPathException;
 import io.github.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
+import io.github.xmljim.json.jsonpath.function.info.FunctionInfo;
 import io.github.xmljim.json.jsonpath.util.Global;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Deque;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,8 +24,8 @@ public class FunctionFactory {
             String fxName = matcher.group("function");
 
             FunctionInfo functionInfo = global.getFunctionRegistry()
-                    .getFunctionInfo(fxName)
-                    .orElseThrow(() -> new JsonPathException("Function not found: " + fxName));
+                .getFunctionInfo(fxName)
+                .orElseThrow(() -> new JsonPathException("Function not found: " + fxName));
 
             String argsString = matcher.group("args");
 
@@ -55,8 +50,8 @@ public class FunctionFactory {
         while (matcher.find()) {
             if (matcher.group() != null && !"".equals(matcher.group())) {
                 argExpressions.add(matcher.group().strip().endsWith(",") ?
-                        matcher.group().strip().substring(0, matcher.group().strip().length() - 1) :
-                        matcher.group().strip());
+                    matcher.group().strip().substring(0, matcher.group().strip().length() - 1) :
+                    matcher.group().strip());
             }
         }
         if (functionInfo.arguments().length != 0) {
@@ -108,9 +103,7 @@ public class FunctionFactory {
             }
         } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
                  IllegalAccessException e) {
-            e.printStackTrace();
+            throw new JsonPathException(e);
         }
-
-        return null;
     }
 }

@@ -40,8 +40,8 @@ abstract class AbstractJsonValue<T> extends AbstractJsonElement implements JsonV
     @Override
     @SuppressWarnings("unchecked")
     public boolean isEquivalent(JsonElement other) {
-        if (other instanceof JsonValue<?> value) {
-            return compareTo((JsonValue<T>) value) == 0;
+        if (other instanceof JsonValue<?> val) {
+            return compareTo((JsonValue<T>) val) == 0;
         }
 
         return false;

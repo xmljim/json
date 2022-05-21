@@ -12,6 +12,7 @@ class NumberValue extends AbstractJsonValue<Number> {
 
     }
 
+    @Override
     public Number get() {
         return switch (type()) {
             case INTEGER -> super.get().intValue();

@@ -96,7 +96,7 @@ public class ResizableByteBuffer {
             }
         } catch (final IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new JsonParserException(e);
         }
 
         return buffer;

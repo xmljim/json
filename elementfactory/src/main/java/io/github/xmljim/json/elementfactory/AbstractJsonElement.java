@@ -7,7 +7,7 @@ abstract class AbstractJsonElement {
     private final NodeType type;
     private final JsonElement parent;
 
-    public AbstractJsonElement(NodeType type, JsonElement parent) {
+    protected AbstractJsonElement(NodeType type, JsonElement parent) {
         this.type = type;
         this.parent = parent;
     }

@@ -48,13 +48,13 @@ final class Version implements Comparable<Version> {
 
         if (matcher.matches()) {
 
-            int major = Integer.parseInt(matcher.group(VersionPatterns.MAJOR));
-            int minor = matcher.group(VersionPatterns.MINOR) != null ? Integer.parseInt(matcher.group(VersionPatterns.MINOR)) : 0;
-            int patch = matcher.group(VersionPatterns.PATCH) != null ? Integer.parseInt(matcher.group(VersionPatterns.PATCH)) : 0;
+            int maj = Integer.parseInt(matcher.group(VersionPatterns.MAJOR));
+            int min = matcher.group(VersionPatterns.MINOR) != null ? Integer.parseInt(matcher.group(VersionPatterns.MINOR)) : 0;
+            int pat = matcher.group(VersionPatterns.PATCH) != null ? Integer.parseInt(matcher.group(VersionPatterns.PATCH)) : 0;
 
-            setMajor(major);
-            setMinor(minor);
-            setPatch(patch);
+            setMajor(maj);
+            setMinor(min);
+            setPatch(pat);
             setPreRelease(matcher.group(VersionPatterns.PRERELEASE));
             setBuildMetadata(matcher.group(VersionPatterns.BUILDMETADATA));
         } else {
@@ -290,8 +290,7 @@ final class Version implements Comparable<Version> {
     @Override
     public String toString() {
 
-        //noinspection StringBufferReplaceableByString,StringBufferMayBeStringBuilder
-        StringBuffer builder = new StringBuffer();
+        StringBuilder builder = new StringBuilder();
 
         builder.append(getMajor()).append(".")
             .append(getMinor()).append(".")

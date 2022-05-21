@@ -83,7 +83,7 @@ class MemberHandler {
                 method.ifPresent(method1 -> setMethodValue(method1, value));
             }
         } catch (NoSuchFieldException e) {
-            e.printStackTrace();
+            throw new JsonMapperException(e);
         }
     }
 

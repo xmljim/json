@@ -125,15 +125,13 @@ public abstract class Context {
         root.variables.put(key, context);
     }
 
-    public void getVariable(String key) {
-        root.variables.get(key);
+    public Context getVariable(String key) {
+        return root.variables.get(key);
     }
 
     @Override
     public boolean equals(Object other) {
         if (other instanceof Context o) {
-//            System.out.printf("equals: %1$d <=> %2$d", get().hashCode(), o.get().hashCode());
-//            System.out.println();
             return Objects.equals(get(), o.get());
         } else {
             return false;
