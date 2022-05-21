@@ -7,7 +7,7 @@
     <groupId>io.github.xmljim.json</groupId>
     <artifactId>json-library</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <modules>
         <module>model</module>
         <module>jsonfactory</module>
@@ -183,6 +183,11 @@
                     <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                     <autoReleaseAfterClose>true</autoReleaseAfterClose>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>versions-maven-plugin</artifactId>
+                <version>2.11.0</version>
             </plugin>
             <!--           <plugin>
                            <groupId>org.apache.maven.plugins</groupId>

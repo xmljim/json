@@ -94,3 +94,13 @@ settings.xml
 /target/nexus-staging/deferred/io/github/xmljim/json/TestModule/1.0-SNAPSHOT/TestModule-1.0-SNAPSHOT-javadoc.jar.asc
 /target/nexus-staging/deferred/io/github/xmljim/json/TestModule/1.0-SNAPSHOT/TestModule-1.0-SNAPSHOT-sources.jar
 /target/nexus-staging/deferred/io/github/xmljim/json/TestModule/1.0-SNAPSHOT/TestModule-1.0-SNAPSHOT-sources.jar.asc
+/target/json-library-1.0.0+rc1.pom
+/target/json-library-1.0.0+rc1.pom.asc
+/target/json-library-1.0.0.pom
+/target/json-library-1.0.0.pom.asc
+/elementfactory/pom.xml.versionsBackup
+/jsonfactory/pom.xml.versionsBackup
+/jsonpath/pom.xml.versionsBackup
+/mapper/pom.xml.versionsBackup
+/merger/pom.xml.versionsBackup
+/parser/pom.xml.versionsBackup
