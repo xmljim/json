@@ -1,13 +1,13 @@
 name: Publish package to the Maven Central Repository and GitHub Packages
 on:
   release:
-    types: [created]
+    types: [ created ]
 jobs:
   publish:
-    runs-on: ubuntu-latest 
-    permissions: 
+    runs-on: ubuntu-latest
+    permissions:
       contents: read
-      packages: write 
+      packages: write
     steps:
       - uses: actions/checkout@v3
       - name: Set up Java for publishing to Maven Central Repository
@@ -32,6 +32,6 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
       - name: Publish to GitHub Packages
-        run: mvn deploy --batch-mode --activate-profiles release --no-transfer-progress
+        run: mvn deploy --batch-mode --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
