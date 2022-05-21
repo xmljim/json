@@ -21,6 +21,7 @@
             <groupId>io.github.xmljim.json</groupId>
             <artifactId>elementfactory</artifactId>
             <version>1.0.1</version>
+            <scope>test</scope>
         </dependency>
 
         <dependency>

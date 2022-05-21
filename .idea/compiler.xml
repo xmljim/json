@@ -20,6 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="json" target="17" />
       <module name="TestModule" target="17" />
     </bytecodeTargetLevel>
   </component>
