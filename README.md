@@ -1,5 +1,4 @@
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-[![Maven](https://badgen.net/badge/icon/maven?icon=maven&label)](https://https://maven.apache.org/)
 [![Java CI with Maven](https://github.com/xmljim/json/actions/workflows/maven-build.yml/badge.svg?branch=master)]
 (https://github.com/xmljim/json/actions/workflows/maven-build.yml)
 [![CodeQL](https://github.com/xmljim/json/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/xmljim/json/actions/workflows/codeql-analysis.yml)
