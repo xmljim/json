@@ -7,7 +7,7 @@
     <groupId>io.github.xmljim.json</groupId>
     <artifactId>json-library</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <modules>
         <module>model</module>
         <module>jsonfactory</module>
