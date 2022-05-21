@@ -13,9 +13,6 @@ import java.util.stream.Collectors;
 final class ClasspathScanner {
     private final Predicate<Class<?>> classFilter;
 
-    public ClasspathScanner(final Predicate<Class<?>> classFilter) {
-        this.classFilter = classFilter;
-    }
 
     public ClasspathScanner() {
         this.classFilter = clazz -> clazz.isAnnotationPresent(JsonServiceProvider.class);
@@ -32,6 +29,7 @@ final class ClasspathScanner {
                 .filter(provides -> isJsonService(provides.service()))
                 .collect(Collectors.toSet());
 
+            @SuppressWarnings("unchecked")
             Set<AjpServiceClass> providerClasses = jsonServiceProviders.stream()
                 .flatMap(provides -> provides.providers().stream())
                 .map(this::loadClass)
@@ -52,19 +50,10 @@ final class ClasspathScanner {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    private Class<? extends JsonService> loadServiceClass(String className) {
-        try {
-            return (Class<? extends JsonService>) Class.forName(className);
-        } catch (ClassNotFoundException e) {
-            throw new JsonPluginException(e);
-        }
-    }
 
     private boolean isJsonService(String className) {
         Class<?> theClass = loadClass(className);
-        boolean isService = Arrays.stream(theClass.getInterfaces()).anyMatch(aClass -> aClass.getName().equals(JsonService.class.getName()));
-        return isService;
+        return Arrays.stream(theClass.getInterfaces()).anyMatch(aClass -> aClass.getName().equals(JsonService.class.getName()));
     }
 
     public record AjpServiceClass(JsonServiceProvider serviceProvider, Set<Class<?>> serviceClasses) {
