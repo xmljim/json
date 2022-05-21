@@ -7,3 +7,4 @@ Now it's using Java 17, taking advantage of numerous features from Java 9 and on
 implementing a fully modular library.
 
 [![Java CI with Maven](https://github.com/xmljim/json/actions/workflows/maven-build.yml/badge.svg?branch=master)](https://github.com/xmljim/json/actions/workflows/maven-build.yml)
+[![CodeQL](https://github.com/xmljim/json/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/xmljim/json/actions/workflows/codeql-analysis.yml)
