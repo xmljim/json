@@ -18,12 +18,25 @@
         <module>jsonpath</module>
     </modules>
 
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>A modern modular Java 17 JSON Library</description>
+    <url>https://github.com/xmljim/json</url>
+
+
     <developers>
         <developer>
             <name>Jim Earley</name>
             <email>xml.jim@gmail.com</email>
+            <organization>Self</organization>
+            <organizationUrl>https://github.com/xmljim</organizationUrl>
         </developer>
     </developers>
+
+    <scm>
+        <connection>https://github.com/xmljim/json.git</connection>
+        <developerConnection>scm:git:ssh://github.com:xmljim/json.git</developerConnection>
+        <url>https://github.com/xmljim/json</url>
+    </scm>
 
     <licenses>
         <license>
