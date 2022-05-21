@@ -7,7 +7,9 @@ on:
   # Triggers the workflow on push or pull request events but only for the master branch
   check_run:
     types: [ rerequested, completed ]
-
+    permissions:
+      contents: read
+      packages: write
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
@@ -20,6 +22,7 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - uses: actions/checkout@v3
       - name: Set up Java for publishing to GitHub Packages
         uses: actions/setup-java@v3
         with:
