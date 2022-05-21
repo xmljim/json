@@ -60,7 +60,7 @@ public class ByteSequence {
      * Private constructor. Use one of the static methods to instantiate the ByteSequence.
      */
     private ByteSequence() {
-        // TODO Auto-generated constructor stub
+        //IGNORE
     }
 
     /**

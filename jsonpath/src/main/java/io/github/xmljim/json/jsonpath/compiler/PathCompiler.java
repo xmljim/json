@@ -166,7 +166,6 @@ class PathCompiler extends Compiler<FilterStream> {
     }
 
     private void handleRightParen() {
-        //TODO: handle function logic
         if (lastEnclosure() == LEFT_PAREN) {
             popEnclosure();
             appendCurrentToToken();

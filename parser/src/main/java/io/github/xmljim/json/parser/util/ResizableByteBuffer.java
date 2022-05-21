@@ -78,7 +78,6 @@ public class ResizableByteBuffer {
                 throw new JsonParserException("No bytes read");
             }
         } catch (final IOException e) {
-            // TODO Auto-generated catch block
             throw new JsonParserException(e);
         }
         buffer.add(bytes);
@@ -95,7 +94,6 @@ public class ResizableByteBuffer {
                 buffer.trim();
             }
         } catch (final IOException e) {
-            // TODO Auto-generated catch block
             throw new JsonParserException(e);
         }
 

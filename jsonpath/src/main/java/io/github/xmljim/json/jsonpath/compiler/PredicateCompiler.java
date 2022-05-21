@@ -17,7 +17,7 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     private Expression right;
     private PredicateOperator operator;
     private boolean negate;
-    private boolean nestedPredicate;  //TODO: handle "nested" predicate for left/right expressions
+    private boolean nestedPredicate;
     private PredicateJoin predicateJoin = PredicateJoin.NONE;
 
     public PredicateCompiler(PathExpression expression, Global global) {
@@ -216,7 +216,6 @@ class PredicateCompiler extends Compiler<Predicate<Context>> {
     }
 
     private void handleRightParen() {
-        //TODO: handle function logic
         if (lastEnclosure() == LEFT_PAREN) {
             popEnclosure();
             appendCurrentToToken();

@@ -10,7 +10,6 @@ import io.github.xmljim.json.jsonpath.util.Global;
 
 import java.util.List;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
 
 abstract class AbstractPredicateFunction extends AbstractJsonPathFunction implements PredicateFunction {
     public AbstractPredicateFunction(String name, List<Argument<?, ?>> arguments, Global global) {
@@ -29,15 +28,4 @@ abstract class AbstractPredicateFunction extends AbstractJsonPathFunction implem
         return getPredicateArgument(name).element();
     }
 
-    public Stream<Context> testPredicate(String name, Context input) {
-        Predicate<Context> predicate = getPredicate(name);
-
-        if (input.type().isArray()) {
-            return input.stream().filter(predicate);
-        } else if (input.type().isObject()) {
-            return predicate.test(input) ? Stream.of(input) : Stream.empty();
-        }
-        //TODO: revisit this
-        return Stream.empty();
-    }
 }

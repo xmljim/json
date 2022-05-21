@@ -151,7 +151,7 @@ public class ByteConstants {
     public static final byte END_ARRAY = RIGHT_SQUARE_BRACKET;
 
     private ByteConstants() {
-        // TODO Auto-generated constructor stub
+        //IGNORE
     }
 
 }

@@ -22,7 +22,7 @@ package io.github.xmljim.json.parser.util;
 public class CharConstants {
 
     private CharConstants() {
-        // TODO Auto-generated constructor stub
+        //PRIVATE CONSTRUCTOR
     }
 
     public static final char TAB = '\t';
