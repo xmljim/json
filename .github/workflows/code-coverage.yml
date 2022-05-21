@@ -31,7 +31,7 @@ jobs:
           distribution: 'zulu'
           java-version: ${{ matrix.java-version }}
       - name: Generate Coverage Report
-        run: mvn clean verify
+        run: mvn --no-transfer-progress --batch-mode clean verify
       - name: Archive Jacoco reports
         uses: actions/upload-artifact@v3
         with:
