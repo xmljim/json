@@ -26,6 +26,6 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
       - name: Publish to GitHub Packages
-        run: mvn deploy --batch-mode --activate-profiles github --no-transfer-progress
+        run: mvn deploy --batch-mode -Pgithub --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
