@@ -15,3 +15,9 @@ implementing a fully modular library.
 [![CodeQL](https://github.com/xmljim/json/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/xmljim/json/actions/workflows/codeql-analysis.yml)
 
 [![Java CI with Maven](https://github.com/xmljim/json/actions/workflows/maven-build.yml/badge.svg)](https://github.com/xmljim/json/actions/workflows/maven-build.yml)
+
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=xmljim_json&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=xmljim_json)
+
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=xmljim_json&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=xmljim_json)
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=xmljim_json&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=xmljim_json)
