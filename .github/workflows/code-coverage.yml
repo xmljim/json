@@ -24,6 +24,11 @@ jobs:
       JAVA_VERSION: ${{ matrix.java-version }}
 
     steps:
+      - id: install-secret-key
+        name: Install gpg secret key
+        run: |
+          cat <(echo -e "${{ secrets.OSSRH_GPG_SECRET_KEY }}") | gpg --batch --import
+          gpg --list-secret-keys --keyid-format LONG
       - uses: actions/checkout@v3
       - name: Set JDK ${{ matrix.java-version }}
         uses: actions/setup-java@v3
