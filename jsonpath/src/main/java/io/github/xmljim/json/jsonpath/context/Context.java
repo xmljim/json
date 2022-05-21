@@ -126,7 +126,7 @@ public abstract class Context {
     }
 
     public void getVariable(String key) {
-        root.variables.getOrDefault(key, null);
+        root.variables.get(key);
     }
 
     @Override

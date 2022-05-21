@@ -12,11 +12,12 @@ class EmptyPredicate extends AbstractFilterPredicate {
 
     @Override
     public boolean test(Context context) {
+        String unexpected = "Unexpected Error";
         if (rightSide().getContextType(context) != DataType.BOOLEAN) {
             throw new JsonPathExpressionException(rightSide().toString(), 0, "Expected a boolean test expression. Value argType is" + rightSide().getContextType(context));
         } else {
             boolean rightValue = (boolean) rightSide().getValue(context)
-                .orElseThrow(() -> new JsonPathExpressionException(toString(), 0, "Unexpected Error")); //shouldn't get here
+                .orElseThrow(() -> new JsonPathExpressionException(toString(), 0, unexpected)); //shouldn't get here
 
             DataType leftType = leftSide().getContextType(context);
 
@@ -27,10 +28,10 @@ class EmptyPredicate extends AbstractFilterPredicate {
                     return String.valueOf(leftSide().getValue(context).orElse("")).isEmpty() == rightValue;
                 } else if (leftType.isArray() && leftSide().size(context) == 1) {
                     return leftSide().getContext(context).map(c -> context.get().asJsonArray().isEmpty() == rightValue)
-                        .orElseThrow(() -> new JsonPathExpressionException(toString(), 0, "Unexpected Error"));
+                        .orElseThrow(() -> new JsonPathExpressionException(toString(), 0, unexpected));
                 } else if (leftType.isObject() && leftSide().size(context) == 1) {
                     return leftSide().getContext(context).map(c -> context.get().asJsonObject().isEmpty() == rightValue)
-                        .orElseThrow(() -> new JsonPathExpressionException(toString(), 0, "Unexpected Error"));
+                        .orElseThrow(() -> new JsonPathExpressionException(toString(), 0, unexpected));
                 } else {
                     return !rightValue;
                 }

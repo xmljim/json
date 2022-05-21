@@ -53,7 +53,7 @@ final class ClasspathScanner {
 
     private boolean isJsonService(String className) {
         Class<?> theClass = loadClass(className);
-        return Arrays.stream(theClass.getInterfaces()).anyMatch(aClass -> aClass.getName().equals(JsonService.class.getName()));
+        return Arrays.stream(theClass.getInterfaces()).anyMatch(aClass -> aClass.isAssignableFrom(JsonService.class));
     }
 
     public record AjpServiceClass(JsonServiceProvider serviceProvider, Set<Class<?>> serviceClasses) {

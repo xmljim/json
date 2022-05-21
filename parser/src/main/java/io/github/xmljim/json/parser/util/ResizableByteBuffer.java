@@ -18,6 +18,8 @@
  */
 package io.github.xmljim.json.parser.util;
 
+import io.github.xmljim.json.factory.parser.JsonParserException;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
@@ -71,10 +73,13 @@ public class ResizableByteBuffer {
         final ResizableByteBuffer buffer = new ResizableByteBuffer();
         final byte[] bytes = new byte[DEFAULT_CAPACITY];
         try {
-            inputStream.read(bytes);
+            int readBytes = inputStream.read(bytes);
+            if (readBytes <= 0) {
+                throw new JsonParserException("No bytes read");
+            }
         } catch (final IOException e) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            throw new JsonParserException(e);
         }
         buffer.add(bytes);
         return buffer;

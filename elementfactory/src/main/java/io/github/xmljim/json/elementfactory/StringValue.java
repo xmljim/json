@@ -15,7 +15,7 @@ class StringValue extends AbstractJsonValue<String> {
     @Override
     public String toJsonString() {
         return "\"" + get()
-            .replaceAll("\"", "\\\\\"")
+            .replace("\"", "\\\\\"")
             + "\"";
     }
 

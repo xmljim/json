@@ -129,9 +129,7 @@ class JsonArrayImpl extends AbstractJsonNode implements JsonArray {
         if (!(o instanceof JsonArrayImpl jsonArray)) {
             return false;
         }
-
-        System.out.printf("equals array: %1$d %2$d", valueList, jsonArray.valueList);
-        System.out.println();
+        
         return Objects.equals(valueList, jsonArray.valueList);
     }
 

@@ -15,10 +15,6 @@ class JsonAssemblerImpl extends AbstractJsonAssembler {
     private long entities;
     private final Timer<JsonAssemblerImpl> assemblerTimer = new Timer<>();
 
-    public JsonAssemblerImpl() {
-
-    }
-
     @Override
     public void documentStart(NodeType type) {
         //result = (JsonNode) eventTimer.start(type == NodeType.ARRAY ? getElementFactory().newArray() : getElementFactory().newObject());
@@ -129,7 +125,7 @@ class JsonAssemblerImpl extends AbstractJsonAssembler {
 
     @Override
     public void newKey(String key) {
-
+        //no-op
     }
 
     @Override

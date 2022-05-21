@@ -9,7 +9,7 @@ public class JsonEventParserException extends JsonParserException {
 
     public JsonEventParserException(int lineNumber, int column, String message) {
         super(message + " [at line: " + lineNumber + "; col: " + column + "]");
-        this.line = line;
+        this.line = lineNumber;
         this.column = column;
     }
 

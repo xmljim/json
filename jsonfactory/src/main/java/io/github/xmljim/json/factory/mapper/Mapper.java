@@ -51,7 +51,7 @@ public interface Mapper {
      * @param jsonObject the JsonObject
      * @return a new Map instance
      */
-    Map<String, ?> toMap(JsonObject jsonObject);
+    Map<String, Object> toMap(JsonObject jsonObject);
 
     /**
      * Convert a JsonArray to a List

@@ -61,7 +61,7 @@ class DefaultMapper implements Mapper {
     }
 
     @Override
-    public Map<String, ?> toMap(JsonObject jsonObject) {
+    public Map<String, Object> toMap(JsonObject jsonObject) {
         Map<String, Object> newMap = new LinkedHashMap<>();
 
         jsonObject.keys().forEach(key -> {
@@ -74,7 +74,7 @@ class DefaultMapper implements Mapper {
     }
 
     @Override
-    public List<?> toList(JsonArray jsonArray) {
+    public List<Object> toList(JsonArray jsonArray) {
         return jsonArray.jsonValues().map(this::convertJsonValue).toList();
     }
 

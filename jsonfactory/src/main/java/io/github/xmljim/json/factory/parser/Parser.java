@@ -23,7 +23,7 @@ public interface Parser {
         try {
             result = future.get();
         } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
+            throw new JsonParserException(e);
         }
 
         return result;

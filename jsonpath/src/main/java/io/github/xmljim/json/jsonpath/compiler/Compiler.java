@@ -1,7 +1,7 @@
 package io.github.xmljim.json.jsonpath.compiler;
 
-import io.github.xmljim.json.jsonpath.filter.FilterStream;
 import io.github.xmljim.json.jsonpath.context.Context;
+import io.github.xmljim.json.jsonpath.filter.FilterStream;
 import io.github.xmljim.json.jsonpath.util.Global;
 
 import java.util.ArrayDeque;
@@ -96,7 +96,7 @@ public abstract class Compiler<T> {
     }
 
     public boolean isNextCharacter(Character c) {
-        return (peek() != null && peek() == c);
+        return (peek() != null && peek().equals(c));
     }
 
     public Character lastCharacter() {
@@ -104,7 +104,7 @@ public abstract class Compiler<T> {
     }
 
     public boolean isLastCharacter(Character c) {
-        return (lastCharacter() != null && lastCharacter() == c);
+        return (lastCharacter() != null && lastCharacter().equals(c));
     }
 
     public Character lastNonWhitespaceCharacter() {
@@ -188,7 +188,7 @@ public abstract class Compiler<T> {
     }
 
     public boolean isLastEnclosure(Character c) {
-        return lastEnclosure() != null && lastEnclosure() == c;
+        return lastEnclosure() != null && lastEnclosure().equals(c);
     }
 
     public void popEnclosure() {

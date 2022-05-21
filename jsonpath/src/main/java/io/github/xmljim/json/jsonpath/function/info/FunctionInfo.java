@@ -8,6 +8,7 @@ import io.github.xmljim.json.model.JsonElement;
 import io.github.xmljim.json.model.JsonObject;
 
 import java.util.Arrays;
+import java.util.Objects;
 
 public record FunctionInfo(String name, String description, String category, String classification,
                            Class<? extends JsonPathFunction> functionClass,
@@ -63,5 +64,18 @@ public record FunctionInfo(String name, String description, String category, Str
         return BuiltIns.isBuiltIn(name(), functionClass());
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        FunctionInfo that = (FunctionInfo) o;
+        return Objects.equals(name, that.name) && Objects.equals(description, that.description) && Objects.equals(category, that.category) && Objects.equals(classification, that.classification) && Objects.equals(functionClass, that.functionClass) && Arrays.equals(arguments, that.arguments);
+    }
 
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(name, description, category, classification, functionClass);
+        result = 31 * result + Arrays.hashCode(arguments);
+        return result;
+    }
 }
