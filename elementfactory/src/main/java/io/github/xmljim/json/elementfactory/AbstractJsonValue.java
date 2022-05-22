@@ -22,7 +22,7 @@ abstract class AbstractJsonValue<T> extends AbstractJsonElement implements JsonV
 
     @Override
     public int compareTo(JsonValue<T> o) {
-        return hashCode() - o.hashCode();
+        return this.hashCode() - (o == null ? -1 : o.hashCode());
     }
 
     @Override

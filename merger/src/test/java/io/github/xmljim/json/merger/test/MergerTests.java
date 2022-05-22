@@ -5,6 +5,7 @@ import io.github.xmljim.json.factory.merge.MergeProcessor;
 import io.github.xmljim.json.factory.parser.InputData;
 import io.github.xmljim.json.factory.parser.ParserFactory;
 import io.github.xmljim.json.model.JsonArray;
+import io.github.xmljim.json.model.JsonObject;
 import io.github.xmljim.json.service.ServiceManager;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -57,4 +58,34 @@ class MergerTests {
             fail(ioe);
         }
     }
+
+
+    @Test
+    @DisplayName("Simple Object Merge - Defaults")
+    void whenMergingObjectsWithNoConflicts_AndDefaultConfig_ShouldSeeAllElements() {
+
+        String primaryJson = """
+            {"foo": "bar", "bar": "baz"}
+            """;
+        String secondaryJson = """
+            {"type": "dog", "color": "black"}
+            """;
+
+        String expectedResult = """
+            {"foo": "bar", "bar": "baz", "type": "dog", "color": "black"}
+            """;
+
+        ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
+
+        JsonObject primary = factory.newParser().parse(InputData.of(primaryJson));
+        JsonObject secondary = factory.newParser().parse(InputData.of(secondaryJson));
+        JsonObject expected = factory.newParser().parse(InputData.of(expectedResult));
+
+        MergeFactory mergeFactory = ServiceManager.getProvider(MergeFactory.class);
+        MergeProcessor processor = mergeFactory.newMergeProcessor();
+        JsonObject actual = processor.merge(primary, secondary);
+
+        assertEquals(expected, actual);
+    }
+
 }
