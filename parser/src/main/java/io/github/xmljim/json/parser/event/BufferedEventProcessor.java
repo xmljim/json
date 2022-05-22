@@ -72,12 +72,15 @@ class BufferedEventProcessor extends BaseEventProcessor {
             }
 
             //fireDocumentEndEvent(lineNumber, column);
-
+            //inputStream.close();
         } catch (final IOException e) {
             throw new JsonEventParserException(e);
         }
+
+
         fireDocumentEndEvent(lineNumber, column);
         processorTimer.stop(this);
+
     }
 
     @Override

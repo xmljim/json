@@ -14,9 +14,9 @@ import java.nio.file.StandardOpenOption;
 
 public record InputData(InputStream inputStream) implements AutoCloseable {
 
-//    public InputStream getInputStream() {
-//        return inputStream;
-//    }
+    public InputStream getInputStream() {
+        return inputStream;
+    }
 
     public static InputData of(final String data) {
         return of(data, StandardCharsets.UTF_8);
@@ -63,6 +63,8 @@ public record InputData(InputStream inputStream) implements AutoCloseable {
 
     @Override
     public void close() throws Exception {
-        inputStream.close();
+        if (this.inputStream != null) {
+            inputStream.close();
+        }
     }
 }
