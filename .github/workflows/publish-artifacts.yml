@@ -21,7 +21,7 @@ jobs:
           gpg-private-key: ${{ secrets.OSSRH_GPG_SECRET_KEY }} # GPG Private Key to Import
           gpg-passphrase: MAVEN_GPG_PASSPHRASE
       - name: Publish to the Maven Central Repository
-        run: mvn deploy --batch-mode --activate-profiles release --no-transfer-progress
+        run: mvn deploy --batch-mode -Drepo=maven --no-transfer-progress
         env:
           MAVEN_USERNAME: ${{ secrets.OSSRH_USERNAME }}
           MAVEN_PASSWORD: ${{ secrets.OSSRH_PWD }}
@@ -32,6 +32,6 @@ jobs:
           java-version: '17'
           distribution: 'zulu'
       - name: Publish to GitHub Packages
-        run: mvn deploy --batch-mode --no-transfer-progress
+        run: mvn deploy --batch-mode -Drepo=github --no-transfer-progress
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
