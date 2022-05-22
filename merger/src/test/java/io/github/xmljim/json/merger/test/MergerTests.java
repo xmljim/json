@@ -15,7 +15,7 @@ import java.io.InputStream;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Merger Tests")
-public class MergerTests {
+class MergerTests {
 
     @Test
     @DisplayName("Create new MergeFactory")
@@ -52,7 +52,7 @@ public class MergerTests {
             JsonArray actualResult = mergeProcessor.merge(arrayA, arrayB);
 
             assertEquals(expectedResult, actualResult);
-            
+
         } catch (IOException ioe) {
             fail(ioe);
         }
