@@ -25,7 +25,6 @@ public interface Parser {
         } catch (InterruptedException | ExecutionException e) {
             throw new JsonParserException(e);
         }
-
         return result;
 
 //        return (T) getSettings().getAssembler().getResult();

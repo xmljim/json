@@ -5,9 +5,11 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ master ]
+    paths:
+      - '**.xml'
+      - '**.java'
   pull_request:
-    branches: [ master ]
+    branches: [ develop, master ]
 
 jobs:
   build:
@@ -15,12 +17,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'zulu'
-        cache: maven
-    - name: Test with Maven
-      run: mvn -B package --file pom.xml
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+          cache: maven
+      - name: Test with Maven
+        run: mvn -B verify package -Drepo=github --file pom.xml

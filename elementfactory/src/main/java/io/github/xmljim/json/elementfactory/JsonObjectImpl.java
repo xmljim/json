@@ -83,7 +83,7 @@ class JsonObjectImpl extends AbstractJsonNode implements JsonObject {
             //key size must be equivalent
             if (this.size() == compare.size()) {
                 //if key size is equivalent, then compare key values
-                keys().forEach(key -> {
+                this.keys().forEach(key -> {
                     if (getValue(key).compareTo(compare.getValue(key)) != 0) {
                         //increment the comparator value if values are not equal
                         comp.getAndIncrement();

@@ -8,7 +8,7 @@ import io.github.xmljim.json.model.NodeType;
 abstract class AbstractJsonNode extends AbstractJsonElement implements Comparable<JsonNode> {
     private final ElementFactory elementFactory;
 
-    public AbstractJsonNode(ElementFactory elementFactory, NodeType nodeType, JsonElement parent) {
+    protected AbstractJsonNode(ElementFactory elementFactory, NodeType nodeType, JsonElement parent) {
         super(nodeType, parent);
         this.elementFactory = elementFactory;
     }
