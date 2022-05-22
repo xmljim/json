@@ -10,7 +10,7 @@ abstract class AbstractJsonValue<T> extends AbstractJsonElement implements JsonV
 
     private final T value;
 
-    public AbstractJsonValue(NodeType type, JsonElement parent, T value) {
+    protected AbstractJsonValue(NodeType type, JsonElement parent, T value) {
         super(type, parent);
         this.value = value;
     }
