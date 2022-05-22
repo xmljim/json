@@ -25,4 +25,4 @@ jobs:
           distribution: 'zulu'
           cache: maven
       - name: Test with Maven
-        run: mvn -B verify package -Drepo=none --file pom.xml
+        run: mvn -B verify package -Drepo=github --file pom.xml
