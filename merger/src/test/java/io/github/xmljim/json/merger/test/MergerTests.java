@@ -52,6 +52,7 @@ public class MergerTests {
             JsonArray actualResult = mergeProcessor.merge(arrayA, arrayB);
 
             assertEquals(expectedResult, actualResult);
+            
         } catch (IOException ioe) {
             fail(ioe);
         }
