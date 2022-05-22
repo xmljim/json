@@ -22,7 +22,7 @@
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
             <artifactId>jsonfactory</artifactId>
-            <version>1.0.2</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

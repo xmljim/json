@@ -21,25 +21,25 @@
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
             <artifactId>json-mapper</artifactId>
-            <version>1.0.2</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
             <artifactId>elementfactory</artifactId>
-            <version>1.0.2</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
             <artifactId>json-parser</artifactId>
-            <version>1.0.2</version>
+            <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
             <artifactId>jsonfactory</artifactId>
-            <version>1.0.2</version>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
