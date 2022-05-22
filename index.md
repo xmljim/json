@@ -1,37 +1,16 @@
-## Welcome to GitHub Pages
+## JSON Library
 
-You can use the [editor on GitHub](https://github.com/xmljim/json/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+There are pleny of Java-based JSON libraries.  All of the do their job very, very well.  However, I originally developed this library back in 2007/2008 to support some functionality I needed that the JSON libraries at the time didn't.  Originally developed and compiled with Java 6, it's slowly evolved as newer Java versions were released.  Up until recently, my JEP library was compiled with Java 8.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+It's time to upgrade again.  This time, all the way to Java 17, the latest LTS release.  It was also time for a significant refactor of the architecture.  Instead of a single monolithic Jar file, this library takes advantage of the Java module system, with each of the constituent pieces designed in a modular fashion.
 
-### Markdown
+The benefit of this approach is that it makes easier to build a pluggable architecture where someone can pull in the pieces they need, rather than one giant "uber-jar" of everything.
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Components
 
-```markdown
-Syntax highlighted code block
+There are only two core component modules that are common to each of the "pluggable" components:
 
-# Header 1
-## Header 2
-### Header 3
+- Json Model:  This contains the interfaces that represent the Json Data model, e.g., `JsonArray`, `JsonObject`, and `JsonValue<?>`
+- Json Factory:  This has a direct dependency on the Json Model, and provides the interfaces that provide the base API for each of the components.  These are tied together with a `ServiceManager` that allows for the indirect instantiation of each component as a service.
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [Basic writing and formatting syntax](https://docs.github.com/en/github/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/xmljim/json/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
