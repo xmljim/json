@@ -5,8 +5,11 @@ name: Java CI with Maven
 
 on:
   push:
+    paths:
+      - '**.xml'
+      - '**.java'
   pull_request:
-    branches: [ develop, master ]
+      branches: [ develop, master ]
 
 jobs:
   build:
