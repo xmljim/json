@@ -16,6 +16,7 @@
         <module>mapper</module>
         <module>merger</module>
         <module>jsonpath</module>
+        <module>json-api</module>
     </modules>
 
     <name>${project.groupId}:${project.artifactId}</name>

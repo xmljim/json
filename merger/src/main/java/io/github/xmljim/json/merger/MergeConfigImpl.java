@@ -4,6 +4,8 @@ import io.github.xmljim.json.factory.merge.MergeConfig;
 import io.github.xmljim.json.factory.merge.strategy.ArrayConflictStrategy;
 import io.github.xmljim.json.factory.merge.strategy.MergeResultStrategy;
 import io.github.xmljim.json.factory.merge.strategy.ObjectConflictStrategy;
+import io.github.xmljim.json.merger.conflict.ArrayConflictStrategies;
+import io.github.xmljim.json.merger.conflict.ObjectConflictStrategies;
 
 class MergeConfigImpl implements MergeConfig {
     private ArrayConflictStrategy arrayConflictStrategy = ArrayConflictStrategies.APPEND;

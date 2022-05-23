@@ -5,6 +5,8 @@ module io.github.xmljim.json.merger {
     requires transitive io.github.xmljim.json.factory;
     opens io.github.xmljim.json.merger to io.github.xmljim.json.factory;
     exports io.github.xmljim.json.merger to io.github.xmljim.json.merger.test;
+    exports io.github.xmljim.json.merger.conflict;
+    opens io.github.xmljim.json.merger.conflict to io.github.xmljim.json.factory;
 
     provides MergeFactory with MergeFactoryImpl;
 }

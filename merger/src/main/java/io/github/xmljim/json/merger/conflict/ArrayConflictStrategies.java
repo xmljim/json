@@ -1,4 +1,4 @@
-package io.github.xmljim.json.merger;
+package io.github.xmljim.json.merger.conflict;
 
 import io.github.xmljim.json.factory.merge.MergeProcessor;
 import io.github.xmljim.json.factory.merge.strategy.ArrayConflictStrategy;
