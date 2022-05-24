@@ -8,8 +8,9 @@
         <version>1.0.2</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
 
-    <artifactId>json-api</artifactId>
+    <artifactId>json-test-coverage</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -19,17 +20,17 @@
     <dependencies>
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
-            <artifactId>json-parser</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>io.github.xmljim.json</groupId>
             <artifactId>elementfactory</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
-            <artifactId>json-merger</artifactId>
+            <artifactId>jsonpath</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.github.xmljim.json</groupId>
+            <artifactId>json-parser</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>
@@ -39,9 +40,8 @@
         </dependency>
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
-            <artifactId>jsonpath</artifactId>
+            <artifactId>json-merger</artifactId>
             <version>${project.version}</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 
@@ -52,15 +52,14 @@
                 <artifactId>jacoco-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>report</id>
+                        <id>report-aggregate</id>
                         <phase>verify</phase>
                         <goals>
-                            <goal>report</goal>
+                            <goal>report-aggregate</goal>
                         </goals>
                     </execution>
                 </executions>
             </plugin>
         </plugins>
     </build>
-
 </project>

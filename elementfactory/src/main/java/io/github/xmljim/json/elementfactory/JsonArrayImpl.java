@@ -129,7 +129,7 @@ class JsonArrayImpl extends AbstractJsonNode implements JsonArray {
         if (!(o instanceof JsonArrayImpl jsonArray)) {
             return false;
         }
-        
+
         return Objects.equals(valueList, jsonArray.valueList);
     }
 
@@ -181,6 +181,11 @@ class JsonArrayImpl extends AbstractJsonNode implements JsonArray {
         builder.append("]");
 
         return builder.toString();
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(this.valueList);
     }
 
     public String toString() {

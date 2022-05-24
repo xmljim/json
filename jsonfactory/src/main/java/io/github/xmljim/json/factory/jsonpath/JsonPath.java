@@ -74,5 +74,10 @@ public interface JsonPath {
         return null;
     }
 
+    /**
+     * To be implemented
+     *
+     * @return stay tuned
+     */
     List<JsonPathError> getErrors();
 }

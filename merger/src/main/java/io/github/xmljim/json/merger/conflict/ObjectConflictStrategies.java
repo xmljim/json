@@ -32,15 +32,15 @@ public enum ObjectConflictStrategies implements ObjectConflictStrategy {
         @Override
         public void apply(JsonObject context, String propertyValue, JsonValue<?> primaryValue, JsonValue<?> secondaryValue, MergeProcessor processor) {
             if (primaryValue.isEquivalent(secondaryValue)) {
-                if (primaryValue.type().isPrimitive()) {
-                    context.put(propertyValue, secondaryValue);
-                } else if (primaryValue.type().isObject()) {
-                    context.put(propertyValue, processor.merge((JsonObject) primaryValue.get(), (JsonObject) secondaryValue.get()));
-                } else {
-                    context.put(propertyValue, processor.merge((JsonArray) primaryValue.get(), (JsonArray) secondaryValue.get()));
-                }
-            } else {
                 context.put(propertyValue, secondaryValue);
+            } else {
+                if (primaryValue.type().isObject()) {
+                    context.put(propertyValue, processor.merge((JsonObject) primaryValue.get(), (JsonObject) secondaryValue.get()));
+                } else if (primaryValue.type().isArray()) {
+                    context.put(propertyValue, processor.merge((JsonArray) primaryValue.get(), (JsonArray) secondaryValue.get()));
+                } else {
+                    context.put(propertyValue, secondaryValue);
+                }
             }
         }
     },
