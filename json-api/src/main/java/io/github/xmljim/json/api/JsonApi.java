@@ -33,27 +33,27 @@ public final class JsonApi {
     /**
      * JsonPath ({@link JsonPathFactory}) API functionality
      */
-    public static JsonPathApi JsonPath = new JsonPathApi();
+    public static final JsonPathApi JsonPath = new JsonPathApi();
 
     /**
      * JsonParser ({@link ParserFactory}) API functionality
      */
-    public static JsonParserApi JsonParser = new JsonParserApi();
+    public static final JsonParserApi JsonParser = new JsonParserApi();
 
     /**
      * JsonElement ({@link ElementFactory}) functionality
      */
-    public static ElementApi JsonElement = new ElementApi();
+    public static final ElementApi JsonElement = new ElementApi();
 
     /**
      * JsonMerge ({@link MergeFactory}) functionality
      */
-    public static JsonMergeApi JsonMerge = new JsonMergeApi();
+    public static final JsonMergeApi JsonMerge = new JsonMergeApi();
 
     /**
      * JsonMapper ({@link MapperFactory}) functionality
      */
-    public static JsonMapperApi JsonMapper = new JsonMapperApi();
+    public static final JsonMapperApi JsonMapper = new JsonMapperApi();
 
     /**
      * Private constructor, use static fields instead
