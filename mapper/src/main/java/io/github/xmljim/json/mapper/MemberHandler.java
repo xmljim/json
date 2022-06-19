@@ -1,7 +1,6 @@
 package io.github.xmljim.json.mapper;
 
 import io.github.xmljim.json.factory.mapper.Mapper;
-import io.github.xmljim.json.factory.mapper.MapperBuilder;
 import io.github.xmljim.json.factory.mapper.MapperFactory;
 import io.github.xmljim.json.mapper.exception.JsonMapperException;
 import io.github.xmljim.json.model.JsonArray;
@@ -46,7 +45,7 @@ class MemberHandler {
             if (value.type().isArray()) {
                 returnValue = buildTargetMapper().toList((JsonArray) value.get());  //.toList((JsonArray) value.value(), buildMapperConfig());
             } else {
-                returnValue = getMapper().toClass((JsonObject) value.get(), targetClass);  //getMapper().convertToClass((JsonObject) value.value(), targetClass);
+                returnValue = getMapper().toClass((JsonObject) value.get(), targetClass);  //getValueMapperFunction().convertToClass((JsonObject) value.value(), targetClass);
             }
         }
 
@@ -57,20 +56,25 @@ class MemberHandler {
         return factory;
     }
 
+    /*
     private MapperBuilder getMapperBuilder() {
-        return getFactory().newBuilder();
+        return null;// getFactory().newBuilder();
     }
-
+*/
     private Mapper getMapper() {
         return mapper;
     }
 
     private Mapper buildTargetMapper() {
+        return null;
+        /*
         return getFactory().newBuilder()
             .merge(getMapper())
             .setValueConverter(null)
             .setTargetClass(getClassMember().getTargetClass())
             .build();
+
+         */
     }
 
     public void setMemberValue(JsonValue<?> value) {

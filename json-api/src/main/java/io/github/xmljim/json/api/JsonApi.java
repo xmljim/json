@@ -3,8 +3,10 @@ package io.github.xmljim.json.api;
 import io.github.xmljim.json.factory.jsonpath.JsonPathBuilder;
 import io.github.xmljim.json.factory.jsonpath.JsonPathFactory;
 import io.github.xmljim.json.factory.jsonpath.ResultType;
-import io.github.xmljim.json.factory.mapper.MapperBuilder;
 import io.github.xmljim.json.factory.mapper.MapperFactory;
+import io.github.xmljim.json.factory.mapper.MappingConfig;
+import io.github.xmljim.json.factory.mapper.MappingParserConfig;
+import io.github.xmljim.json.factory.mapper.parser.MappingParser;
 import io.github.xmljim.json.factory.merge.MergeFactory;
 import io.github.xmljim.json.factory.merge.strategy.ArrayConflictStrategy;
 import io.github.xmljim.json.factory.merge.strategy.MergeResultStrategy;
@@ -232,6 +234,16 @@ public final class JsonApi {
         public ParserBuilder getParserBuilder() {
             return parserFactory.newParserBuilder();
         }
+
+        public <T> T parse(InputData inputData, Class<T> targetClass) {
+            MappingParser mappingParser = JsonMapper.newMappingParser();
+            return mappingParser.parse(inputData, targetClass);
+        }
+
+        public <T> T parse(MappingParserConfig mappingParserConfig, InputData inputData, Class<T> targetClass) {
+            MappingParser mappingParser = JsonMapper.newMappingParser(mappingParserConfig);
+            return mappingParser.parse(inputData, targetClass);
+        }
     }
 
     /**
@@ -331,6 +343,7 @@ public final class JsonApi {
                                             ObjectConflictStrategy objectConflictStrategy,
                                             MergeResultStrategy mergeResultStrategy,
                                             String mergeAppendKey) {
+
             return mergeFactory.newMergeBuilder()
                 .setArrayConflictStrategy(arrayConflictStrategy)
                 .setObjectConflictStrategy(objectConflictStrategy)
@@ -349,16 +362,6 @@ public final class JsonApi {
 
         private JsonMapperApi() {
             //no-op
-        }
-
-        /**
-         * Return a new MapperBuilder to configure a MapperProcessor
-         *
-         * @return a new MapperBuilder
-         */
-        public MapperBuilder getMapperBuilder() {
-
-            return mapperFactory.newBuilder();
         }
 
         /**
@@ -403,6 +406,18 @@ public final class JsonApi {
             return mapperFactory.newMapper().toClass(jsonObject, targetClass);
         }
 
+        public <T> T toClass(MappingConfig mappingConfig, JsonObject jsonObject, Class<T> targetClass) {
+            return mapperFactory.newMapper(mappingConfig).toClass(jsonObject, targetClass);
+        }
+
+        public <T> JsonObject toJson(T instance) {
+            return mapperFactory.newMapper().toJson(instance);
+        }
+
+        public <T> JsonObject toJson(MappingConfig mappingConfig, T instance) {
+            return mapperFactory.newMapper(mappingConfig).toJson(instance);
+        }
+
         /**
          * Convert a JsonObject to a Map
          *
@@ -432,5 +447,14 @@ public final class JsonApi {
         public JsonValue<?> toValue(Object value) {
             return mapperFactory.newMapper().toValue(value);
         }
+
+        MappingParser newMappingParser() {
+            return mapperFactory.newMappingParser();
+        }
+
+        MappingParser newMappingParser(MappingParserConfig mappingParserConfig) {
+            return mapperFactory.newMappingParser(mappingParserConfig);
+        }
+
     }
 }

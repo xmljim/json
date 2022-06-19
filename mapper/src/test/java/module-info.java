@@ -5,4 +5,5 @@ module io.xmljim.json.mapper.test {
     requires org.junit.jupiter.engine;
     opens io.xmljim.json.mapper.test;
     opens io.xmljim.json.mapper.test.testclasses;
+    
 }

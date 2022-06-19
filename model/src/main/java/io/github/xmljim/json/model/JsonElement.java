@@ -24,7 +24,7 @@ public sealed interface JsonElement permits JsonNode, JsonValue {
     /**
      * Return the JSON string representation for this element
      *
-     * @return
+     * @return the JSON string representation for this element
      */
     String toJsonString();
 
@@ -39,7 +39,7 @@ public sealed interface JsonElement permits JsonNode, JsonValue {
      * Pretty print the JSON string with the specified indentation
      *
      * @param indent the number of spaces to index
-     * @return
+     * @return Pretty printed JSON string with the specified indentation
      */
     String prettyPrint(int indent);
 

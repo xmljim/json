@@ -11,6 +11,7 @@ public class BasicTestClass {
     private Long count;
     private List<String> valueSet;
     //@JSONTargetClass(TestSubclassImpl.class)
+
     private TestSubclassImpl subclass;
 
     /**

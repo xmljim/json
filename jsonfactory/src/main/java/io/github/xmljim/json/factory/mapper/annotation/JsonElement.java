@@ -2,6 +2,9 @@ package io.github.xmljim.json.factory.mapper.annotation;
 
 import java.lang.annotation.*;
 
+/**
+ * Specifies a mapping to a Json element
+ */
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)

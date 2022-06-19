@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-interface AnnotationUtils {
+abstract class AnnotationUtils {
     /**
      * Find and return an Optional containing an Annotation
      *
@@ -22,7 +22,7 @@ interface AnnotationUtils {
      * @param classMember     The class member (either a Field, Method or Class)
      * @return an Optional containing the Annotation
      */
-    static <T extends Annotation> Optional<T> findAnnotation(Class<? extends T> annotationClass, AnnotatedElement classMember) {
+    public static <T extends Annotation> Optional<T> findAnnotation(Class<? extends T> annotationClass, AnnotatedElement classMember) {
         T annotation = null;
 
         if (classMember.isAnnotationPresent(annotationClass)) {
@@ -32,7 +32,7 @@ interface AnnotationUtils {
         return Optional.ofNullable(annotation);
     }
 
-    static Optional<ValueConverter<?>> getConvertToJson(AnnotatedElement element) {
+    public static Optional<ValueConverter<?>> getConvertToJson(AnnotatedElement element) {
         ValueConverter<?> convert = null;
         final Optional<ConvertValue> valueConverter = findAnnotation(ConvertValue.class, element);
 
@@ -46,7 +46,7 @@ interface AnnotationUtils {
         return Optional.ofNullable(convert);
     }
 
-    static Optional<ValueConverter<?>> getConvertToValue(AnnotatedElement element) {
+    public static Optional<ValueConverter<?>> getConvertToValue(AnnotatedElement element) {
         ValueConverter<?> convert = null;
         final Optional<ConvertValue> valueConverter = findAnnotation(ConvertValue.class, element);
 
@@ -59,11 +59,11 @@ interface AnnotationUtils {
         return Optional.ofNullable(convert);
     }
 
-    static boolean findJsonElementIgnore(AnnotatedElement element) {
+    public static boolean findJsonElementIgnore(AnnotatedElement element) {
         return findAnnotation(JsonElement.class, element).map(JsonElement::ignore).orElse(false);
     }
 
-    static Optional<String> findJsonElementKey(AnnotatedElement element) {
+    public static Optional<String> findJsonElementKey(AnnotatedElement element) {
         return findAnnotation(JsonElement.class, element).filter(a -> !"".equals(a.key())).map(JsonElement::key);
     }
 
@@ -71,11 +71,11 @@ interface AnnotationUtils {
         return findAnnotation(JsonElement.class, element).filter(a -> !"".equals(a.setterMethod())).map(JsonElement::setterMethod);
     }
 
-    static Optional<String> findJsonElementGetter(AnnotatedElement element) {
+    public static Optional<String> findJsonElementGetter(AnnotatedElement element) {
         return findAnnotation(JsonElement.class, element).filter(a -> !"".equals(a.getterMethod())).map(JsonElement::getterMethod);
     }
 
-    static Optional<Class<?>> findConvertClass(AnnotatedElement element) {
+    public static Optional<Class<?>> findConvertClass(AnnotatedElement element) {
         return findAnnotation(ConvertClass.class, element).map(ConvertClass::target);
     }
 }

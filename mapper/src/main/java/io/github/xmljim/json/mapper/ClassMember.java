@@ -69,7 +69,7 @@ class ClassMember {
         final Type returnType = setter ? Void.TYPE : field.getType();//field.getGenericType() != null ? (ParameterizedType)field.getGenericType() : field.getType();
         final List<Method> methods = findMethods(clazz, methodName, paramCount, returnType);
 
-        Optional<Method> m = Optional.empty();
+        Optional<Method> m;
 
         if (setter) {
             m = methods.stream().filter(method -> getMethodParameterType(method).equals(getFieldType(field))).findFirst();

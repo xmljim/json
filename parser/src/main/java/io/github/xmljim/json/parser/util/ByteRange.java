@@ -293,23 +293,28 @@ public class ByteRange {
     }
 
     private void addToArray(byte newByte) {
-        growArray(1);
-        rangeData[cursor++] = newByte;
-        Arrays.sort(rangeData);
+        if (!contains(newByte)) {
+            growArray(1);
+            rangeData[cursor++] = newByte;
+            Arrays.sort(rangeData);
+        }
     }
 
     private void addToArray(byte[] byteArray) {
         growArray(byteArray.length);
 
         for (final byte b : byteArray) {
-            rangeData[cursor++] = b;
+            if (!isInRangeLocal(b)) {
+                rangeData[cursor++] = b;
+            }
         }
         Arrays.sort(rangeData);
     }
 
     private boolean isInRangeLocal(byte b) {
 
-        return Arrays.binarySearch(rangeData, b) >= 0;
+        int searchVal = Arrays.binarySearch(rangeData, b);// >= 0;
+        return searchVal >= 0;
     }
 
     @Override

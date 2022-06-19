@@ -4,4 +4,5 @@ module io.xmljim.jsonparser.test {
     requires org.junit.jupiter.api;
     requires org.junit.jupiter.engine;
     opens io.xmljim.json.parsertest;
+    opens io.xmljim.json.parsertest.util;
 }

@@ -1,5 +1,7 @@
 package io.github.xmljim.json.model;
 
+import java.util.Collection;
+
 /**
  * An enumeration of node/value types
  */
@@ -102,5 +104,41 @@ public enum NodeType {
      */
     public boolean isUndefined() {
         return this.name().equals(UNDEFINED.name());
+    }
+
+    public static NodeType fromClassType(Class<?> classType) {
+        if (classType.equals(String.class)) {
+            return STRING;
+        }
+
+        if (classType.equals(int.class) || classType.equals(Integer.class)) {
+            return INTEGER;
+        }
+
+        if (classType.equals(long.class) || classType.equals(Long.class)) {
+            return LONG;
+        }
+
+        if (classType.equals(double.class) || classType.equals(Double.class)) {
+            return DOUBLE;
+        }
+
+        if (classType.equals(boolean.class) || classType.equals(Boolean.class)) {
+            return BOOLEAN;
+        }
+
+        if (Collection.class.isAssignableFrom(classType)) {
+            return ARRAY;
+        }
+
+        if (classType.isArray()) {
+            return ARRAY;
+        }
+
+        if (!classType.isPrimitive()) {
+            return OBJECT;
+        }
+
+        return UNDEFINED;
     }
 }

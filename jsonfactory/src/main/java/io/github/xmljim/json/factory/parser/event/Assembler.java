@@ -6,6 +6,11 @@ import io.github.xmljim.json.model.NodeType;
 import java.math.BigDecimal;
 import java.util.function.Supplier;
 
+/**
+ * Assembles a specific format instance from incoming JsonEvents
+ *
+ * @param <T> The format type
+ */
 public interface Assembler<T> extends Configurable {
 
     /**
@@ -114,9 +119,24 @@ public interface Assembler<T> extends Configurable {
      */
     void valueNull(String key);
 
+    /**
+     * Assembled from a new key
+     *
+     * @param key
+     */
     void newKey(String key);
 
+    /**
+     * Return the formatted result
+     *
+     * @return the formatted result
+     */
     Supplier<T> getResult();
 
+    /**
+     * Return the Statistics associated with the assembler
+     *
+     * @return the statistics associated with the assembler
+     */
     Statistics getStatistics();
 }

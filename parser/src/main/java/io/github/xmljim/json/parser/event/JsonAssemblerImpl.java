@@ -139,7 +139,7 @@ class JsonAssemblerImpl extends AbstractJsonAssembler {
     }
 
     private void createAndAppendValue(String key, Object value) {
-        JsonValue<?> val = getElementFactory().newValue(value, stack.peek());
+        JsonValue<?> val = getElementFactory().newValue(value);
         appendToCurrent(key, val);
     }
 

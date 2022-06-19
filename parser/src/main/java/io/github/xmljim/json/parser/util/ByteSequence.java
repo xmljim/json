@@ -356,6 +356,11 @@ public class ByteSequence {
         add(new CardinalityByteRange(range));
     }
 
+    public byte[] getBytes() {
+        ArrayList<Byte> byteList = new ArrayList<>();
+        return null;
+    }
+
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();

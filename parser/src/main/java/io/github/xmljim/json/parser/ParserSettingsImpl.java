@@ -157,4 +157,28 @@ class ParserSettingsImpl implements ParserSettings {
 
         return settings;
     }
+
+    public ParserSettings merge(ParserSettings parserSettings) {
+
+        this.assembler = parserSettings.getAssembler() == null ? this.assembler : (
+            this.assembler.getClass().getName().equals(parserSettings.getAssembler().getClass().getName()) ? this.assembler :
+                parserSettings.getAssembler());
+        this.blockCount = parserSettings.getBlockCount() != blockCount ? parserSettings.getBlockCount() : blockCount;
+        this.charset = parserSettings.getCharacterSet() == null ? this.charset : (this.charset.equals(parserSettings.getCharacterSet()) ?
+            this.charset : parserSettings.getCharacterSet());
+        this.enableStatistics = this.enableStatistics != parserSettings.enableStatistics() ? parserSettings.enableStatistics() : this.enableStatistics;
+        this.eventHandler = parserSettings.getEventHandler() == null ? this.eventHandler : (this.eventHandler.getClass().getName().equals(parserSettings.getEventHandler().getClass().getName()) ?
+            parserSettings.getEventHandler() : this.eventHandler);
+        this.fixedNumberStrategy = parserSettings.fixedNumberStrategy() == null ? this.fixedNumberStrategy :
+            (parserSettings.fixedNumberStrategy().equals(this.fixedNumberStrategy) ? this.fixedNumberStrategy : parserSettings.fixedNumberStrategy());
+        this.floatingNumberStrategy = parserSettings.floatingNumberStrategy() == null ? this.floatingNumberStrategy :
+            (parserSettings.floatingNumberStrategy().equals(this.floatingNumberStrategy) ? this.floatingNumberStrategy : parserSettings.floatingNumberStrategy());
+        this.maxBufferEventCapacity = this.maxBufferEventCapacity == parserSettings.getMaxEventBufferCapacity() ?
+            this.maxBufferEventCapacity : parserSettings.getMaxEventBufferCapacity();
+        this.useStrict = this.useStrict == parserSettings.useStrict() ? useStrict : parserSettings.useStrict();
+        this.processor = parserSettings.getProcessor() == null ? this.processor :
+            (this.processor.getClass().getName().equals(parserSettings.getProcessor().getClass().getName()) ? this.processor :
+                parserSettings.getProcessor());
+        return this;
+    }
 }

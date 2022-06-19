@@ -60,7 +60,7 @@ public class ElementFactoryImpl implements ElementFactory {
     @SuppressWarnings("unchecked")
     private <V, T> JsonValue<V> mapToValue(T value) {
         if (mapperProviderAvailable) {
-            return (JsonValue<V>) mapperFactory.newBuilder().build().toValue(value);
+            return (JsonValue<V>) mapperFactory.newMapper().toValue(value);
         } else {
             throwUnsupportedError(value.getClass());
         }

@@ -18,7 +18,6 @@ public class ParserFactoryTest {
 
         Parser parser = factory.newParser();
         assertNotNull(parser);
-
     }
 
 }

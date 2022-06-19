@@ -10,7 +10,7 @@ public non-sealed interface JsonValue<T> extends JsonElement, Comparable<JsonVal
     /**
      * Return the raw value
      *
-     * @return
+     * @return the raw value
      */
     T get();
 

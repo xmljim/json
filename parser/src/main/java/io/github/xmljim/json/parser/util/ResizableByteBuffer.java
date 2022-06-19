@@ -66,7 +66,9 @@ public class ResizableByteBuffer {
      * @param initialByteArray the initial array of bytes
      */
     public ResizableByteBuffer(byte[] initialByteArray) {
-        add(initialByteArray);
+        for (byte b : initialByteArray) {
+            add(b);
+        }
     }
 
     public static ResizableByteBuffer fromStream(InputStream inputStream) {

@@ -1,5 +1,8 @@
 package io.github.xmljim.json.factory.merge.strategy;
 
+/**
+ * Specifies the output of a merge operation
+ */
 public enum MergeResultStrategy {
     /**
      * Merge directly to the primary instance.

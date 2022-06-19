@@ -3,6 +3,7 @@ package io.github.xmljim.json.mapper;
 import io.github.xmljim.json.factory.mapper.Mapper;
 import io.github.xmljim.json.factory.mapper.MapperConfig;
 import io.github.xmljim.json.factory.mapper.MapperFactory;
+import io.github.xmljim.json.factory.mapper.Mapping;
 import io.github.xmljim.json.factory.model.ElementFactory;
 import io.github.xmljim.json.mapper.exception.JsonMapperException;
 import io.github.xmljim.json.model.JsonArray;
@@ -34,6 +35,11 @@ class DefaultMapper implements Mapper {
     @Override
     public MapperConfig getConfig() {
         return mapperConfig;
+    }
+
+    @Override
+    public Mapping getMapping() {
+        return null;
     }
 
     @Override
