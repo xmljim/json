@@ -925,8 +925,7 @@ class BufferedEventProcessor extends BaseEventProcessor {
          * @return record as a string
          */
         public String toString() {
-            String str = "Marker [char='" + (char) containerByte() + "'; row=" + row() + "; column=" + column() + "]";
-            return str;
+            return "Marker [char='" + (char) containerByte() + "'; row=" + row() + "; column=" + column() + "]";
         }
     }
 }

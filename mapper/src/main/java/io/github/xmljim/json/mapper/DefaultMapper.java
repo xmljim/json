@@ -88,19 +88,19 @@ class DefaultMapper implements Mapper {
     @SuppressWarnings("unchecked")
     public JsonValue<?> toValue(Object value, JsonElement parent) {
         if (value == null) {
-            return elementFactory.newValue(null, parent);
+            return elementFactory.newValue(null);
         } else if (value instanceof String v) {
-            return elementFactory.newValue(v, parent);
+            return elementFactory.newValue(v);
         } else if (value instanceof Boolean v) {
-            return elementFactory.newValue(v, parent);
+            return elementFactory.newValue(v);
         } else if (value instanceof Number v) {
-            return elementFactory.newValue(v, parent);
+            return elementFactory.newValue(v);
         } else if (value instanceof Map v) {
-            return elementFactory.newValue(toJson(v), parent);
+            return elementFactory.newValue(toJson(v));
         } else if (value instanceof Collection v) {
-            return elementFactory.newValue(toJson(v), parent);
+            return elementFactory.newValue(toJson(v));
         } else {
-            return elementFactory.newValue(toJson(value), parent);
+            return elementFactory.newValue(toJson(value));
         }
     }
 

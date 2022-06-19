@@ -301,8 +301,8 @@ public final class JsonApi {
          *
          * @param primary   the primary node
          * @param secondary the secondary node
-         * @param <T>
-         * @return
+         * @param <T>       The JsonNode type
+         * @return The merged JsonNode
          */
         public <T extends JsonNode> T merge(T primary, T secondary) {
             return mergeFactory.newMergeProcessor().merge(primary, secondary);

@@ -122,7 +122,7 @@ public interface Assembler<T> extends Configurable {
     /**
      * Assembled from a new key
      *
-     * @param key
+     * @param key The key name
      */
     void newKey(String key);
 

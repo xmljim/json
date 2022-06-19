@@ -30,7 +30,7 @@ class MemberHandler {
     }
 
     private Optional<Object> handleJSONValue(JsonValue<?> value) {
-        Object returnValue = null;
+        Object returnValue;
 
         if (getClassMember().isIgnored()) {
             return Optional.empty();
@@ -43,6 +43,7 @@ class MemberHandler {
         } else {
             final Class<?> targetClass = getClassMember().getTargetClass();
             if (value.type().isArray()) {
+                assert buildTargetMapper() != null;
                 returnValue = buildTargetMapper().toList((JsonArray) value.get());  //.toList((JsonArray) value.value(), buildMapperConfig());
             } else {
                 returnValue = getMapper().toClass((JsonObject) value.get(), targetClass);  //getValueMapperFunction().convertToClass((JsonObject) value.value(), targetClass);

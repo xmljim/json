@@ -234,9 +234,7 @@ public final class Statistics {
      * @param statistics another statistics instance
      */
     public void merge(Statistics statistics) {
-        statistics.stream().forEach(stat -> {
-            statisticMap.putIfAbsent(stat.getName(), stat);
-        });
+        statistics.stream().forEach(stat -> statisticMap.putIfAbsent(stat.getName(), stat));
     }
 
     /**

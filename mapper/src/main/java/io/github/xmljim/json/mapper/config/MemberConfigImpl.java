@@ -147,6 +147,6 @@ public class MemberConfigImpl extends AbstractConfiguration implements MemberCon
         JSON_CONVERTER,
         SETTER_METHOD_NAME,
         GETTER_METHOD_NAME,
-        IGNORED;
+        IGNORED
     }
 }

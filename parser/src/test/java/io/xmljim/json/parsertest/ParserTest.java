@@ -49,7 +49,7 @@ class ParserTest {
         String json = """
             {
                 "foo": "bar",
-                "boo": 
+                "boo":
             }
             """;
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
@@ -63,7 +63,7 @@ class ParserTest {
         String json = """
             {
                 "foo": "bar",
-                "boo", "baz" 
+                "boo", "baz"
             }
             """;
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);

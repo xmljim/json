@@ -95,7 +95,7 @@ public class ByteRangeTest {
         ByteRange byteRange = ByteRange.fromString("baseball");
         int[] values = byteRange.getMatchingByteIndexes("bat".getBytes());
         List<Integer> actual = new ArrayList<>();
-        Arrays.stream(values).forEach(item -> actual.add(item));
+        Arrays.stream(values).forEach(actual::add);
         assertEquals(List.of(0, 1), actual);
     }
 

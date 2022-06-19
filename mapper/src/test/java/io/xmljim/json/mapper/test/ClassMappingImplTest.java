@@ -36,7 +36,7 @@ class ClassMappingImplTest {
     }
 
     @Test
-    void testWithRecord() throws Exception {
+    void testWithRecord() {
         MapperFactory factory = new MapperFactoryImpl();
         Mapper mapper = factory.newMapper(MappingConfig.with()
             .appendClassConfig(ClassConfig.with()
