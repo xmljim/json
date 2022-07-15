@@ -1,7 +1,7 @@
 ---
 layout: page
 title: "JSON Data Model"
-permalink: /api/model
+permalink: api/model
 ---
 # JSON Data Model
 
