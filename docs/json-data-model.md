@@ -1,7 +1,8 @@
+---
 layout: page
 title: "JSON Data Model"
 permalink: /api/model
-
+---
 # JSON Data Model
 
 **Module Name:** `io.github.xmljim.json.model`
