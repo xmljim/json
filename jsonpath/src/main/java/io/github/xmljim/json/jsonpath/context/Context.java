@@ -2,7 +2,6 @@ package io.github.xmljim.json.jsonpath.context;
 
 import io.github.xmljim.json.factory.model.ElementFactory;
 import io.github.xmljim.json.jsonpath.JsonPathException;
-import io.github.xmljim.json.jsonpath.filter.Accessor;
 import io.github.xmljim.json.jsonpath.util.DataType;
 import io.github.xmljim.json.model.JsonArray;
 import io.github.xmljim.json.model.JsonElement;

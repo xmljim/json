@@ -21,7 +21,7 @@ class LessThanOrEqualPredicate extends AbstractFilterPredicate {
             int size = leftSide().size(context);
             List<Context> vals = leftSide().values(context);
             if ((leftSide().size(context) == 1 && leftSide().getContextType(context).isNumeric())
-                && (rightSide().size(context) == 1 && rightSide().getContextType(context).isNumeric())) {
+                    && (rightSide().size(context) == 1 && rightSide().getContextType(context).isNumeric())) {
 
                 Number left = (Number) leftSide().getValue(context).orElse(0);
                 Number right = (Number) rightSide().getValue(context).orElse(-1);

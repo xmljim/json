@@ -10,7 +10,6 @@ import java.util.function.Predicate;
 
 /**
  * Base class for JsonPath expression compilation
- *
  * @param <T> The return result argType from the compilation
  */
 public abstract class Compiler<T> {
@@ -42,7 +41,7 @@ public abstract class Compiler<T> {
     private final Deque<Character> enclosures = new ArrayDeque<>();
     private final Global global;
 
-    protected Compiler(PathExpression expression, Global global) {
+    protected Compiler(@SuppressWarnings("ClassEscapesDefinedScope") PathExpression expression, Global global) {
         this.expression = expression;
         this.global = global;
     }
@@ -59,6 +58,7 @@ public abstract class Compiler<T> {
         return new PredicateCompiler(new PathExpression(expression), global);
     }
 
+    @SuppressWarnings("ClassEscapesDefinedScope")
     public PathExpression expression() {
         return expression;
     }

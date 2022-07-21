@@ -19,4 +19,5 @@ module io.github.xmljim.json.jsonpath.test {
     opens io.github.xmljim.json.jsonpath.test.predicate.expression;
     opens io.github.xmljim.json.jsonpath.test.function.node;
     opens io.github.xmljim.json.jsonpath.test.filter;
+    opens io.github.xmljim.json.jsonpath.test.util;
 }

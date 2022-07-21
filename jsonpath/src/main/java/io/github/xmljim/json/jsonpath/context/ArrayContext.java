@@ -1,6 +1,5 @@
 package io.github.xmljim.json.jsonpath.context;
 
-import io.github.xmljim.json.jsonpath.filter.Accessor;
 import io.github.xmljim.json.model.JsonArray;
 
 import java.util.stream.IntStream;

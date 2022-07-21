@@ -1,7 +1,7 @@
 package io.github.xmljim.json.jsonpath.predicate;
 
+import io.github.xmljim.json.jsonpath.context.Accessor;
 import io.github.xmljim.json.jsonpath.context.Context;
-import io.github.xmljim.json.jsonpath.filter.Accessor;
 import io.github.xmljim.json.jsonpath.filter.Filter;
 import io.github.xmljim.json.jsonpath.filter.FilterType;
 import io.github.xmljim.json.jsonpath.predicate.expression.Expression;

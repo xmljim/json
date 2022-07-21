@@ -4,7 +4,7 @@ import io.github.xmljim.json.jsonpath.util.DataType;
 
 import java.time.LocalDate;
 
-public class DateContext extends TemporalContext<LocalDate> {
+class DateContext extends TemporalContext<LocalDate> {
     public DateContext(LocalDate value) {
         super(value);
     }

@@ -1,6 +1,7 @@
 package io.github.xmljim.json.jsonpath.filter;
 
 import io.github.xmljim.json.jsonpath.compiler.JsonPathExpressionException;
+import io.github.xmljim.json.jsonpath.context.Accessor;
 import io.github.xmljim.json.jsonpath.context.Context;
 import io.github.xmljim.json.jsonpath.util.Global;
 import io.github.xmljim.json.model.JsonArray;

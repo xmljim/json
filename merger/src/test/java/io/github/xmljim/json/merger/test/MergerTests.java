@@ -15,7 +15,9 @@ import org.junit.jupiter.api.Test;
 import java.io.IOException;
 import java.io.InputStream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @DisplayName("Merger Tests")
 class MergerTests {
@@ -65,16 +67,16 @@ class MergerTests {
     @DisplayName("Test Array Conflict Strategy: Append")
     void testArrayAppendConflictStrategy() {
         String primaryArray = """
-            ["a", "b", {"foo": "bar"}, 1, 1, 3, ["first", "last"]]
-            """;
+                ["a", "b", {"foo": "bar"}, 1, 1, 3, ["first", "last"]]
+                """;
 
         String secondaryArray = """
-            ["z", "b", {"foo": "bar"}, 1, 5, 6, ["first", "last"]]
-            """;
+                ["z", "b", {"foo": "bar"}, 1, 5, 6, ["first", "last"]]
+                """;
 
         String expectedArray = """
-            ["a", "z", "b", {"foo":"bar"}, 1, 1, 5, 3, 6, ["first", "last"]]
-            """;
+                ["a", "z", "b", {"foo":"bar"}, 1, 1, 5, 3, 6, ["first", "last"]]
+                """;
 
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
@@ -85,9 +87,9 @@ class MergerTests {
 
 
         JsonArray actual = mergeFactory.newMergeBuilder()
-            .setArrayConflictStrategy(ArrayConflictStrategies.APPEND)
-            .build()
-            .merge(primary, secondary);
+                .setArrayConflictStrategy(ArrayConflictStrategies.APPEND)
+                .build()
+                .merge(primary, secondary);
         assertEquals(expected, actual);
     }
 
@@ -95,16 +97,16 @@ class MergerTests {
     @DisplayName("Test Array Conflict Strategy: Append, Primary bigger than Secondary")
     void testArrayAppendConflictStrategyPrimaryBiggerThanSecondary() {
         String primaryArray = """
-            ["a", "b", {"foo": "bar"}, 1, 1, 3, ["first", "last"], 99]
-            """;
+                ["a", "b", {"foo": "bar"}, 1, 1, 3, ["first", "last"], 99]
+                """;
 
         String secondaryArray = """
-            ["z", "b", {"foo": "bar"}, 1, 5, 6, ["first", "last"]]
-            """;
+                ["z", "b", {"foo": "bar"}, 1, 5, 6, ["first", "last"]]
+                """;
 
         String expectedArray = """
-            ["a", "z", "b", {"foo":"bar"}, 1, 1, 5, 3, 6, ["first", "last"], 99]
-            """;
+                ["a", "z", "b", {"foo":"bar"}, 1, 1, 5, 3, 6, ["first", "last"], 99]
+                """;
 
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
@@ -115,9 +117,9 @@ class MergerTests {
 
 
         JsonArray actual = mergeFactory.newMergeBuilder()
-            .setArrayConflictStrategy(ArrayConflictStrategies.APPEND)
-            .build()
-            .merge(primary, secondary);
+                .setArrayConflictStrategy(ArrayConflictStrategies.APPEND)
+                .build()
+                .merge(primary, secondary);
         assertEquals(expected, actual);
     }
 
@@ -125,16 +127,16 @@ class MergerTests {
     @DisplayName("Test Array Conflict Strategy: Append, Primary bigger than Secondary")
     void testArrayAppendConflictStrategyPrimarySmallerThanSecondary() {
         String primaryArray = """
-            ["a", "b", {"foo": "bar"}, 1, 1, 3, ["first", "last"]]
-            """;
+                ["a", "b", {"foo": "bar"}, 1, 1, 3, ["first", "last"]]
+                """;
 
         String secondaryArray = """
-            ["z", "b", {"foo": "bar"}, 1, 5, 6, ["first", "last"], 99]
-            """;
+                ["z", "b", {"foo": "bar"}, 1, 5, 6, ["first", "last"], 99]
+                """;
 
         String expectedArray = """
-            ["a", "z", "b", {"foo":"bar"}, 1, 1, 5, 3, 6, ["first", "last"], 99]
-            """;
+                ["a", "z", "b", {"foo":"bar"}, 1, 1, 5, 3, 6, ["first", "last"], 99]
+                """;
 
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
@@ -145,9 +147,9 @@ class MergerTests {
 
 
         JsonArray actual = mergeFactory.newMergeBuilder()
-            .setArrayConflictStrategy(ArrayConflictStrategies.APPEND)
-            .build()
-            .merge(primary, secondary);
+                .setArrayConflictStrategy(ArrayConflictStrategies.APPEND)
+                .build()
+                .merge(primary, secondary);
         assertEquals(expected, actual);
     }
 
@@ -155,16 +157,16 @@ class MergerTests {
     @DisplayName("Test Array Conflict Strategy: Deduplicate")
     void testDeduplicateArrayStrategy() {
         String primaryArray = """
-            ["a", "b", {"foo": "bar"}, 1, 1, [1,3,5], true]
-            """;
+                ["a", "b", {"foo": "bar"}, 1, 1, [1,3,5], true]
+                """;
 
         String secondaryArray = """
-            ["z", "b", {"foo": "bar"}, 1, 5, [1,3,6], "a"]
-            """;
+                ["z", "b", {"foo": "bar"}, 1, 5, [1,3,6], "a"]
+                """;
 
         String expectedArray = """
-            ["a", "z", "b", {"foo":"bar"}, 1, 5, [1,3,5,6], true]
-            """;
+                ["a", "z", "b", {"foo":"bar"}, 1, 5, [1,3,5,6], true]
+                """;
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
         JsonArray primary = factory.newParser().parse(InputData.of(primaryArray));
@@ -175,9 +177,9 @@ class MergerTests {
 
 
         JsonArray actual = mergeFactory.newMergeBuilder()
-            .setArrayConflictStrategy(ArrayConflictStrategies.DEDUPLICATE)
-            .build()
-            .merge(primary, secondary);
+                .setArrayConflictStrategy(ArrayConflictStrategies.DEDUPLICATE)
+                .build()
+                .merge(primary, secondary);
         assertEquals(expected, actual);
     }
 
@@ -185,16 +187,16 @@ class MergerTests {
     @DisplayName("Test Array Conflict Strategy: InsertBefore")
     void testArrayConflictStrategyInsertBefore() {
         String primaryArray = """
-            ["first", "next-to-last", true, {"simple": "object"}, {"a":true}, [1,2],1,2,3]
-            """;
+                ["first", "next-to-last", true, {"simple": "object"}, {"a":true}, [1,2],1,2,3]
+                """;
 
         String secondaryArray = """
-            ["second", "last", false, ["simple", "array"], {"b": false}, [3,4], 1,2,4]
-            """;
+                ["second", "last", false, ["simple", "array"], {"b": false}, [3,4], 1,2,4]
+                """;
 
         String expectedArray = """
-            ["second", "first",  "last","next-to-last", false, true, ["simple", "array"],{"simple": "object"}, {"a": true, "b": false}, [3,1,4,2] 1,2,4,3]
-            """;
+                ["second", "first",  "last","next-to-last", false, true, ["simple", "array"],{"simple": "object"}, {"a": true, "b": false}, [3,1,4,2] 1,2,4,3]
+                """;
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
         JsonArray primary = factory.newParser().parse(InputData.of(primaryArray));
@@ -205,9 +207,9 @@ class MergerTests {
 
 
         JsonArray actual = mergeFactory.newMergeBuilder()
-            .setArrayConflictStrategy(ArrayConflictStrategies.INSERT_BEFORE)
-            .build()
-            .merge(primary, secondary);
+                .setArrayConflictStrategy(ArrayConflictStrategies.INSERT_BEFORE)
+                .build()
+                .merge(primary, secondary);
         assertEquals(expected, actual);
     }
 
@@ -215,16 +217,16 @@ class MergerTests {
     @DisplayName("Test Array Conflict Strategy: InsertAfter")
     void testArrayConflictStrategyInsertAfter() {
         String primaryArray = """
-            ["first", "next-to-last", true, {"simple": "object"}, {"a":true}, [1,2],1,2,3]
-            """;
+                ["first", "next-to-last", true, {"simple": "object"}, {"a":true}, [1,2],1,2,3]
+                """;
 
         String secondaryArray = """
-            ["second", "last", false, ["simple", "array"],{"b": false}, [3,4], 1,2,4]
-            """;
+                ["second", "last", false, ["simple", "array"],{"b": false}, [3,4], 1,2,4]
+                """;
 
         String expectedArray = """
-            ["first", "second", "next-to-last", "last", true, false, {"simple": "object"}, ["simple", "array"],{"a": true, "b": false}, [1,3,2,4], 1,2,3,4]
-            """;
+                ["first", "second", "next-to-last", "last", true, false, {"simple": "object"}, ["simple", "array"],{"a": true, "b": false}, [1,3,2,4], 1,2,3,4]
+                """;
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
         JsonArray primary = factory.newParser().parse(InputData.of(primaryArray));
@@ -235,9 +237,9 @@ class MergerTests {
 
 
         JsonArray actual = mergeFactory.newMergeBuilder()
-            .setArrayConflictStrategy(ArrayConflictStrategies.INSERT_AFTER)
-            .build()
-            .merge(primary, secondary);
+                .setArrayConflictStrategy(ArrayConflictStrategies.INSERT_AFTER)
+                .build()
+                .merge(primary, secondary);
         assertEquals(expected, actual);
     }
 
@@ -247,15 +249,15 @@ class MergerTests {
     void whenMergingObjectsWithNoConflicts_AndDefaultConfig_ShouldSeeAllElements() {
 
         String primaryJson = """
-            {"foo": "bar", "bar": "baz"}
-            """;
+                {"foo": "bar", "bar": "baz"}
+                """;
         String secondaryJson = """
-            {"type": "dog", "color": "black"}
-            """;
+                {"type": "dog", "color": "black"}
+                """;
 
         String expectedResult = """
-            {"foo": "bar", "bar": "baz", "type": "dog", "color": "black"}
-            """;
+                {"foo": "bar", "bar": "baz", "type": "dog", "color": "black"}
+                """;
 
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
@@ -274,16 +276,16 @@ class MergerTests {
     @DisplayName("Test Object Conflict Strategy: Accept Primary")
     void testObjectConflictStrategyAcceptPrimary() {
         String primaryObject = """
-            {"a": true, "b": [1,2], "c": [3,4], "d": {"foo": "bar"}, "e": false}
-            """;
+                {"a": true, "b": [1,2], "c": [3,4], "d": {"foo": "bar"}, "e": false}
+                """;
 
         String secondaryObject = """
-            {"a": false, "b": [1,2], "c": [5,6], "d": {"bar": "baz"}, "e", null}
-            """;
+                {"a": false, "b": [1,2], "c": [5,6], "d": {"bar": "baz"}, "e": null}
+                """;
 
         String expectedObject = """
-            {"a": true, "b": [1,2], "c": [3,5,4,6], "d": {"foo": "bar", "bar": "baz"}, "e": false}
-            """;
+                {"a": true, "b": [1,2], "c": [3,5,4,6], "d": {"foo": "bar", "bar": "baz"}, "e": false}
+                """;
 
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
@@ -292,10 +294,10 @@ class MergerTests {
         JsonObject expected = factory.newParser().parse(InputData.of(expectedObject));
 
         JsonObject actual = ServiceManager.getProvider(MergeFactory.class)
-            .newMergeBuilder()
-            .setObjectConflictStrategy(ObjectConflictStrategies.ACCEPT_PRIMARY)
-            .build()
-            .merge(primary, secondary);
+                .newMergeBuilder()
+                .setObjectConflictStrategy(ObjectConflictStrategies.ACCEPT_PRIMARY)
+                .build()
+                .merge(primary, secondary);
 
         assertEquals(expected, actual);
     }
@@ -304,16 +306,16 @@ class MergerTests {
     @DisplayName("Test Object Conflict Strategy: Accept Secondary")
     void testObjectConflictStrategyAcceptSecondary() {
         String primaryObject = """
-            {"a": true, "b": [1,2], "c": [3,4], "d": {"foo": "bar"}, "e": false}
-            """;
+                {"a": true, "b": [1,2], "c": [3,4], "d": {"foo": "bar"}, "e": false}
+                """;
 
         String secondaryObject = """
-            {"a": false, "b": [1,2], "c": [5,6], "d": {"bar": "baz"}, "e", null}
-            """;
+                {"a": false, "b": [1,2], "c": [5,6], "d": {"bar": "baz"}, "e": null}
+                """;
 
         String expectedObject = """
-            {"a": false, "b": [1,2], "c": [3,5,4,6], "d": {"foo": "bar", "bar": "baz"}, "e": null}
-            """;
+                {"a": false, "b": [1,2], "c": [3,5,4,6], "d": {"foo": "bar", "bar": "baz"}, "e": null}
+                """;
 
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
@@ -322,10 +324,10 @@ class MergerTests {
         JsonObject expected = factory.newParser().parse(InputData.of(expectedObject));
 
         JsonObject actual = ServiceManager.getProvider(MergeFactory.class)
-            .newMergeBuilder()
-            .setObjectConflictStrategy(ObjectConflictStrategies.ACCEPT_SECONDARY)
-            .build()
-            .merge(primary, secondary);
+                .newMergeBuilder()
+                .setObjectConflictStrategy(ObjectConflictStrategies.ACCEPT_SECONDARY)
+                .build()
+                .merge(primary, secondary);
 
         assertEquals(expected, actual);
     }
@@ -334,23 +336,23 @@ class MergerTests {
     @DisplayName("Test Object Conflict Strategy: Append")
     void testObjectConflictStrategyAppend() {
         String primaryObject = """
-            {"a": true, "b": [1,2], "c": [3,4], "d": {"foo": "bar"}, "e": false}
-            """;
+                {"a": true, "b": [1,2], "c": [3,4], "d": {"foo": "bar"}, "e": false}
+                """;
 
         String secondaryObject = """
-            {"a": false, "b": [1,2], "c": [5,6], "d": {"bar": "baz"}, "e", null}
-            """;
+                {"a": false, "b": [1,2], "c": [5,6], "d": {"bar": "baz"}, "e": null}
+                """;
 
         String expectedObject = """
-            {   "a": true,
-                "a_appended": false,
-                "b": [1,2],
-                "c": [3,5,4,6],
-                "d": {"foo": "bar", "bar": "baz"},
-                "e": false,
-                "e_appended": null
-            }
-            """;
+                {   "a": true,
+                    "a_appended": false,
+                    "b": [1,2],
+                    "c": [3,5,4,6],
+                    "d": {"foo": "bar", "bar": "baz"},
+                    "e": false,
+                    "e_appended": null
+                }
+                """;
 
         ParserFactory factory = ServiceManager.getProvider(ParserFactory.class);
 
@@ -359,11 +361,11 @@ class MergerTests {
         JsonObject expected = factory.newParser().parse(InputData.of(expectedObject));
 
         JsonObject actual = ServiceManager.getProvider(MergeFactory.class)
-            .newMergeBuilder()
-            .setObjectConflictStrategy(ObjectConflictStrategies.APPEND)
-            .setMergeAppendKey("_appended")
-            .build()
-            .merge(primary, secondary);
+                .newMergeBuilder()
+                .setObjectConflictStrategy(ObjectConflictStrategies.APPEND)
+                .setMergeAppendKey("_appended")
+                .build()
+                .merge(primary, secondary);
 
         assertEquals(expected, actual);
     }
