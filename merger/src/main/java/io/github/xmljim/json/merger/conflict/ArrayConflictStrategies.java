@@ -1,4 +1,4 @@
-package io.github.xmljim.json.merger;
+package io.github.xmljim.json.merger.conflict;
 
 import io.github.xmljim.json.factory.merge.MergeProcessor;
 import io.github.xmljim.json.factory.merge.strategy.ArrayConflictStrategy;
@@ -25,8 +25,8 @@ public enum ArrayConflictStrategies implements ArrayConflictStrategy {
                         context.add(mergedArray);
                     }
                 } else {
-                    context.add(primaryValue);
                     context.add(secondaryValue);
+                    context.add(primaryValue);
                 }
             }
         }
@@ -62,24 +62,16 @@ public enum ArrayConflictStrategies implements ArrayConflictStrategy {
                 context.add(primaryValue);
             } else {
                 if (primaryValue.type().equals(secondaryValue.type())) {
-                    if (primaryValue.type().isPrimitive()) {
-                        if (propertyValue == 0 || propertyValue == context.size()) {
-                            context.add(primaryValue);
-                            context.add(secondaryValue);
-                        } else {
-                            context.insert(propertyValue, primaryValue);
-                            context.add(secondaryValue);
-                        }
-                    } else if (primaryValue.type().isObject()) {
+                    if (primaryValue.type().isObject()) {
                         context.add(processor.merge((JsonObject) primaryValue.get(), (JsonObject) secondaryValue.get()));
-                    } else {
+                    } else if (primaryValue.type().isArray()) {
                         context.add(processor.merge((JsonArray) primaryValue.get(), (JsonArray) secondaryValue.get()));
+                    } else {
+                        context.add(primaryValue);
+                        context.add(secondaryValue);
                     }
-                } else if (propertyValue == 0 || propertyValue == context.size()) {
-                    context.add(primaryValue);
-                    context.add(secondaryValue);
                 } else {
-                    context.insert(propertyValue, primaryValue);
+                    context.add(primaryValue);
                     context.add(secondaryValue);
                 }
             }

@@ -2,6 +2,7 @@ package io.xmljim.json.mapper.test;
 
 import io.github.xmljim.json.factory.mapper.Mapper;
 import io.github.xmljim.json.factory.mapper.MapperFactory;
+import io.github.xmljim.json.factory.mapper.MappingConfig;
 import io.github.xmljim.json.factory.model.ElementFactory;
 import io.github.xmljim.json.model.JsonArray;
 import io.github.xmljim.json.model.JsonObject;
@@ -122,7 +123,11 @@ class MapperTest {
         basic.put("subclass", subClass);
 
         MapperFactory factory = ServiceManager.getProvider(MapperFactory.class);
-        Mapper mapper = factory.newBuilder().setTargetClass(BasicTestClass.class).build();
+
+        Mapper mapper = factory.newMapper(
+            MappingConfig.with().withClass(BasicTestClass.class).build());
+
+        //Mapper mapper = factory.newBuilder().setTargetClass(BasicTestClass.class).build();
         BasicTestClass testClass = mapper.toClass(basic);
 
         assertNotNull(testClass);

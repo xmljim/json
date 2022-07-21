@@ -4,12 +4,32 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.function.Supplier;
 
+/**
+ * A JSON Parser
+ */
 public interface Parser {
 
+    /**
+     * Return the Parser's settings
+     *
+     * @return the parser settings
+     */
     ParserSettings getSettings();
 
+    /**
+     * Utility method to apply parser settings
+     *
+     * @param settings the parser settings
+     */
     void setSettings(ParserSettings settings);
 
+    /**
+     * Parse the data
+     *
+     * @param data the input data
+     * @param <T>  the data format
+     * @return the parsed JSON data in the format requested
+     */
     default <T> T parse(InputData data) {
 
         initializeProcessor();
@@ -31,10 +51,18 @@ public interface Parser {
     }
 
 
+    /**
+     * Initialize the Processer used by this parser
+     */
     default void initializeProcessor() {
         getSettings().getProcessor().subscribe(getSettings().getEventHandler());
     }
 
+    /**
+     * Return the statistics from the parsing
+     *
+     * @return the statistics
+     */
     default Statistics getStatistics() {
         Statistics statistics = new Statistics();
         if (getSettings().enableStatistics()) {

@@ -1,4 +1,4 @@
-package io.github.xmljim.json.jsonpath.filter;
+package io.github.xmljim.json.jsonpath.context;
 
 import java.util.Objects;
 

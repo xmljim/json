@@ -17,6 +17,8 @@ abstract class BaseEventProcessor extends SubmissionPublisher<JsonEvent> impleme
     private final Timer<JsonEvent> eventTimer = new Timer<>();
     private ParserSettings settings;
 
+    private JsonEvent lastEvent;
+
     public BaseEventProcessor(final ParserSettings settings) {
         super(ForkJoinPool.commonPool(), settings.getMaxEventBufferCapacity());
         this.settings = settings;
@@ -43,6 +45,11 @@ abstract class BaseEventProcessor extends SubmissionPublisher<JsonEvent> impleme
      */
     protected void sendEvent(JsonEvent event) {
         submit(event);
+        lastEvent = event;
+    }
+
+    protected JsonEvent getLastEvent() {
+        return lastEvent;
     }
 
     protected void fireArrayEndEvent(int lineNumber, int column) {

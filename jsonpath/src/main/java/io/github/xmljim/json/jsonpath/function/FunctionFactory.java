@@ -7,14 +7,28 @@ import io.github.xmljim.json.jsonpath.util.Global;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Deque;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class FunctionFactory {
 
-    private static final String FUNCTION_PATTERN = "(?<function>[a-z0-9\\-]+)\\((?<args>.*)\\)";
-    private static final String ARGS_PATTERN = "(([@$.a-zA-Z\\d_\\-'{}*#]+(\\[[,:a-z\\d'-]+])*)(\\s[!<>=a-z]+\\s\\2?)?(\\s?[&|]{2}\\s?)?)+";//"(([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?(\\s?[&|]+\\s?)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,\\]]+)?)(,\\s?((([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?(\\s?[&|]+\\s?)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?)))*";
+    private static final String FUNCTION_PATTERN = "(?<function>[a-zA-Z0-9_\\-]+)\\((?<args>.*)\\)";
+    private static final String PATH_PATTERN = "([@$.a-zA-Z\\d_\\-'{}*#]+(\\[[,:a-z\\d'-]+])*)";
+    private static final String OPERATOR_PATTERN = "(\\s[!<>=a-z]+\\s\\2?)?";
+    private static final String JUNCTION_PATTERN = "(\\s?[&|]{2}\\s?)?";
+    private static final String MATH_OPERATOR_PATTERN = "(\\s?[+-*/%^])?";
+    private static final String ARG_SEPARATOR_PATTERN = "(,\\s?)?";
+    private static final String ARGUMENTS_PATTERN = "(?<args>(" + PATH_PATTERN + MATH_OPERATOR_PATTERN + OPERATOR_PATTERN + JUNCTION_PATTERN + ARG_SEPARATOR_PATTERN + ")*)";
+    private static final String FUNCTION_NAME = "(?<function>[a-zA-Z0-9_\\-]+)";
+    private static final String FULL_PATTERN = FUNCTION_NAME + "\\(" + ARGUMENTS_PATTERN + "\\)";
+    private static final String ARGS_PATTERN = "(([@$.a-zA-Z\\d_\\-'{}*#]+(\\[[,:a-z\\d'-]+])*)(\\s[!<>=~a-z]+\\s\\2?)?(\\s?[&|]{2}\\s?)?)+";//"(([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?(\\s?[&|]+\\s?)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,\\]]+)?)(,\\s?((([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?(\\s?[&|]+\\s?)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)(\\s?[=!<>a-z]+\\s)?([@$.a-zA-Z0-9_\\-'{}#\\[,:\\]]+)?)))*";
+
 
     public static JsonPathFunction createFunction(String expression, Global global) {
         Pattern functionPattern = Pattern.compile(FUNCTION_PATTERN);
@@ -24,8 +38,8 @@ public class FunctionFactory {
             String fxName = matcher.group("function");
 
             FunctionInfo functionInfo = global.getFunctionRegistry()
-                .getFunctionInfo(fxName)
-                .orElseThrow(() -> new JsonPathException("Function not found: " + fxName));
+                    .getFunctionInfo(fxName)
+                    .orElseThrow(() -> new JsonPathException("Function not found: " + fxName));
 
             String argsString = matcher.group("args");
 
@@ -50,8 +64,8 @@ public class FunctionFactory {
         while (matcher.find()) {
             if (matcher.group() != null && !"".equals(matcher.group())) {
                 argExpressions.add(matcher.group().strip().endsWith(",") ?
-                    matcher.group().strip().substring(0, matcher.group().strip().length() - 1) :
-                    matcher.group().strip());
+                        matcher.group().strip().substring(0, matcher.group().strip().length() - 1) :
+                        matcher.group().strip());
             }
         }
         if (functionInfo.arguments().length != 0) {

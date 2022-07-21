@@ -21,6 +21,8 @@ class DefaultParser implements Parser {
 
     @Override
     public void setSettings(ParserSettings settings) {
+        if (settings != null) {
+        }
         this.settings = settings;
     }
 }

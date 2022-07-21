@@ -23,12 +23,14 @@
             <artifactId>jsonfactory</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <dependency>
             <groupId>io.github.xmljim.json</groupId>
             <artifactId>elementfactory</artifactId>
             <version>${project.version}</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
     <build>

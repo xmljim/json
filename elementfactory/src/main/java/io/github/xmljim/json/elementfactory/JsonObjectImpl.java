@@ -117,7 +117,7 @@ class JsonObjectImpl extends AbstractJsonNode implements JsonObject {
 
     @Override
     public int hashCode() {
-        return Objects.hash(data, parent());
+        return Objects.hash(data);
     }
 
     @Override

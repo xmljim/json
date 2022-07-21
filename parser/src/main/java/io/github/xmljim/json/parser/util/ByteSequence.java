@@ -306,7 +306,7 @@ public class ByteSequence {
      * Adds a varargs of bytes to a ByteRange, and adds the ByteRange
      * as the next sequence
      *
-     * @param anyOf
+     * @param anyOf an array of bytes to add
      */
     private void add(byte... anyOf) {
         final ByteRange range = ByteRange.empty();
@@ -332,7 +332,7 @@ public class ByteSequence {
      * and its Cardinality.
      *
      * @param cbt blurgh
-     * @category Not fully implemented yet.  Cardinality needs additional code
+     * @apiNote Not fully implemented yet.  Cardinality needs additional code
      */
     private void add(CardinalityByteRange cbt) {
         sequence.add(cbt);
@@ -341,7 +341,7 @@ public class ByteSequence {
     /**
      * Appends the sequence from another ByteSequence
      *
-     * @param sequence
+     * @param sequence The ByteSequence
      */
     private void add(ByteSequence sequence) {
         this.sequence.addAll(sequence.getSequenceItems());
@@ -350,10 +350,20 @@ public class ByteSequence {
     /**
      * Adds a new sequence from a ByteRange
      *
-     * @param range
+     * @param range the range of bytes
      */
     private void add(ByteRange range) {
         add(new CardinalityByteRange(range));
+    }
+
+    /**
+     * Return an array of bytes
+     *
+     * @return an array of bytes
+     */
+    public byte[] getBytes() {
+        ArrayList<Byte> byteList = new ArrayList<>();
+        return null;
     }
 
     @Override

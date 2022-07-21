@@ -11,7 +11,10 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.fail;
 
 @DisplayName("Built-in Function Tests")
 class FunctionTests extends JsonPathTestBase {
@@ -70,17 +73,17 @@ class FunctionTests extends JsonPathTestBase {
             //now the ugly way:
             JsonArray compoundArray = getCompoundTest();
             List<JsonObject> result = compoundArray.jsonValues().map(JsonElement::asJsonObject)
-                .filter(jsonObject -> jsonObject.getValue("assignments").asJsonArray().jsonValues()
-                    .filter(assignment -> {
-                        JsonObject assigned = assignment.asJsonObject();
-                        return (assigned.getValue("doc_type_id").asNumber().intValue() == 19 &&
-                            assigned.getValue("doc_status").asString().equals("PROCESSED"));
-                    }).count() >= 3)
-                .toList();
+                    .filter(jsonObject -> jsonObject.getValue("assignments").asJsonArray().jsonValues()
+                            .filter(assignment -> {
+                                JsonObject assigned = assignment.asJsonObject();
+                                return (assigned.getValue("doc_type_id").asNumber().intValue() == 19 &&
+                                        assigned.getValue("doc_status").asString().equals("PROCESSED"));
+                            }).count() >= 3)
+                    .toList();
 
             assertEquals(array.size(), result.size());
             assertEquals(result.get(0).value("id").orElseThrow(() -> new Exception("Bad Expected Value")),
-                array.getValue(0).asJsonObject().value("id").orElseThrow());
+                    array.getValue(0).asJsonObject().value("id").orElseThrow());
 
         } catch (Exception e) {
             fail(e);
@@ -96,17 +99,17 @@ class FunctionTests extends JsonPathTestBase {
             //now the ugly way:
             JsonArray compoundArray = getCompoundTest();
             List<JsonObject> result = compoundArray.jsonValues().map(JsonElement::asJsonObject)
-                .filter(jsonObject -> jsonObject.getValue("assignments").asJsonArray().jsonValues()
-                    .filter(assignment -> {
-                        JsonObject assigned = assignment.asJsonObject();
-                        return (assigned.getValue("doc_type_id").asNumber().intValue() == 19 &&
-                            assigned.getValue("doc_status").asString().equals("PROCESSED"));
-                    }).count() < 3)
-                .toList();
+                    .filter(jsonObject -> jsonObject.getValue("assignments").asJsonArray().jsonValues()
+                            .filter(assignment -> {
+                                JsonObject assigned = assignment.asJsonObject();
+                                return (assigned.getValue("doc_type_id").asNumber().intValue() == 19 &&
+                                        assigned.getValue("doc_status").asString().equals("PROCESSED"));
+                            }).count() < 3)
+                    .toList();
 
             assertEquals(array.size(), result.size());
             assertEquals(result.get(0).value("id").orElseThrow(() -> new Exception("Bad Expected Value")),
-                array.getValue(0).asJsonObject().value("id").orElseThrow());
+                    array.getValue(0).asJsonObject().value("id").orElseThrow());
 
         } catch (Exception e) {
             fail(e);
@@ -231,6 +234,9 @@ class FunctionTests extends JsonPathTestBase {
 
             expr = "$.teams.*[?(@.id == 'COL')].stadium.ends-with('Field')";
             assertTrue((boolean) jsonPath.select(baseball, expr).get(0));
+
+            boolean endsWithField = jsonPath.selectValue(baseball, expr);
+            assertTrue(endsWithField);
 
         } catch (Exception e) {
             fail(e);

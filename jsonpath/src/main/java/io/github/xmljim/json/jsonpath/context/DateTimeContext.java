@@ -4,7 +4,7 @@ import io.github.xmljim.json.jsonpath.util.DataType;
 
 import java.time.LocalDateTime;
 
-public class DateTimeContext extends TemporalContext<LocalDateTime> {
+class DateTimeContext extends TemporalContext<LocalDateTime> {
     public DateTimeContext(LocalDateTime value) {
         super(value);
     }

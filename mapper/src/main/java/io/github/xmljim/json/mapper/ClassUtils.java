@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 
-interface ClassUtils {
+abstract class ClassUtils {
     /**
      * Create a new class instance
      *
@@ -18,7 +18,7 @@ interface ClassUtils {
      * @return a new instance of the class;
      * @throws JsonMapperException thrown if an error occurs creating the class
      */
-    static <T> T createInstance(Class<T> classToCreate) {
+    public static <T> T createInstance(Class<T> classToCreate) {
         final Optional<Constructor<?>> constructor = getDefaultConstructor(classToCreate);
 
         if (constructor.isPresent()) {
@@ -47,7 +47,7 @@ interface ClassUtils {
             .filter(constructor -> constructor.getParameterCount() == 0).findFirst();
     }
 
-    static <T> T createInstance(Class<T> classToCreate, Class<?>[] argTypes, Object... args) {
+    public static <T> T createInstance(Class<T> classToCreate, Class<?>[] argTypes, Object... args) {
         try {
             Constructor<T> constructor;
             constructor = classToCreate.getConstructor(argTypes);
@@ -58,14 +58,14 @@ interface ClassUtils {
         }
     }
 
-    static ValueConverter<?> createValueConverter(Class<?> classToCreate, Map<String, String> args) {
+    public static ValueConverter<?> createValueConverter(Class<?> classToCreate, Map<String, String> args) {
         if (classToCreate == null) {
             return null;
         }
 
         try {
             Constructor<?> con;
-            con = classToCreate.getConstructor(String[].class);
+            con = classToCreate.getConstructor(Map.class);
             con.setAccessible(true);
             return (ValueConverter<?>) con.newInstance(args);
         } catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException |
@@ -74,4 +74,6 @@ interface ClassUtils {
         }
 
     }
+
+
 }

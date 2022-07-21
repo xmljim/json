@@ -21,6 +21,8 @@ public interface Mapper {
      */
     MapperConfig getConfig();
 
+    Mapping getMapping();
+
     /**
      * Convert a Map to a JsonObject
      *

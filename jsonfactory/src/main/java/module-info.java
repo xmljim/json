@@ -11,4 +11,6 @@ module io.github.xmljim.json.factory {
     exports io.github.xmljim.json.service;
     exports io.github.xmljim.json.service.exception;
     exports io.github.xmljim.json.factory.jsonpath;
+    exports io.github.xmljim.json.factory.config;
+    exports io.github.xmljim.json.factory.mapper.parser;
 }

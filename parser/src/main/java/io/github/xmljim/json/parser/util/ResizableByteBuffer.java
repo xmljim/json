@@ -66,7 +66,9 @@ public class ResizableByteBuffer {
      * @param initialByteArray the initial array of bytes
      */
     public ResizableByteBuffer(byte[] initialByteArray) {
-        add(initialByteArray);
+        for (byte b : initialByteArray) {
+            add(b);
+        }
     }
 
     public static ResizableByteBuffer fromStream(InputStream inputStream) {
@@ -264,8 +266,7 @@ public class ResizableByteBuffer {
      * @return a new ByteBuffer instance
      */
     public ByteBuffer toByteBuffer() {
-        final ByteBuffer buffer = ByteBuffer.wrap(Arrays.copyOfRange(byteArray, 0, size));
-        return buffer;
+        return ByteBuffer.wrap(Arrays.copyOfRange(byteArray, 0, size));
     }
 
     /**
@@ -313,7 +314,7 @@ public class ResizableByteBuffer {
     /**
      * Trims the underlying array to remove any unallocated items at the end of the array.
      *
-     * @return
+     * @return the trimmed byte array
      */
     private byte[] trim() {
         if (size == 0) {
@@ -334,7 +335,7 @@ public class ResizableByteBuffer {
      * Make sure the array has enough space for the minimum number of items to be added.  Typically this will continue to add
      * at least 50% more space than what was asked for to avoid repeated resizing.
      *
-     * @param minimumCapacity
+     * @param minimumCapacity The minimum capacity for the byte array
      */
     private void ensureByteCapacity(int minimumCapacity) {
         if (byteArray.length - (size + minimumCapacity) <= 0) {

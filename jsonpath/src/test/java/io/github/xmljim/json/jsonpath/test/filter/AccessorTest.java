@@ -1,6 +1,6 @@
 package io.github.xmljim.json.jsonpath.test.filter;
 
-import io.github.xmljim.json.jsonpath.filter.Accessor;
+import io.github.xmljim.json.jsonpath.context.Accessor;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

@@ -1,5 +1,8 @@
 package io.github.xmljim.json.mapper;
 
+import io.github.xmljim.json.mapper.exception.JsonMapperException;
+
+import java.lang.reflect.Method;
 import java.lang.reflect.Type;
 
 class MethodReference {
@@ -46,6 +49,18 @@ class MethodReference {
             return contextType;
         } else {
             return Void.TYPE;
+        }
+    }
+
+    public <T> Method getMethodFromInstance(T instance) {
+        try {
+            if (getMethodType() == MethodType.SETTER) {
+                return instance.getClass().getMethod(getName(), contextType.getClass());
+            } else {
+                return instance.getClass().getMethod(getName());
+            }
+        } catch (NoSuchMethodException nsme) {
+            throw new JsonMapperException(nsme);
         }
     }
 

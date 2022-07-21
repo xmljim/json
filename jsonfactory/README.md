@@ -7,6 +7,18 @@ All services typically follow a *Factory* design pattern and all extend the `Jso
 example, the `ElementFactory` interface extends `JsonService` and provides methods for creating concrete instances of
 the JSON Model.
 
+## JsonService
+
+The `JsonService` interface is nothing more than a tagging interface that identifies that any interface that extends
+it _is_ intended to be a service to be consumed by another component. Internally, the `ServiceManager` scans
+the module path for all `JsonService` instances.
+
+## @JsonService Annotation
+
+The `@JsonService` annotation is applied to `JsonService` interface implementation classes. In addition to tagging
+the implementation class as a Service Provider, it contains other metadata that facilitate in helping the
+Service Manager select the appropriate implementation class, if more than one exists.
+
 ## ServiceManager
 
 The `ServiceManager` class provides static methods for instantiating *Service Providers*. Service

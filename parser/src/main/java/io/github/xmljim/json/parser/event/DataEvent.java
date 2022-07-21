@@ -1,6 +1,7 @@
 package io.github.xmljim.json.parser.event;
 
 import io.github.xmljim.json.factory.parser.event.EventType;
+import io.github.xmljim.json.parser.util.ByteSequence;
 
 import java.nio.ByteBuffer;
 import java.util.Objects;
@@ -33,7 +34,7 @@ class DataEvent extends AbstractJsonEvent {
     public String toString() {
         return new StringJoiner(", ", DataEvent.class.getSimpleName() + "[", "]")
             .add("eventType=" + eventType)
-            .add("data=" + data)
+            .add("data=" + ByteSequence.withStartingSequence(data.array()))
             .add("line=" + super.getLineNumber())
             .add("column=" + super.getColumn())
             .toString();

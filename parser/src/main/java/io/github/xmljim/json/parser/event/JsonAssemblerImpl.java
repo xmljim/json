@@ -31,7 +31,7 @@ class JsonAssemblerImpl extends AbstractJsonAssembler {
     public void jsonArrayStart(String key) {
         assemblerTimer.start(this);
 
-        JsonArray array = getElementFactory().newArray(stack.peek());
+        JsonArray array = getElementFactory().newArray();
         appendToCurrent(key, array);
         assemblerTimer.stop(this);
     }
@@ -47,7 +47,7 @@ class JsonAssemblerImpl extends AbstractJsonAssembler {
     @Override
     public void jsonObjectStart(String key) {
         assemblerTimer.start(this);
-        JsonObject object = getElementFactory().newObject(stack.peek());
+        JsonObject object = getElementFactory().newObject();
         appendToCurrent(key, object);
         assemblerTimer.stop(this);
     }
@@ -139,7 +139,7 @@ class JsonAssemblerImpl extends AbstractJsonAssembler {
     }
 
     private void createAndAppendValue(String key, Object value) {
-        JsonValue<?> val = getElementFactory().newValue(value, stack.peek());
+        JsonValue<?> val = getElementFactory().newValue(value);
         appendToCurrent(key, val);
     }
 

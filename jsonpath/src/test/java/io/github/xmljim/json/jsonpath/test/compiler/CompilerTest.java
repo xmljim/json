@@ -14,8 +14,8 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 class CompilerTest extends JsonPathTestBase {
 
     @Test
-    @DisplayName("Given an expression with a root select and bracketed property key, then return a sequence" +
-        "containing a RootPathOperator and a ChildPathOperator")
+    @DisplayName("Given an expression with a root select and bracketed property key, then return a sequence " +
+            "containing a RootPathOperator and a ChildPathOperator")
     void testChildPathWithBrackets() {
         String expression = "$['foo']";
         FilterStream sequence = getFilterStream(expression);
@@ -27,7 +27,7 @@ class CompilerTest extends JsonPathTestBase {
 
     @Test
     @DisplayName("Given an expression with a root selector and 'dot' property key, then return a sequence" +
-        "containing a RootPathOperator and a ChildPathOperator")
+            "containing a RootPathOperator and a ChildPathOperator")
     void testChildPathWithDot() {
         String expression = "$.foo";
         FilterStream sequence = getFilterStream(expression);

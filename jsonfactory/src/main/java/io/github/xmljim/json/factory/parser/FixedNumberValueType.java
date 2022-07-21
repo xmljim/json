@@ -2,7 +2,13 @@ package io.github.xmljim.json.factory.parser;
 
 import java.math.BigInteger;
 
+/**
+ * An enumeration of fixed number strategies
+ */
 public enum FixedNumberValueType implements NumericValueType {
+    /**
+     * Integer
+     */
     INTEGER {
         @Override
         public Number apply(String numericString) {
@@ -10,6 +16,9 @@ public enum FixedNumberValueType implements NumericValueType {
         }
     },
 
+    /**
+     * Long
+     */
     LONG {
         @Override
         public Number apply(String numericString) {
@@ -17,6 +26,9 @@ public enum FixedNumberValueType implements NumericValueType {
         }
     },
 
+    /**
+     * Big Integer
+     */
     BIG_INTEGER {
         @Override
         public Number apply(String numericString) {
